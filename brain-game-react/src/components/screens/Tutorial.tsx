@@ -1,4 +1,4 @@
-// Tutorial Screen - Shows game instructions before each minigame
+// Tutorial Screen - DARK TV Game Show Theme
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -8,17 +8,10 @@ import { Category, MinigameId } from '../../types';
 
 // Category colors
 const CATEGORY_COLORS: Record<Category, string> = {
-  0: 'from-red-400 to-red-600',     // Analyse
-  1: 'from-yellow-400 to-yellow-600', // Calculate
-  2: 'from-green-400 to-green-600',   // Memory
-  3: 'from-blue-400 to-blue-600',     // Identify
-};
-
-const CATEGORY_BG_COLORS: Record<Category, string> = {
-  0: 'bg-red-100 text-red-700',
-  1: 'bg-yellow-100 text-yellow-700',
-  2: 'bg-green-100 text-green-700',
-  3: 'bg-blue-100 text-blue-700',
+  0: '#e74c3c', // Analyse - red
+  1: '#f1c40f', // Calculate - yellow
+  2: '#2ecc71', // Memory - green
+  3: '#3498db', // Identify - blue
 };
 
 // Game instructions from SOURCE.md
@@ -29,47 +22,47 @@ const GAME_INSTRUCTIONS: Record<MinigameId, { description: string; tips: string[
   },
   1: { 
     description: 'Find matching pairs of cards. Cards may swap positions!',
-    tips: ['Memorize card locations quickly', 'Watch out for swapping cards at higher levels'],
+    tips: ['Memorize card locations quickly', 'Watch out for swapping cards'],
   },
   2: { 
     description: 'Solve the equation by finding the missing number.',
-    tips: ['Start with simple addition/subtraction', 'Higher levels include multiplication and division'],
+    tips: ['Higher levels include multiplication and division'],
   },
   3: { 
     description: 'Find the missing operator that makes the equation true.',
-    tips: ['Try each operator mentally', 'Work through them systematically'],
+    tips: ['Try each operator mentally'],
   },
   4: { 
     description: 'Count all the cubes in the 3D structure, including hidden ones!',
-    tips: ['Count column by column', 'Remember there may be cubes behind others'],
+    tips: ['Count column by column', 'Remember cubes behind others'],
   },
   5: { 
     description: 'Determine which object is heaviest based on the scale comparisons.',
-    tips: ['Make logical deductions from each scale', 'Watch for equal weights'],
+    tips: ['Make logical deductions from each scale'],
   },
   6: { 
     description: 'Click the meteors in ascending numerical order.',
-    tips: ['Numbers may become words at higher levels', 'Meteors bounce and move!'],
+    tips: ['Numbers may become words at higher levels'],
   },
   7: { 
     description: 'Match the jigsaw pieces to their correct outlines.',
-    tips: ['Look at the piece shapes carefully', 'Drag pieces to the matching outline'],
+    tips: ['Look at the piece shapes carefully'],
   },
   8: { 
     description: 'Select numbers that add up to the target sum.',
-    tips: ['Multiple combinations may work', 'Look for obvious pairs first'],
+    tips: ['Multiple combinations may work'],
   },
   9: { 
     description: 'Find and trace the displayed sequence on the hexagon grid.',
-    tips: ['Sequences can be matched forwards or backwards', 'Grid grows at higher levels'],
+    tips: ['Sequences can match forwards or backwards'],
   },
   10: { 
     description: 'Watch the switches light up, then repeat the sequence.',
-    tips: ['Like Simon Says', 'Sequence gets longer and faster'],
+    tips: ['Like Simon Says'],
   },
   11: { 
     description: 'Track where the car ends up after following the paths.',
-    tips: ['Cars turn at every junction', 'Multiple cars appear at higher levels'],
+    tips: ['Cars turn at every junction'],
   },
 };
 
@@ -83,7 +76,6 @@ export function Tutorial() {
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
   const instructions = GAME_INSTRUCTIONS[currentMinigame];
   const categoryColor = CATEGORY_COLORS[currentCategory as Category];
-  const categoryBgColor = CATEGORY_BG_COLORS[currentCategory as Category];
 
   const handleStart = () => {
     playClick();
@@ -93,14 +85,20 @@ export function Tutorial() {
   return (
     <GameCanvasWrapper>
       <GameCanvas>
-        <div className="relative w-full h-full bg-gradient-to-b from-sky-50 to-white overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
           {/* Category badge */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             className="absolute top-4 left-1/2 transform -translate-x-1/2"
           >
-            <span className={`px-6 py-2 rounded-full text-sm font-bold ${categoryBgColor}`}>
+            <span 
+              className="px-6 py-2 rounded-full text-sm font-bold text-white shadow-lg"
+              style={{ 
+                background: `linear-gradient(180deg, ${categoryColor} 0%, ${categoryColor}cc 100%)`,
+                boxShadow: `0 4px 15px ${categoryColor}66`
+              }}
+            >
               {categoryName}
             </span>
           </motion.div>
@@ -115,7 +113,7 @@ export function Tutorial() {
             <img
               src={`/assets/icons/game-${currentMinigame + 1}.png`}
               alt={game.name}
-              className="w-24 h-24 object-contain"
+              className="w-20 h-20 object-contain"
             />
           </motion.div>
 
@@ -124,7 +122,7 @@ export function Tutorial() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="absolute top-44 left-0 right-0 text-center text-3xl text-gray-800"
+            className="absolute top-40 left-0 right-0 text-center text-3xl gold-glow"
             style={{ fontFamily: 'Baveuse, cursive' }}
           >
             {game.name}
@@ -135,15 +133,21 @@ export function Tutorial() {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="absolute top-56 left-8 right-8 text-center"
+            className="absolute top-52 left-8 right-8 text-center"
           >
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-lg text-gray-300 mb-4">
               {instructions.description}
             </p>
             
-            <div className="bg-white/80 rounded-xl p-4 shadow-md border border-gray-200">
-              <h3 className="font-bold text-gray-800 mb-2">Tips</h3>
-              <ul className="text-sm text-gray-600 space-y-1">
+            <div 
+              className="rounded-xl p-4 shadow-lg"
+              style={{ 
+                background: 'linear-gradient(180deg, #2a2a5a 0%, #1a1a3a 100%)',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }}
+            >
+              <h3 className="font-bold text-white mb-2">Tips</h3>
+              <ul className="text-sm text-gray-400 space-y-1">
                 {instructions.tips.map((tip, i) => (
                   <li key={i}>• {tip}</li>
                 ))}
@@ -158,15 +162,9 @@ export function Tutorial() {
             transition={{ delay: 0.4 }}
             className="absolute bottom-24 left-0 right-0 flex justify-center gap-8 text-sm"
           >
-            <div className="text-green-600 font-bold">
-              +{game.correctPoints} pts
-            </div>
-            <div className="text-red-600 font-bold">
-              {game.incorrectPoints} pts
-            </div>
-            <div className="text-gray-600">
-              60 seconds
-            </div>
+            <div className="text-green-400 font-bold">+{game.correctPoints} pts</div>
+            <div className="text-red-400 font-bold">{game.incorrectPoints} pts</div>
+            <div className="text-gray-400">60 seconds</div>
           </motion.div>
 
           {/* Start button */}
@@ -177,8 +175,13 @@ export function Tutorial() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleStart}
-            className={`absolute bottom-6 left-1/2 transform -translate-x-1/2 px-12 py-4 bg-gradient-to-b ${categoryColor} text-white text-xl rounded-xl shadow-lg border-4 border-white/30`}
-            style={{ fontFamily: 'Baveuse, cursive' }}
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 px-12 py-4 text-white text-xl rounded-xl shadow-lg"
+            style={{ 
+              fontFamily: 'Baveuse, cursive',
+              background: `linear-gradient(180deg, ${categoryColor} 0%, ${categoryColor}bb 100%)`,
+              boxShadow: `0 4px 20px ${categoryColor}66`,
+              border: '2px solid rgba(255,255,255,0.2)'
+            }}
           >
             START GAME
           </motion.button>

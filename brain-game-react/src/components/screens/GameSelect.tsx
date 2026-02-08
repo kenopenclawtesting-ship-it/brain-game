@@ -1,4 +1,4 @@
-// Game Select Screen - Choose game mode
+// Game Select Screen - DARK TV Game Show Theme
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -6,6 +6,10 @@ import { GameCanvas, GameCanvasWrapper } from '../layout/GameCanvas';
 import { MINIGAMES } from '../../lib/constants';
 import { MinigameId } from '../../types';
 import { useState } from 'react';
+
+// Category colors
+const CATEGORY_COLORS = ['#e74c3c', '#f1c40f', '#2ecc71', '#3498db'];
+const CATEGORY_NAMES = ['Analyse', 'Calculate', 'Memory', 'Identify'];
 
 export function GameSelect() {
   const setScreen = useGameStore((state) => state.setScreen);
@@ -41,14 +45,14 @@ export function GameSelect() {
   return (
     <GameCanvasWrapper>
       <GameCanvas>
-        <div className="relative w-full h-full bg-gradient-to-b from-sky-100 to-white overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
           {/* Back button */}
           <motion.img
             src="/assets/sprites/button-back.png"
             alt="Back"
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="absolute top-4 left-4 w-20 h-auto sprite-button"
+            className="absolute top-4 left-4 w-16 h-auto sprite-button z-20"
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleBack}
@@ -59,7 +63,7 @@ export function GameSelect() {
           <motion.h1
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-center pt-6 text-3xl text-amber-600"
+            className="text-center pt-6 text-2xl gold-glow"
             style={{ fontFamily: 'Baveuse, cursive' }}
           >
             {showPractice ? 'Practice Mode' : 'Select Game Mode'}
@@ -71,22 +75,24 @@ export function GameSelect() {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="flex flex-col items-center justify-center gap-6 mt-16"
+              className="flex flex-col items-center justify-center gap-5 mt-12"
             >
               {/* Category preview strip */}
               <div className="flex gap-2 mb-4">
-                <div className="w-16 h-16 bg-red-500 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
-                  <span style={{ fontFamily: 'Baveuse, cursive' }}>A</span>
-                </div>
-                <div className="w-16 h-16 bg-yellow-500 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
-                  <span style={{ fontFamily: 'Baveuse, cursive' }}>C</span>
-                </div>
-                <div className="w-16 h-16 bg-green-500 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
-                  <span style={{ fontFamily: 'Baveuse, cursive' }}>M</span>
-                </div>
-                <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold shadow-md">
-                  <span style={{ fontFamily: 'Baveuse, cursive' }}>I</span>
-                </div>
+                {CATEGORY_COLORS.map((color, i) => (
+                  <div 
+                    key={i}
+                    className="w-14 h-14 rounded-lg flex items-center justify-center text-white font-bold shadow-lg"
+                    style={{ 
+                      background: `linear-gradient(180deg, ${color} 0%, ${color}99 100%)`,
+                      boxShadow: `0 4px 15px ${color}66`
+                    }}
+                  >
+                    <span style={{ fontFamily: 'Baveuse, cursive' }}>
+                      {CATEGORY_NAMES[i][0]}
+                    </span>
+                  </div>
+                ))}
               </div>
 
               {/* Classic Test button */}
@@ -94,8 +100,12 @@ export function GameSelect() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleClassicTest}
-                className="w-64 py-4 bg-gradient-to-b from-green-400 to-green-600 text-white text-xl rounded-xl shadow-lg border-4 border-green-300"
-                style={{ fontFamily: 'Baveuse, cursive' }}
+                className="w-64 py-4 text-white text-xl rounded-xl shadow-lg border-2 border-green-400/30"
+                style={{ 
+                  fontFamily: 'Baveuse, cursive',
+                  background: 'linear-gradient(180deg, #27ae60 0%, #1e8449 100%)',
+                  boxShadow: '0 4px 20px rgba(39, 174, 96, 0.4)'
+                }}
               >
                 Classic Test
                 <div className="text-sm font-normal opacity-80">4 categories • 60s each</div>
@@ -105,8 +115,12 @@ export function GameSelect() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-64 py-4 bg-gradient-to-b from-purple-400 to-purple-600 text-white text-xl rounded-xl shadow-lg border-4 border-purple-300"
-                style={{ fontFamily: 'Baveuse, cursive' }}
+                className="w-64 py-4 text-white text-xl rounded-xl shadow-lg border-2 border-purple-400/30"
+                style={{ 
+                  fontFamily: 'Baveuse, cursive',
+                  background: 'linear-gradient(180deg, #9b59b6 0%, #6c3483 100%)',
+                  boxShadow: '0 4px 20px rgba(155, 89, 182, 0.4)'
+                }}
               >
                 Pro Test
                 <div className="text-sm font-normal opacity-80">Coming soon!</div>
@@ -117,8 +131,12 @@ export function GameSelect() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handlePractice}
-                className="w-64 py-4 bg-gradient-to-b from-blue-400 to-blue-600 text-white text-xl rounded-xl shadow-lg border-4 border-blue-300"
-                style={{ fontFamily: 'Baveuse, cursive' }}
+                className="w-64 py-4 text-white text-xl rounded-xl shadow-lg border-2 border-blue-400/30"
+                style={{ 
+                  fontFamily: 'Baveuse, cursive',
+                  background: 'linear-gradient(180deg, #3498db 0%, #2471a3 100%)',
+                  boxShadow: '0 4px 20px rgba(52, 152, 219, 0.4)'
+                }}
               >
                 Practice
                 <div className="text-sm font-normal opacity-80">Pick any game</div>
@@ -129,9 +147,9 @@ export function GameSelect() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="px-8 mt-8"
+              className="px-6 mt-8"
             >
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-3">
                 {MINIGAMES.filter(g => !g.isPro).map((game, index) => (
                   <motion.button
                     key={game.id}
@@ -141,16 +159,21 @@ export function GameSelect() {
                     whileHover={{ scale: 1.1, y: -5 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => handleSelectGame(game.id)}
-                    className="flex flex-col items-center p-3 bg-white rounded-xl shadow-md hover:shadow-lg border-2 border-gray-200 hover:border-blue-400 transition-colors"
+                    className="flex flex-col items-center p-3 rounded-xl shadow-lg transition-colors"
+                    style={{
+                      background: 'linear-gradient(180deg, #2a2a5a 0%, #1a1a3a 100%)',
+                      border: `2px solid ${CATEGORY_COLORS[game.category]}44`,
+                      boxShadow: `0 4px 15px ${CATEGORY_COLORS[game.category]}33`
+                    }}
                   >
                     <img
                       src={`/assets/icons/game-${game.id + 1}.png`}
                       alt={game.name}
-                      className="w-16 h-16 object-contain"
+                      className="w-14 h-14 object-contain"
                       draggable={false}
                     />
                     <span 
-                      className="text-xs mt-2 text-gray-700 text-center leading-tight"
+                      className="text-xs mt-2 text-white text-center leading-tight"
                       style={{ fontFamily: 'Baveuse, cursive' }}
                     >
                       {game.name}
@@ -160,23 +183,16 @@ export function GameSelect() {
               </div>
 
               {/* Category legend */}
-              <div className="flex justify-center gap-4 mt-6 text-xs">
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-red-500 rounded" />
-                  <span>Analyse</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-yellow-500 rounded" />
-                  <span>Calculate</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-green-500 rounded" />
-                  <span>Memory</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-blue-500 rounded" />
-                  <span>Identify</span>
-                </div>
+              <div className="flex justify-center gap-4 mt-5 text-xs">
+                {CATEGORY_NAMES.map((name, i) => (
+                  <div key={i} className="flex items-center gap-1">
+                    <div 
+                      className="w-3 h-3 rounded"
+                      style={{ background: CATEGORY_COLORS[i] }}
+                    />
+                    <span className="text-gray-400">{name}</span>
+                  </div>
+                ))}
               </div>
             </motion.div>
           )}

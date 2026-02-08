@@ -23,17 +23,18 @@ export function GameCanvas({ children, className = '' }: GameCanvasProps) {
   );
 }
 
-// Full-screen responsive wrapper that scales the canvas - LIGHT background like original
+// Full-screen wrapper with DARK TV game show background + spotlights
 export function GameCanvasWrapper({ children }: { children: ReactNode }) {
   return (
     <div 
       className="flex items-center justify-center min-h-screen p-4"
-      style={{
-        background: 'linear-gradient(180deg, #e8f4f8 0%, #ffffff 100%)',
-      }}
+      style={{ background: '#0a0e27' }}
     >
+      {/* Spotlight effect overlay */}
+      <div className="spotlight-bg" />
+      
       <div 
-        className="relative"
+        className="relative z-10"
         style={{
           width: '100%',
           maxWidth: CANVAS_WIDTH,

@@ -19,28 +19,52 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Light background like original Flash game */
+/* DARK TV game show background */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(180deg, #e8f4f8 0%, #ffffff 100%);
+  background: #0a0e27;
 }
 
-/* Game canvas container - 640x480 centered */
+/* Spotlight effect layer */
+.spotlight-bg {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 40% 60% at 30% 0%, rgba(26, 42, 90, 0.4) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 70% 0%, rgba(42, 26, 90, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 50% at 50% 0%, rgba(60, 60, 120, 0.3) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Game canvas container - DARK with glow */
 .game-canvas {
   width: 640px;
   height: 480px;
-  background: #ffffff;
+  background: linear-gradient(180deg, #1a1a4a 0%, #2a1a3a 100%);
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 
+    0 0 40px rgba(100, 100, 255, 0.4),
+    0 0 80px rgba(100, 80, 200, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  border: 2px solid rgba(100, 100, 200, 0.3);
 }
 
-/* Baveuse font for titles */
+/* Baveuse font utility */
 .font-baveuse {
   font-family: 'Baveuse', cursive;
+}
+
+/* Gold text with glow */
+.gold-glow {
+  color: #ffd700;
+  text-shadow: 
+    0 0 10px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 215, 0, 0.4),
+    0 0 30px rgba(255, 180, 0, 0.2);
 }
 
 /* Disable text selection in game area */
@@ -51,14 +75,69 @@ body {
 
 /* Sprite button hover effect */
 .sprite-button {
-  transition: transform 0.15s ease-out;
+  transition: transform 0.15s ease-out, filter 0.15s ease-out;
   cursor: pointer;
 }
 
 .sprite-button:hover {
   transform: scale(1.08);
+  filter: brightness(1.1);
 }
 
 .sprite-button:active {
+  transform: scale(0.95);
+}
+
+/* Professor podium - metallic silver semi-ellipse */
+.professor-podium {
+  background: linear-gradient(180deg, #c0c0c0 0%, #808080 50%, #606060 100%);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Speech bubble */
+.speech-bubble {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  bottom: 30px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent white transparent transparent;
+}
+
+/* Menu button base style */
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: 'Baveuse', cursive;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.menu-button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+.menu-button:active {
   transform: scale(0.95);
 }

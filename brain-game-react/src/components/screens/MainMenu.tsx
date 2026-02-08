@@ -1,4 +1,4 @@
-// Main Menu Screen - Matching original Flash game
+// Main Menu Screen - DARK TV Game Show Theme
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -25,110 +25,149 @@ export function MainMenu() {
     // TODO: trophies screen
   };
 
-  const handleInviteClick = () => {
+  const handleChallengeClick = () => {
     playClick();
-    // TODO: invite functionality
+    // TODO: challenge mode
   };
 
-  // Professor talks on hover
-  const handleProfessorHover = (talking: boolean) => {
-    setProfessorImg(talking ? '/assets/sprites/professor-talk.png' : '/assets/sprites/professor-happy.png');
+  const handleProfileClick = () => {
+    playClick();
+    // TODO: profile screen
   };
 
   return (
     <GameCanvasWrapper>
       <GameCanvas>
-        <div className="relative w-full h-full bg-gradient-to-b from-sky-100 to-white overflow-hidden">
-          {/* Title */}
+        <div className="relative w-full h-full overflow-hidden">
+          {/* Title with gold glow */}
           <motion.div
             initial={{ y: -30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="absolute top-6 left-0 right-0 text-center"
+            className="absolute top-4 left-0 right-0 text-center"
           >
             <h1 
-              className="text-3xl text-amber-600 drop-shadow-md"
+              className="text-2xl gold-glow"
               style={{ fontFamily: 'Baveuse, cursive' }}
             >
-              Who Has The
+              WHO HAS THE
             </h1>
             <h1 
-              className="text-4xl text-amber-500 drop-shadow-lg"
+              className="text-4xl gold-glow mt-1"
               style={{ fontFamily: 'Baveuse, cursive' }}
             >
               BIGGEST BRAIN?
             </h1>
           </motion.div>
 
-          {/* Speech bubble */}
+          {/* 2x2 Button Grid - center-left */}
           <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, type: 'spring' }}
-            className="absolute top-28 left-8 bg-white rounded-2xl p-4 shadow-lg border-2 border-gray-200 max-w-[200px]"
-          >
-            <p className="text-sm text-gray-700">
-              Welcome! Click <strong>PLAY</strong> to test your brain across 4 categories!
-            </p>
-            {/* Speech bubble tail */}
-            <div className="absolute -bottom-3 left-12 w-6 h-6 bg-white border-b-2 border-r-2 border-gray-200 transform rotate-45" />
-          </motion.div>
-
-          {/* Menu buttons - right side */}
-          <motion.div
-            initial={{ x: 50, opacity: 0 }}
+            initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="absolute right-8 top-28 flex flex-col gap-4"
+            transition={{ delay: 0.3 }}
+            className="absolute left-8 top-28 grid grid-cols-2 gap-3"
           >
             {/* PLAY button */}
             <motion.img
               src="/assets/sprites/button-play.png"
               alt="Play"
-              className="sprite-button w-48 h-auto"
+              className="sprite-button w-[130px] h-auto"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onClick={handlePlayClick}
               draggable={false}
             />
 
+            {/* CHALLENGE button - teal/green */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleChallengeClick}
+              className="menu-button w-[130px] h-[60px]"
+              style={{ 
+                background: 'linear-gradient(180deg, #20b2aa 0%, #008080 100%)',
+              }}
+            >
+              <span>👤</span>
+              <span>CHALLENGE</span>
+            </motion.button>
+
             {/* TROPHIES button */}
             <motion.img
               src="/assets/sprites/button-trophies.png"
               alt="Trophies"
-              className="sprite-button w-48 h-auto"
+              className="sprite-button w-[130px] h-auto"
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleTrophiesClick}
               draggable={false}
             />
 
-            {/* INVITE button */}
-            <motion.img
-              src="/assets/sprites/button-invite.png"
-              alt="Invite"
-              className="sprite-button w-48 h-auto"
-              whileHover={{ scale: 1.08 }}
+            {/* PROFILE button - purple */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={handleInviteClick}
+              onClick={handleProfileClick}
+              className="menu-button w-[130px] h-[60px]"
+              style={{ 
+                background: 'linear-gradient(180deg, #9370db 0%, #663399 100%)',
+              }}
+            >
+              <span>👤</span>
+              <span>PROFILE</span>
+            </motion.button>
+          </motion.div>
+
+          {/* Speech bubble - right side */}
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.5, type: 'spring' }}
+            className="speech-bubble absolute right-6 top-32 max-w-[180px]"
+          >
+            <p className="text-sm text-gray-800 leading-snug">
+              <strong>Welcome!</strong> Got a Big BRAIN? Play Who Has The Biggest Brain to find out!
+            </p>
+          </motion.div>
+
+          {/* Professor on podium - bottom center */}
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
+          >
+            {/* Podium */}
+            <div 
+              className="professor-podium absolute bottom-0 left-1/2 transform -translate-x-1/2"
+              style={{ width: '180px', height: '40px' }}
+            />
+            
+            {/* Professor */}
+            <img
+              src={professorImg}
+              alt="Professor"
+              className="relative z-10 h-[180px] w-auto"
+              onMouseEnter={() => setProfessorImg('/assets/sprites/professor-talk.png')}
+              onMouseLeave={() => setProfessorImg('/assets/sprites/professor-happy.png')}
               draggable={false}
             />
           </motion.div>
 
-          {/* Professor character - bottom center */}
-          <motion.img
-            src={professorImg}
-            alt="Professor"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-[200px] w-auto"
-            onMouseEnter={() => handleProfessorHover(true)}
-            onMouseLeave={() => handleProfessorHover(false)}
-            draggable={false}
-          />
+          {/* Bottom decoration bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 opacity-50" />
         </div>
       </GameCanvas>
+
+      {/* Bottom links bar */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="mt-4 text-center text-xs text-gray-500"
+      >
+        <span className="opacity-50">© Playfish • Terms • Privacy</span>
+      </motion.div>
     </GameCanvasWrapper>
   );
 }
