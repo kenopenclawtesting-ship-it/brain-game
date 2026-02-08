@@ -16,7 +16,6 @@ function App() {
   const currentMinigame = useGameStore((state) => state.currentMinigame);
 
   useEffect(() => {
-    // Global error handler
     const handleError = (event: ErrorEvent) => {
       setError(event.message);
       console.error('App error:', event.error);
@@ -25,16 +24,34 @@ function App() {
     return () => window.removeEventListener('error', handleError);
   }, []);
 
-  // Show error if any
   if (error) {
     return (
-      <div className="min-h-screen bg-red-100 text-red-900 flex items-center justify-center p-8">
-        <div className="text-center bg-white p-8 rounded-xl shadow-lg">
-          <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
-          <p className="text-red-600">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+      <div style={{
+        minHeight: '100vh',
+        background: '#1a0a0a',
+        color: '#ff6666',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 32,
+        fontFamily: 'Baveuse, cursive',
+      }}>
+        <div style={{ textAlign: 'center', background: '#2a1a1a', padding: 32, borderRadius: 16 }}>
+          <h1 style={{ fontSize: 24, marginBottom: 16 }}>Something went wrong</h1>
+          <p style={{ color: '#ff8888' }}>{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              marginTop: 16,
+              padding: '10px 24px',
+              background: '#cc3333',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 10,
+              cursor: 'pointer',
+              fontFamily: 'Baveuse, cursive',
+              fontSize: 16,
+            }}
           >
             Reload
           </button>
@@ -43,23 +60,22 @@ function App() {
     );
   }
 
-  // Render current screen
   const renderScreen = () => {
     try {
       switch (currentScreen) {
         case 'splash':
         case 'menu':
           return <MainMenu />;
-        
+
         case 'gameSelect':
           return <GameSelect />;
-        
+
         case 'tutorial':
           return <Tutorial />;
-        
+
         case 'countdown':
           return <CountdownScreen />;
-        
+
         case 'game':
           const GameComponent = GAME_COMPONENTS[currentMinigame];
           return GameComponent ? (
@@ -67,21 +83,33 @@ function App() {
               <GameComponent />
             </GameCanvasWrapper>
           ) : null;
-        
+
         case 'results':
           return <Results />;
-        
+
         case 'summary':
           return <Summary />;
-        
+
         default:
           return <MainMenu />;
       }
     } catch (e) {
       console.error('Render error:', e);
       return (
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="bg-white p-8 rounded-xl shadow-lg text-red-600">
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: '#0a0e2a',
+        }}>
+          <div style={{
+            background: '#2a1a3a',
+            padding: 32,
+            borderRadius: 16,
+            color: '#ff6666',
+            fontFamily: 'Baveuse, cursive',
+          }}>
             Error rendering: {String(e)}
           </div>
         </div>
@@ -89,11 +117,7 @@ function App() {
     }
   };
 
-  return (
-    <div className="min-h-screen">
-      {renderScreen()}
-    </div>
-  );
+  return renderScreen();
 }
 
 export default App;

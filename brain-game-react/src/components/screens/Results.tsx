@@ -1,13 +1,11 @@
-// Results Screen - DARK TV Game Show Theme
+// Results Screen - Score display with stage background and professor
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
-import { GameCanvas, GameCanvasWrapper } from '../layout/GameCanvas';
 import { MINIGAMES, CATEGORY_NAMES } from '../../lib/constants';
 import { Category } from '../../types';
 
-// Category colors
 const CATEGORY_COLORS: Record<Category, string> = {
   0: '#e74c3c',
   1: '#f1c40f',
@@ -25,25 +23,21 @@ export function Results() {
   const startNextCategory = useGameStore((state) => state.startNextCategory);
   const setScreen = useGameStore((state) => state.setScreen);
   const { play, playClick } = useSound();
-  
+
   const [displayScore, setDisplayScore] = useState(0);
-  
+
   const game = MINIGAMES[currentMinigame];
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
   const categoryColor = CATEGORY_COLORS[currentCategory as Category];
-  const accuracy = currentCorrect + currentIncorrect > 0 
-    ? Math.round((currentCorrect / (currentCorrect + currentIncorrect)) * 100)
-    : 0;
 
   useEffect(() => {
     play('applause');
-    
-    // Animate score counting
+
     const duration = 1500;
     const steps = 30;
     const increment = currentScore / steps;
     let current = 0;
-    
+
     const timer = setInterval(() => {
       current += increment;
       if (current >= currentScore) {
@@ -53,7 +47,7 @@ export function Results() {
         setDisplayScore(Math.floor(current));
       }
     }, duration / steps);
-    
+
     return () => clearInterval(timer);
   }, [currentScore, play]);
 
@@ -66,134 +60,136 @@ export function Results() {
     }
   };
 
-  return (
-    <GameCanvasWrapper>
-      <GameCanvas>
-        <div className="relative w-full h-full overflow-hidden">
-          {/* Radial glow */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: `radial-gradient(circle at center top, ${categoryColor}22 0%, transparent 60%)`
-            }}
-          />
+  const profImg = currentScore >= 300
+    ? '/assets/sprites/professor-happy.png'
+    : '/assets/sprites/professor-sad.png';
 
+  return (
+    <div className="game-page">
+      <div className="page-header">
+        <h1 className="page-title">WHO HAS THE BIGGEST BRAIN?</h1>
+      </div>
+
+      <div className="game-stage">
+        <img
+          src="/assets/sprites/stage-bg.png"
+          alt=""
+          className="stage-bg"
+          draggable={false}
+        />
+
+        <div className="stage-overlay">
           {/* Category badge */}
           <motion.div
-            initial={{ y: -20, opacity: 0 }}
+            initial={{ y: -15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="absolute top-4 left-1/2 transform -translate-x-1/2"
+            style={{
+              position: 'absolute',
+              top: '13%',
+              left: '35%',
+              transform: 'translateX(-50%)',
+              zIndex: 3,
+            }}
           >
-            <span 
-              className="px-6 py-2 text-white rounded-full text-sm font-bold shadow-lg"
-              style={{ 
-                background: `linear-gradient(180deg, ${categoryColor} 0%, ${categoryColor}cc 100%)`,
-              }}
-            >
-              {categoryName}
+            <span style={{
+              fontFamily: 'Baveuse, cursive',
+              fontSize: 11,
+              color: '#fff',
+              background: `linear-gradient(180deg, ${categoryColor}, ${categoryColor}cc)`,
+              padding: '3px 14px',
+              borderRadius: 12,
+            }}>
+              {categoryName} — {game.name}
             </span>
           </motion.div>
 
-          {/* Game name */}
-          <motion.h2
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="absolute top-16 left-0 right-0 text-center text-2xl text-white"
-            style={{ fontFamily: 'Baveuse, cursive' }}
-          >
-            {game.name}
-          </motion.h2>
-
-          {/* Score display */}
-          <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-            className="absolute top-28 left-0 right-0 text-center"
-          >
-            <div className="text-sm text-gray-400 mb-1">YOUR SCORE</div>
-            <div 
-              className="text-7xl font-bold gold-glow"
-              style={{ fontFamily: 'Baveuse, cursive' }}
-            >
-              {displayScore}
-            </div>
-          </motion.div>
-
-          {/* Stats boxes */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="absolute top-56 left-8 right-8 flex justify-center gap-6"
-          >
-            <div 
-              className="rounded-xl p-4 text-center min-w-[90px] shadow-lg"
-              style={{ background: 'linear-gradient(180deg, #27ae60 0%, #1e8449 100%)' }}
-            >
-              <div 
-                className="text-4xl font-bold text-white"
-                style={{ fontFamily: 'Baveuse, cursive' }}
-              >
-                {currentCorrect}
-              </div>
-              <div className="text-xs text-white/80">Correct</div>
-            </div>
-            <div 
-              className="rounded-xl p-4 text-center min-w-[90px] shadow-lg"
-              style={{ background: 'linear-gradient(180deg, #e74c3c 0%, #c0392b 100%)' }}
-            >
-              <div 
-                className="text-4xl font-bold text-white"
-                style={{ fontFamily: 'Baveuse, cursive' }}
-              >
-                {currentIncorrect}
-              </div>
-              <div className="text-xs text-white/80">Wrong</div>
-            </div>
-            <div 
-              className="rounded-xl p-4 text-center min-w-[90px] shadow-lg"
-              style={{ background: 'linear-gradient(180deg, #9b59b6 0%, #6c3483 100%)' }}
-            >
-              <div 
-                className="text-4xl font-bold text-white"
-                style={{ fontFamily: 'Baveuse, cursive' }}
-              >
-                {accuracy}%
-              </div>
-              <div className="text-xs text-white/80">Accuracy</div>
-            </div>
-          </motion.div>
-
-          {/* Performance message */}
+          {/* YOUR SCORE label */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="absolute top-[320px] left-8 right-8 text-center"
+            transition={{ delay: 0.2 }}
+            style={{
+              position: 'absolute',
+              top: '22%',
+              left: '35%',
+              transform: 'translateX(-50%)',
+              fontFamily: 'Baveuse, cursive',
+              fontSize: 12,
+              color: 'rgba(100,90,120,0.7)',
+              zIndex: 3,
+            }}
           >
-            <p className="text-lg text-gray-300" style={{ fontFamily: 'Baveuse, cursive' }}>
-              {getPerformanceMessage(currentScore)}
-            </p>
+            YOUR SCORE
           </motion.div>
 
-          {/* Progress dots for full test */}
+          {/* Big score number */}
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.3, type: 'spring' }}
+            style={{
+              position: 'absolute',
+              top: '27%',
+              left: '35%',
+              transform: 'translateX(-50%)',
+              zIndex: 3,
+            }}
+          >
+            <div className="results-score-big">{displayScore}</div>
+          </motion.div>
+
+          {/* Stats row */}
+          <motion.div
+            initial={{ y: 15, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            style={{
+              position: 'absolute',
+              top: '48%',
+              left: '10%',
+              width: '55%',
+              display: 'flex',
+              justifyContent: 'center',
+              gap: 10,
+              zIndex: 3,
+            }}
+          >
+            <div className="results-stat-box" style={{ background: 'rgba(39,174,96,0.2)', border: '1px solid rgba(39,174,96,0.3)' }}>
+              <div className="results-stat-number" style={{ color: '#27ae60' }}>{currentCorrect}</div>
+              <div className="results-stat-label">Correct</div>
+            </div>
+            <div className="results-stat-box" style={{ background: 'rgba(231,76,60,0.2)', border: '1px solid rgba(231,76,60,0.3)' }}>
+              <div className="results-stat-number" style={{ color: '#e74c3c' }}>{currentIncorrect}</div>
+              <div className="results-stat-label">Wrong</div>
+            </div>
+          </motion.div>
+
+          {/* Progress dots (full test mode) */}
           {gameMode === 'fullTest' && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-              className="absolute bottom-28 left-0 right-0 flex justify-center gap-3"
+              transition={{ delay: 0.6 }}
+              style={{
+                position: 'absolute',
+                top: '63%',
+                left: '35%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                gap: 8,
+                zIndex: 3,
+              }}
             >
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="w-4 h-4 rounded-full transition-colors"
                   style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
                     background: i < currentCategory ? '#27ae60' :
-                      i === currentCategory ? categoryColor : 
-                      '#444',
-                    boxShadow: i === currentCategory ? `0 0 10px ${categoryColor}` : 'none'
+                      i === currentCategory ? categoryColor : '#ccc',
+                    boxShadow: i === currentCategory ? `0 0 8px ${categoryColor}` : 'none',
                   }}
                 />
               ))}
@@ -201,34 +197,54 @@ export function Results() {
           )}
 
           {/* Continue button */}
-          <motion.button
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.8, type: 'spring' }}
-            whileHover={{ scale: 1.05 }}
+            transition={{ delay: 0.7, type: 'spring' }}
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleContinue}
-            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 px-12 py-4 text-white text-xl rounded-xl shadow-lg"
-            style={{ 
+            style={{
+              position: 'absolute',
+              bottom: '18%',
+              left: '30%',
+              transform: 'translateX(-50%)',
               fontFamily: 'Baveuse, cursive',
-              background: `linear-gradient(180deg, ${categoryColor} 0%, ${categoryColor}bb 100%)`,
-              boxShadow: `0 4px 20px ${categoryColor}66`,
-              border: '2px solid rgba(255,255,255,0.2)'
+              fontSize: 18,
+              color: '#fff',
+              background: `linear-gradient(180deg, ${categoryColor}, ${categoryColor}bb)`,
+              padding: '10px 36px',
+              borderRadius: 14,
+              cursor: 'pointer',
+              boxShadow: `0 4px 16px ${categoryColor}66`,
+              border: '2px solid rgba(255,255,255,0.2)',
+              zIndex: 3,
             }}
           >
-            {gameMode === 'practice' ? 'BACK TO MENU' : 
-             currentCategory >= 3 ? 'SEE RESULTS' : 'CONTINUE'}
-          </motion.button>
-        </div>
-      </GameCanvas>
-    </GameCanvasWrapper>
-  );
-}
+            {gameMode === 'practice' ? 'BACK TO MENU' :
+              currentCategory >= 3 ? 'SEE RESULTS' : 'CONTINUE'}
+          </motion.div>
 
-function getPerformanceMessage(score: number): string {
-  if (score >= 700) return 'Outstanding! You\'re a natural!';
-  if (score >= 500) return 'Excellent work! Keep it up!';
-  if (score >= 300) return 'Good job! Practice makes perfect!';
-  if (score >= 100) return 'Nice try! You\'re improving!';
-  return 'Keep practicing! You\'ll get better!';
+          {/* Professor reaction (uses the baked-in professor position) */}
+          <motion.img
+            src={profImg}
+            alt="Professor"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            style={{
+              position: 'absolute',
+              right: '5%',
+              top: '43%',
+              height: 155,
+              width: 'auto',
+              zIndex: 2,
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+            }}
+            draggable={false}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }

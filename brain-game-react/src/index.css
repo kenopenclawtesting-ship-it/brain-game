@@ -348,3 +348,271 @@ body {
     transparent 70%
   );
 }
+
+/* ============================
+   GAME SELECT - PlayMenu sprite with click zones
+   ============================ */
+.gs-back-btn {
+  position: absolute;
+  top: 14%;
+  left: 6%;
+  width: 50px;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  z-index: 5;
+}
+
+.gs-title {
+  position: absolute;
+  top: 14%;
+  left: 35%;
+  transform: translateX(-50%);
+  font-family: 'Baveuse', cursive;
+  font-size: 18px;
+  color: #ffd700;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.play-menu-container {
+  position: absolute;
+  top: 24%;
+  left: 12%;
+  width: 55%;
+  z-index: 2;
+}
+
+.play-menu-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+}
+
+.click-zone {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  z-index: 3;
+}
+
+.click-zone:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.classic-zone {
+  top: 2%;
+  left: 18%;
+  width: 64%;
+  height: 50%;
+  border-radius: 50%;
+}
+
+.practice-zone {
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  height: 46%;
+  border-radius: 30%;
+}
+
+.pro-zone {
+  bottom: 0;
+  right: 0;
+  width: 52%;
+  height: 50%;
+  border-radius: 30%;
+}
+
+/* ============================
+   PRACTICE GRID - Game selection
+   ============================ */
+.practice-grid {
+  position: absolute;
+  top: 24%;
+  left: 10%;
+  width: 55%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  z-index: 2;
+}
+
+.practice-game-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.practice-game-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.practice-game-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.practice-game-name {
+  font-family: 'Baveuse', cursive;
+  font-size: 8px;
+  color: #fff;
+  text-align: center;
+  margin-top: 3px;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.pro-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-family: 'Baveuse', cursive;
+  font-size: 7px;
+  color: #ffd700;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+/* ============================
+   COUNTDOWN SCREEN
+   ============================ */
+.countdown-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdown-category {
+  font-family: 'Baveuse', cursive;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 4px;
+}
+
+.countdown-game-name {
+  font-family: 'Baveuse', cursive;
+  font-size: 28px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.countdown-number {
+  font-family: 'Baveuse', cursive;
+  font-size: 120px;
+  color: #ffd700;
+  text-shadow:
+    0 0 30px rgba(255, 215, 0, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+}
+
+.countdown-go {
+  font-family: 'Baveuse', cursive;
+  font-size: 72px;
+  color: #2ecc71;
+  text-shadow:
+    0 0 30px rgba(46, 204, 113, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.countdown-info {
+  font-family: 'Baveuse', cursive;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 30px;
+}
+
+/* ============================
+   RESULTS SCREEN
+   ============================ */
+.results-score-big {
+  font-family: 'Baveuse', cursive;
+  font-size: 80px;
+  color: #ffd700;
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+}
+
+.results-stat-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 16px;
+  text-align: center;
+  min-width: 70px;
+}
+
+.results-stat-number {
+  font-family: 'Baveuse', cursive;
+  font-size: 32px;
+  color: #fff;
+}
+
+.results-stat-label {
+  font-family: 'Baveuse', cursive;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================
+   SUMMARY SCREEN
+   ============================ */
+.summary-brain-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+.summary-brain-name {
+  font-family: 'Baveuse', cursive;
+  font-size: 32px;
+  color: #ff69b4;
+  text-shadow:
+    0 0 15px rgba(255, 105, 180, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.summary-category-bar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.summary-category-chip {
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 65px;
+}
+
+.summary-category-name {
+  font-family: 'Baveuse', cursive;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.summary-category-score {
+  font-family: 'Baveuse', cursive;
+  font-size: 18px;
+  color: #fff;
+}

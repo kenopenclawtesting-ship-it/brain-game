@@ -1,13 +1,11 @@
-// Summary Screen - DARK TV Game Show Theme
+// Summary Screen - Brain type reveal with stage background
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
-import { GameCanvas, GameCanvasWrapper } from '../layout/GameCanvas';
 import { CATEGORY_NAMES, getBrainType } from '../../lib/constants';
 import { Category } from '../../types';
 
-// Category colors
 const CATEGORY_COLORS: Record<Category, string> = {
   0: '#e74c3c',
   1: '#f1c40f',
@@ -20,22 +18,21 @@ export function Summary() {
   const setScreen = useGameStore((state) => state.setScreen);
   const resetGame = useGameStore((state) => state.resetGame);
   const { play, playClick } = useSound();
-  
+
   const [displayTotal, setDisplayTotal] = useState(0);
   const [revealBrain, setRevealBrain] = useState(false);
-  
+
   const totalScore = categoryScores.reduce((sum, score) => sum + score, 0);
   const brainType = getBrainType(totalScore);
 
   useEffect(() => {
     play('applause');
-    
-    // Animate total score counting
+
     const duration = 2000;
     const steps = 50;
     const increment = totalScore / steps;
     let current = 0;
-    
+
     const timer = setInterval(() => {
       current += increment;
       if (current >= totalScore) {
@@ -46,7 +43,7 @@ export function Summary() {
         setDisplayTotal(Math.floor(current));
       }
     }, duration / steps);
-    
+
     return () => clearInterval(timer);
   }, [totalScore, play]);
 
@@ -57,67 +54,85 @@ export function Summary() {
   };
 
   return (
-    <GameCanvasWrapper>
-      <GameCanvas>
-        <div className="relative w-full h-full overflow-hidden">
-          {/* Radial glow */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              background: 'radial-gradient(circle at center, rgba(255,215,0,0.15) 0%, transparent 60%)'
-            }}
-          />
+    <div className="game-page">
+      <div className="page-header">
+        <h1 className="page-title">WHO HAS THE BIGGEST BRAIN?</h1>
+      </div>
 
+      <div className="game-stage">
+        <img
+          src="/assets/sprites/stage-bg.png"
+          alt=""
+          className="stage-bg"
+          draggable={false}
+        />
+
+        <div className="stage-overlay">
           {/* Title */}
-          <motion.h1
-            initial={{ y: -20, opacity: 0 }}
+          <motion.div
+            initial={{ y: -15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="absolute top-4 left-0 right-0 text-center text-2xl gold-glow"
-            style={{ fontFamily: 'Baveuse, cursive' }}
+            style={{
+              position: 'absolute',
+              top: '13%',
+              left: '35%',
+              transform: 'translateX(-50%)',
+              fontFamily: 'Baveuse, cursive',
+              fontSize: 18,
+              color: '#ffd700',
+              textShadow: '0 0 10px rgba(255,215,0,0.5)',
+              zIndex: 3,
+            }}
           >
-            Your Brain Size
-          </motion.h1>
+            YOUR BRAIN SIZE
+          </motion.div>
 
-          {/* Category breakdown */}
+          {/* Category scores bar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="absolute top-14 left-4 right-4 grid grid-cols-4 gap-2"
+            className="summary-category-bar"
+            style={{
+              position: 'absolute',
+              top: '21%',
+              left: '35%',
+              transform: 'translateX(-50%)',
+              zIndex: 3,
+            }}
           >
             {categoryScores.map((score, i) => (
-              <div 
-                key={i} 
-                className="rounded-lg p-2 text-center shadow-lg"
-                style={{ 
-                  background: `linear-gradient(180deg, ${CATEGORY_COLORS[i as Category]} 0%, ${CATEGORY_COLORS[i as Category]}99 100%)`,
-                }}
+              <div
+                key={i}
+                className="summary-category-chip"
+                style={{ background: CATEGORY_COLORS[i as Category] }}
               >
-                <div className="text-xs text-white/80">{CATEGORY_NAMES[i as Category]}</div>
-                <div 
-                  className="text-xl font-bold text-white"
-                  style={{ fontFamily: 'Baveuse, cursive' }}
-                >
-                  {score}
-                </div>
+                <div className="summary-category-name">{CATEGORY_NAMES[i as Category]}</div>
+                <div className="summary-category-score">{score}</div>
               </div>
             ))}
           </motion.div>
 
           {/* Total score */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="absolute top-32 left-0 right-0 text-center"
+            style={{
+              position: 'absolute',
+              top: '35%',
+              left: '35%',
+              transform: 'translateX(-50%)',
+              textAlign: 'center',
+              zIndex: 3,
+            }}
           >
-            <div className="text-sm text-gray-400">TOTAL SCORE</div>
-            <div 
-              className="text-6xl font-bold gold-glow"
-              style={{ fontFamily: 'Baveuse, cursive' }}
-            >
-              {displayTotal}
-            </div>
+            <div style={{
+              fontFamily: 'Baveuse, cursive',
+              fontSize: 10,
+              color: 'rgba(100,90,120,0.7)',
+            }}>TOTAL SCORE</div>
+            <div className="results-score-big" style={{ fontSize: 60 }}>{displayTotal}</div>
           </motion.div>
 
           {/* Brain type reveal */}
@@ -125,64 +140,87 @@ export function Summary() {
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: 'spring', bounce: 0.5 }}
-              className="absolute top-52 left-0 right-0 flex flex-col items-center"
+              transition={{ type: 'spring', bounce: 0.4 }}
+              style={{
+                position: 'absolute',
+                top: '51%',
+                left: '35%',
+                transform: 'translateX(-50%)',
+                textAlign: 'center',
+                zIndex: 3,
+              }}
             >
-              {/* Brain sprite */}
-              <div 
-                className="rounded-full p-2 mb-2"
-                style={{
-                  background: 'linear-gradient(180deg, #4a4a8a 0%, #2a2a5a 100%)',
-                  boxShadow: '0 0 30px rgba(100,100,255,0.4)'
-                }}
-              >
-                <img
-                  src={`/assets/sprites/brain-type-${brainType.index + 1}.png`}
-                  alt={brainType.name}
-                  className="w-28 h-28 object-contain"
-                />
-              </div>
-              
-              {/* Brain type name */}
-              <div 
-                className="text-3xl font-bold text-purple-400 mb-1"
-                style={{ 
-                  fontFamily: 'Baveuse, cursive',
-                  textShadow: '0 0 15px rgba(155,89,182,0.6)'
-                }}
-              >
-                {brainType.name}
-              </div>
-              
-              {/* Description */}
-              <div className="text-sm text-gray-400 max-w-xs text-center px-4">
+              <img
+                src={`/assets/sprites/brain-type-${brainType.index + 1}.png`}
+                alt={brainType.name}
+                className="summary-brain-img"
+              />
+              <div className="summary-brain-name">{brainType.name}</div>
+              <p style={{
+                fontFamily: 'Baveuse, cursive',
+                fontSize: 10,
+                color: '#666',
+                maxWidth: 200,
+                margin: '4px auto 0',
+              }}>
                 {brainType.description}
-              </div>
+              </p>
             </motion.div>
           )}
 
-          {/* Play again button */}
+          {/* Play Again button */}
           {revealBrain && (
-            <motion.button
-              initial={{ y: 20, opacity: 0 }}
+            <motion.div
+              initial={{ y: 15, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onClick={handlePlayAgain}
-              className="absolute bottom-6 left-1/2 transform -translate-x-1/2 px-12 py-4 text-white text-xl rounded-xl shadow-lg"
-              style={{ 
+              style={{
+                position: 'absolute',
+                bottom: '17%',
+                left: '30%',
+                transform: 'translateX(-50%)',
                 fontFamily: 'Baveuse, cursive',
-                background: 'linear-gradient(180deg, #27ae60 0%, #1e8449 100%)',
-                boxShadow: '0 4px 20px rgba(39,174,96,0.5)',
-                border: '2px solid rgba(255,255,255,0.2)'
+                fontSize: 18,
+                color: '#fff',
+                background: 'linear-gradient(180deg, #27ae60, #1e8449)',
+                padding: '10px 40px',
+                borderRadius: 14,
+                cursor: 'pointer',
+                boxShadow: '0 4px 16px rgba(39,174,96,0.5)',
+                border: '2px solid rgba(255,255,255,0.2)',
+                zIndex: 3,
               }}
             >
               PLAY AGAIN
-            </motion.button>
+            </motion.div>
           )}
+
+          {/* Professor (happy or sad based on score) */}
+          <motion.img
+            src={totalScore >= 1500
+              ? '/assets/sprites/professor-happy.png'
+              : '/assets/sprites/professor-sad.png'
+            }
+            alt="Professor"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            style={{
+              position: 'absolute',
+              right: '5%',
+              top: '43%',
+              height: 155,
+              width: 'auto',
+              zIndex: 2,
+              filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+            }}
+            draggable={false}
+          />
         </div>
-      </GameCanvas>
-    </GameCanvasWrapper>
+      </div>
+    </div>
   );
 }
