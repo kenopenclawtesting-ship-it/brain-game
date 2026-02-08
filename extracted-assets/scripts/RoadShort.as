@@ -1,0 +1,15 @@
+package
+{
+   import flash.display.MovieClip;
+   
+   [Embed(source="/_assets/assets.swf", symbol="symbol788")]
+   public dynamic class RoadShort extends MovieClip
+   {
+       
+      
+      public function RoadShort()
+      {
+         super();
+      }
+   }
+}

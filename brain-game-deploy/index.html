@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's The Smartest? - Brain Training Game</title>
+    <meta name="description" content="Test your brain with 12 mini-games! Classic brain training game with global leaderboard.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 1000px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .game-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        #game-container {
+            width: 100%;
+            aspect-ratio: 4/3;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        #game-container ruffle-player {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .game-footer {
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .game-footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Score Submit */
+        .score-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .score-form input {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+        
+        .score-form input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+        
+        .score-form input::placeholder {
+            color: #666;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 100%);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Leaderboard */
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            gap: 10px;
+        }
+        
+        .leaderboard-item.highlight {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+        
+        .rank {
+            font-weight: 700;
+            color: #00d4ff;
+            width: 30px;
+        }
+        
+        .rank.gold { color: #ffd700; }
+        .rank.silver { color: #c0c0c0; }
+        .rank.bronze { color: #cd7f32; }
+        
+        .player-name {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .player-score {
+            font-weight: 600;
+            color: #7b2cbf;
+        }
+        
+        .player-brain {
+            font-size: 1.2rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        .instructions {
+            font-size: 0.95rem;
+            color: #aaa;
+            line-height: 1.6;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+            border-top-color: #00d4ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Who's The Smartest?</h1>
+            <p class="subtitle">Classic brain training with 12 mini-games</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="game-section">
+                <div id="game-container"></div>
+                <p class="game-footer">
+                    Original game © 2007-2008 Playfish Ltd. • Powered by <a href="https://ruffle.rs" target="_blank">Ruffle</a>
+                </p>
+            </div>
+            
+            <div class="sidebar">
+                <!-- Submit Score Card -->
+                <div class="card">
+                    <h2>📝 Submit Your Score</h2>
+                    <div class="instructions">
+                        <p>After finishing a game:</p>
+                        <ol>
+                            <li>Note your brain size (in cm³)</li>
+                            <li>Enter your name & score below</li>
+                            <li>Join the global leaderboard!</li>
+                        </ol>
+                    </div>
+                    <form class="score-form" id="score-form">
+                        <input type="text" id="player-name" placeholder="Your name" maxlength="20" required>
+                        <input type="number" id="player-score" placeholder="Brain size (e.g., 2100)" min="0" max="5000" required>
+                        <button type="submit" id="submit-btn">Submit Score</button>
+                    </form>
+                </div>
+                
+                <!-- Leaderboard Card -->
+                <div class="card">
+                    <h2>🏆 Leaderboard</h2>
+                    <div id="leaderboard" class="leaderboard-list">
+                        <div class="loading">Loading</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast container -->
+    <div id="toast-container"></div>
+    
+    <!-- Ruffle Flash Emulator -->
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+    
+    <script>
+        // Initialize Ruffle and load game
+        window.addEventListener('DOMContentLoaded', () => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById('game-container');
+            container.appendChild(player);
+            player.load({
+                url: 'assets/brain_game_2_6_7_translated_v1.swf',
+                autoplay: 'on',
+                unmuteOverlay: 'hidden',
+                backgroundColor: '#000000',
+                letterbox: 'on'
+            });
+        });
+        
+        // API Functions
+        const API = {
+            async getLeaderboard() {
+                try {
+                    const res = await fetch('/api/leaderboard');
+                    const data = await res.json();
+                    return data.success ? data.leaderboard : [];
+                } catch (e) {
+                    console.error('Failed to fetch leaderboard:', e);
+                    return [];
+                }
+            },
+            
+            async submitScore(name, score) {
+                try {
+                    const brainInfo = getBrainLabel(score);
+                    const res = await fetch('/api/score', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            name, 
+                            score,
+                            brainSize: score,
+                            brainLabel: brainInfo.label
+                        })
+                    });
+                    return await res.json();
+                } catch (e) {
+                    console.error('Failed to submit score:', e);
+                    return { success: false, error: e.message };
+                }
+            }
+        };
+        
+        // Brain classification based on score (brain size in cm³)
+        function getBrainLabel(size) {
+            if (size < 1300) return { label: 'Tiny Brain 🐜', emoji: '🐜' };
+            if (size < 1500) return { label: 'Small Brain 🐭', emoji: '🐭' };
+            if (size < 1700) return { label: 'Average Brain 🧑', emoji: '🧑' };
+            if (size < 1900) return { label: 'Smart Brain 🎓', emoji: '🎓' };
+            if (size < 2100) return { label: 'Genius Brain 🧠', emoji: '🧠' };
+            if (size < 2300) return { label: 'Einstein Brain 👨‍🔬', emoji: '👨‍🔬' };
+            return { label: 'Space Alien 👽', emoji: '👽' };
+        }
+        
+        // Toast notification
+        function showToast(message, duration = 3000) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), duration);
+        }
+        
+        // Render leaderboard
+        let currentPlayerId = null;
+        
+        async function renderLeaderboard() {
+            const container = document.getElementById('leaderboard');
+            const leaderboard = await API.getLeaderboard();
+            
+            if (leaderboard.length === 0) {
+                container.innerHTML = '<div class="empty-state">No scores yet. Be the first!</div>';
+                return;
+            }
+            
+            container.innerHTML = leaderboard.slice(0, 15).map((entry, idx) => {
+                const rank = idx + 1;
+                const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+                const highlight = entry.id === currentPlayerId ? 'highlight' : '';
+                const brainInfo = getBrainLabel(entry.score);
+                
+                return `
+                    <div class="leaderboard-item ${highlight}">
+                        <span class="rank ${rankClass}">#${rank}</span>
+                        <span class="player-name">${escapeHtml(entry.name)}</span>
+                        <span class="player-score">${entry.score}</span>
+                        <span class="player-brain">${brainInfo.emoji}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Form handling
+        const form = document.getElementById('score-form');
+        const nameInput = document.getElementById('player-name');
+        const scoreInput = document.getElementById('player-score');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        // Remember player name
+        const savedName = localStorage.getItem('playerName');
+        if (savedName) nameInput.value = savedName;
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = nameInput.value.trim();
+            const score = parseInt(scoreInput.value);
+            
+            if (!name || isNaN(score)) {
+                showToast('Please enter your name and score');
+                return;
+            }
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            const result = await API.submitScore(name, score);
+            
+            if (result.success) {
+                localStorage.setItem('playerName', name);
+                currentPlayerId = result.entry.id;
+                showToast(`🎉 Rank #${result.rank} - ${getBrainLabel(score).label}`);
+                scoreInput.value = '';
+                await renderLeaderboard();
+            } else {
+                showToast('Failed to submit score. Try again!');
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Score';
+        });
+        
+        // Initial load
+        renderLeaderboard();
+        
+        // Refresh leaderboard periodically
+        setInterval(renderLeaderboard, 30000);
+    </script>
+</body>
+</html>

@@ -160,10 +160,43 @@ for (i = 0; i < 4; i++) {
 GameWorld.totalScores = combinedScore;
 ```
 
-### 4.3 Cheat Detection
-- **Memory modification**: ChecksumProtectedValues with checksum validation
+### 4.3 Cheat Detection & Anti-Cheat Systems
+- **Memory modification**: `ProtectedInt` class with LFSR encryption
 - **Speed hack**: If game completed in < 62 seconds (60 + 2 buffer), flag as cheat
 - **Calculate cheat**: Average answer time < 1 second = cheat
+
+### 4.4 ProtectedInt Implementation
+```actionscript
+// Anti-memory-editing protection (com/playfish/games/utils/ProtectedInt.as)
+class ProtectedInt {
+    private var _value:int;      // Encoded value
+    private var checksum:int;    // CRC validation
+    
+    // 10 rounds of LFSR (Linear Feedback Shift Register)
+    private static const POLY:uint = 3172090281;  // Feedback polynomial
+    private static const ROUNDS:int = 10;
+    
+    // Get/set automatically encode/decode + validate checksum
+    // If checksum invalid → randomize (breaks cheat)
+}
+```
+
+### 4.5 Deterministic Random (for Challenges)
+```actionscript
+// com/playfish/games/utils/Random.as - Seeded PRNG
+class Random {
+    // 48-bit seed split into low/mid/high 16-bit words
+    private var seedLow:uint, seedMid:uint, seedHigh:uint;
+    
+    // Linear congruential generator with multiplier/addend
+    // MULTIPLIER = 5 * 65536 + 57068 * 65536 + 58989
+    // ADDEND = 11
+    
+    function setSeed(seed0:uint, seed1:uint):void
+    function nextInt(bound:int):uint  // Returns 0..bound-1
+}
+// Used in challenges so both players get identical puzzles
+```
 
 ---
 
@@ -196,7 +229,41 @@ public static function getBrainType(score:int):int {
 ```
 
 ### 5.3 Brain Type Names (32 levels)
-Brain types are visual - displayed via `BrainTypeSprite` MovieClip with 32 frames representing different brain sizes.
+From `LanguageTranslation.as` (with descriptions):
+| # | Name | Score Range | Description |
+|---|------|-------------|-------------|
+| 0 | AMOEBA | 0-99 | "I'm sure there's something good to say about AMOEBAS..." |
+| 1 | EARTHWORM | 100-299 | Good for garden soil, not big thinkers |
+| 2 | SNAIL | 300-499 | Kind of cute, tiny brains |
+| 3 | RAT | 500-699 | Clever animals |
+| 4 | CAT | 700-899 | Nine lives, so-so brains |
+| 5 | DOG | 900-999 | Who wouldn't want to be a dog! |
+| 6 | GOAT | 1000-1099 | Mountain skippers |
+| 7 | CHIMP | 1100-1199 | Understands basic symbols |
+| 8 | GORILLA | 1200-1299 | Largest primates, highly intelligent |
+| 9 | MISSING LINK | 1300-1399 | Early man, relatively evolved |
+| 10 | NEANDERTHAL | 1400-1499 | Geniuses of their time, controlled fire |
+| 11 | AVERAGE JOE | 1500-1599 | Not amazing, not shabby |
+| 12 | GEEK | 1600-1699 | Shows promise! |
+| 13 | NERD | 1700-1799 | Will rule the universe! |
+| 14 | SCHOLAR | 1800-1899 | Congratulations on a job well done! |
+| 15 | SCIENTIST | 1900-1999 | Something to be proud of |
+| 16 | GENIUS | 2000-2099 | Biggest brain in humans today |
+| 17 | SPACE ACE | 2100-2299 | Ahead of your time |
+| 18 | CYBORG | 2300-2499 | Man-machine combination |
+| 19 | ALIEN | 2500-2699 | Welcome to Earth, visitor! |
+| 20 | SQUIDLIAN | 2700-2899 | Mighty brain master |
+| 21 | BITBOT | 2900-3099 | You're a machine! |
+| 22 | SPACEBOT | 3100-3299 | RX-711 SPACEBOT |
+| 23 | CALCUBOT | 3300-3499 | I always knew it! |
+| 24 | ENCEPHALOBOT | 3500-3699 | Ask for autographs later |
+| 25 | BRAINBOT | 3700-3899 | All that computing power! |
+| 26 | NEUROBOT | 3900-4099 | One of the few in the universe |
+| 27 | COMPUTRON | 4100-4299 | Computational elite |
+| 28 | XENOS | 4300-4499 | Level few achieve |
+| 29 | NEURONIAN | 4500-4699 | Monstrous brain |
+| 30 | AEONIAN | 4700-4899 | Awe-inspiring brain capacity |
+| 31 | GALAXIAN | 4900+ | Brain Master of the Universe |
 
 ---
 
@@ -292,15 +359,15 @@ THRESHOLD_CHALLENGE_POINTS_OVER = 1000
 ```actionscript
 // Difficulty scaling
 difficulty = Math.floor(totalCorrect / 3.5);
-// At difficulty 0: numbers 1-20
-// Increases by 10 per level, max 100
+// Numbers range: 1 to min(10 + difficulty*3, 99)
 
 // Operators used
 SIGN_PLUS = 0, SIGN_MINUS = 1, SIGN_MULTIPLY = 2, SIGN_DIVIDE = 3
 
-// Complex equations (alternating)
-if (difficulty > 1 && difficulty % 2 == 1) {
+// Complex equations (at higher difficulty, odd rounds)
+if (difficulty >= 3 && totalCorrect % 2 == 1) {
     // Nested operations like (3 + 2) * ? = 20
+    element.element1.setSign(Engine.rnd(0, NUM_SIGNS - 1));
 }
 ```
 
@@ -329,22 +396,44 @@ startRevealDelay = 2000ms;
 ### 8.4 CubeCounter
 **Rules**: Count 3D cubes in an isometric view
 ```actionscript
-// Shows stacked cubes, count total including hidden ones
-// Grid layout with shadows for depth perception
+// Difficulty scaling
+difficulty = Math.floor(totalCorrect / 1.5);
+baseWidth = Engine.rnd(2, 5 + Math.floor(difficulty / 8));  // 2-5+ base
+maxHeight = Engine.rnd(3, 5);  // Up to 4 blocks high
+numBlocks = Math.min(Engine.rnd(2, 6) + difficulty, baseWidth^2 * maxHeight);
+
+// Isometric view - must count hidden cubes!
+// Alternating color patterns make counting harder
+// Input via on-screen numeric keypad
 ```
 
 ### 8.5 WeightGame (Balance Scale)
-**Rules**: Determine which object is heaviest/lightest
+**Rules**: Determine which object is heaviest from scale comparisons
 ```actionscript
-// Shows balance scales with objects
-// Deduce relative weights from tilt direction
+// Difficulty scaling
+numScales = Math.min(1 + Math.floor(totalCorrect / 8), 4);  // 1-4 scales
+numItems = numScales + 1 + extraItems;  // Items to deduce from
+
+// At round 4+: May have EQUAL weight items (traps!)
+// At round 3+: May have multiple items per scale side (up to 3)
+
+// Item groups (visual themes)
+NORMAL_GROUP_INDICES = [0,1,2,3,4,6];  // Shapes0-6
+EASTER_GROUP_INDEX = 5;  // Special Easter items
 ```
 
 ### 8.6 MeteorSequence (Asteroids)
-**Rules**: Click falling meteors in numerical order
+**Rules**: Click floating meteors in ascending order
 ```actionscript
-// Meteors fall with numbers 1-N
-// Click in ascending order before they reach bottom
+// Difficulty scaling
+numMeteors = Math.min(3 + Math.floor(totalCorrect / 4), 6);
+maxNumber = Math.min(15 + totalCorrect * 5, 100);
+rotationSpeed = Math.min(1 + Math.floor(totalCorrect / 4), 5);
+
+// At round 2 (25% chance): Shows LETTERS (A-Z) instead of numbers!
+// At round 6+: Shows NUMBER WORDS ("THREE", "FIVE") instead of digits
+// Localized words for 12 languages (NUMBERS_TEXT dictionary)
+// Meteors BOUNCE off each other (physics simulation!)
 ```
 
 ### 8.7 JigsawMatch
@@ -362,31 +451,69 @@ startRevealDelay = 2000ms;
 ```
 
 ### 8.9 SequenceMatch (Hex Path) (PRO)
-**Rules**: Recreate the shown hexagon path
+**Rules**: Match sequences on a hexagon grid
 ```actionscript
-// Show a path through hexagons
-// Reproduce it from memory
+// 37 difficulty levels! Grid grows and sequences get longer
+DIFFICULTY_LEVEL_PARAMS = [
+    { numRows:3, numColumes:2, numSequences:1, sequenceLength:2 },
+    { numRows:3, numColumes:3, numSequences:1, sequenceLength:2 },
+    { numRows:3, numColumes:3, numSequences:1, sequenceLength:3 },
+    // ... progresses to max:
+    { numRows:7, numColumes:10, numSequences:4, sequenceLength:6 }
+];
+// Click hexagons to form the displayed sequences
+// Can match forward OR backward (both valid!)
 ```
 
 ### 8.10 MemorySequence (PRO)
-**Rules**: Repeat action sequences
+**Rules**: Simon-says style memory game
 ```actionscript
-// Simon-says style: watch sequence, repeat it
-// Sequence length increases
+// Difficulty scaling
+layoutNum = Engine.rnd(Math.min(Math.floor(totalCorrect / 2), 8),
+                        Math.min(2 + Math.floor(totalCorrect / 2), 10));
+// 10 different switch layouts (SwitchLayout0-9)
+
+sequenceLength = 3 + Math.floor((totalCorrect + 1) / 3);  // Grows with rounds
+sequenceDelay = Math.max(500 - totalCorrect * 15, 300);   // Gets faster!
+
+// 5 switch visual types (Switch0-4)
+// Switches light up in sequence, repeat the pattern
+// No repeat of same switch 3x in a row
 ```
 
 ### 8.11 CarPath (PRO)
 **Rules**: Predict where the car ends up
 ```actionscript
-// Shows road network
-// Trace path mentally, click destination
+// 28 difficulty levels!
+DIFFICULTY_LEVEL_PARAMS = [
+    { numCars:1, numPath:2, numCrossPath:2, maxCrossPathWidth:2, pathSegments:2 },
+    { numCars:1, numPath:3, numCrossPath:2, maxCrossPathWidth:1, pathSegments:2 },
+    // ... progresses to:
+    { numCars:4, numPath:8, numCrossPath:16, maxCrossPathWidth:3, pathSegments:4 }
+];
+// numCars = how many cars to track simultaneously
+// numPath = number of possible destinations
+// numCrossPath = number of path intersections
+// Cars turn at every junction - track mentally!
 ```
 
 ### 8.12 ShapeOrder
 **Rules**: Remember and reproduce shape sequence
 ```actionscript
-// Shows shapes in order
-// Click them in the same order from memory
+// Detailed difficulty progression (15 levels)
+DIFFICULTY_LEVEL_PARAMS = [
+    { numIcons:3, difficultShapes:false, extraChoosePanels:1, speedMutiplyer:1.2 },
+    { numIcons:3, difficultShapes:false, extraChoosePanels:2, speedMutiplyer:1.4 },
+    { numIcons:4, difficultShapes:false, extraChoosePanels:1, speedMutiplyer:1.4 },
+    { numIcons:4, difficultShapes:false, extraChoosePanels:2, speedMutiplyer:1.6 },
+    { numIcons:5, difficultShapes:false, extraChoosePanels:1, speedMutiplyer:1.6 },
+    { numIcons:5, difficultShapes:true,  extraChoosePanels:2, speedMutiplyer:1.8 },
+    { numIcons:6, difficultShapes:false, extraChoosePanels:1, speedMutiplyer:1.8 },
+    { numIcons:6, difficultShapes:false, extraChoosePanels:2, speedMutiplyer:2.0 },
+    // ... continues to max 8 icons
+];
+// difficultShapes = sushi set (more similar-looking)
+// extraChoosePanels = decoy options
 ```
 
 ---
@@ -507,8 +634,14 @@ addFrameScript(targetFrame, function():void {
 
 ## 12. UI Constants
 
-### 12.1 Canvas Dimensions
+### 12.1 Stage & Canvas Dimensions (Engine.as)
 ```actionscript
+// Stage (full flash movie)
+STAGE_WIDTH = 640
+STAGE_HEIGHT = 700  // Full height including UI chrome
+GAME_VERSION = "2.6.7"
+
+// Game canvas (playable area - from GameWorld)
 CANVAS_WIDTH = 640
 CANVAS_HEIGHT = 480
 CANVAS_CENTER_X = 320
@@ -543,33 +676,170 @@ NUM_CACHED_SCROLLABLE_FRIEND_SCORES = varies by context
 
 ## 14. Localization
 
-### 14.1 Supported Languages
-Defined in `LanguageTranslation.as` (168KB file):
-- English, Spanish, French, German, Italian
-- Portuguese, Dutch, Swedish, Norwegian, Danish
-- Finnish, Polish, Turkish, Indonesian
-- Chinese (Simplified), Japanese, Korean
-- And more...
+### 14.1 Supported Languages (12 Primary)
+Defined in `LanguageTranslation.as`:
+| Language | Code | Notes |
+|----------|------|-------|
+| English | ENGLISH | Default |
+| Spanish | ESPAÑOL | |
+| French | FRANÇAIS | |
+| German | DEUTSCH | |
+| Italian | ITALIANO | |
+| Portuguese | PORTUGUÊS | |
+| Dutch | NEDERLANDS | |
+| Swedish | SVENSKA | |
+| Norwegian | NORSK | |
+| Finnish | SUOMI | |
+| Polish | POLSKI | |
+| Greek | ΕΛΛΗΝΙΚΑ | Special font handling |
 
-### 14.2 Language Selection
+### 14.2 Localized Content
+- **Game Instructions**: All 12 minigame tutorials
+- **Brain Type Names**: 32 brain types translated
+- **Brain Type Descriptions**: Flavor text for each brain type
+- **UI Strings**: Buttons, menus, messages
+- **Number Words**: 0-10 as words (for MeteorSequence)
+
+### 14.3 Font Handling
 ```actionscript
-LanguageButton.currentLanguage  // Current language code
-Engine.setFontForLang(textField, "FontName")  // Font per language
+// Special handling for Greek (el) - uses Arial Black
+// Chinese (CS/CT) - uses system Arial, no embed
+// Others - embedded fonts
+Engine.setFontForLang(textField:TextField, fontName:String)
 ```
 
 ---
 
-## 15. File Summary
+## 15. Utility Classes
+
+### 15.1 RandomBasket (Random Selection Without Replacement)
+```actionscript
+// com/playfish/games/whohasthebiggestbrain/utils/RandomBasket.as
+class RandomBasket {
+    var basket:Array;
+    
+    // Constructor can initialize with range
+    RandomBasket(start:int, end:int)  // Fills basket with start..end-1
+    
+    // Get random item and REMOVE it from basket
+    getNextItem():Object
+    
+    // Add/remove items
+    addItems(...items)
+    addItemArray(arr:Array)
+    removeItems(...items)
+    
+    // Clone for backtracking
+    clone():RandomBasket
+}
+// Used extensively for non-repeating random selection
+```
+
+### 15.2 Preferences (Local Storage)
+```actionscript
+// Uses SharedObject for persistence
+class Preferences {
+    static const SOUND:int = 0;
+    static const QUALITY:int = 1;
+    static const LANGUAGE:int = 2;
+    static const PROGAME_SELECTION:int = 3;
+    
+    static var values:Array = [true, true, "en", null];
+    
+    static function load():void  // From SharedObject("brainPreferences")
+    static function save(index:int = -1):void
+}
+```
+
+### 15.3 GameObject Animation System
+```actionscript
+// Base game object with tweening
+class GameObject extends Sprite {
+    var speedX:Number, speedY:Number;
+    var tweenType:uint;  // NONE, MOTION_TIME, MOTION_SPEED, ALPHA, SHAPE
+    
+    // Movement with easing
+    tween(destX, destY, timeMs, ease)
+    tweenMotionSpeed(destX, destY, speed, decel)
+}
+
+// Animated MovieClip wrapper
+class AnimatedSprite extends Sprite {
+    var mc:MovieClip;
+    var numLoops:int;  // -1 = infinite
+    var frameDelay:int = 40;  // ms per frame
+    
+    tickAnimation(timeDelta)  // Call each frame
+    setAnimation(name, loops)
+    manipulate(FLIP_HORIZONTAL | FLIP_VERTICAL | ROTATE_90...)
+}
+```
+
+---
+
+## 16. RPC Backend API
+
+### 16.1 API Endpoints (RpcClient.as)
+```actionscript
+// Score submission
+uploadScore(gameType, minigameScores[], checksum)
+uploadPracticeScore(minigameScore)
+uploadChallengeScore(challengeId, score, gameType, completed)
+
+// User data
+getUserInfo() → UserInfo + region
+getScores(context, timeContext, gameType, includeMe, limit)
+getHistoricScores() → Array<HistoricScore>
+
+// Challenges
+createChallenge(targetUserId, games[]) → challengeId, seed0, seed1
+acceptChallenge(challengeId) → seed0, seed1
+rejectChallenge(challengeId)
+getPendingChallenges() → Array<PendingChallenge>
+
+// Social
+getChallengeFriends() → Array<UserInfo>
+sendGloat(gloatId, message, targetUserId)
+getGloatList() → Array<Gloat>
+
+// Achievements
+addAchievements(achievementMask) → newAchievements
+```
+
+### 16.2 Context Constants
+```actionscript
+USER_CONTEXT_ALL = 1
+USER_CONTEXT_FRIENDS = 2
+USER_CONTEXT_CHALLENGE_ALL = 5
+USER_CONTEXT_CHALLENGE_FRIENDS = 6
+USER_CONTEXT_CHALLENGE_REGION = 7
+
+TIME_CONTEXT_ALL = 0
+TIME_CONTEXT_WEEK = 16
+TIME_CONTEXT_MONTH = 32
+```
+
+---
+
+## 17. File Summary
 
 | Type | Count | Size |
 |------|-------|------|
 | Core game logic | 45 files | ~400 KB |
 | Minigames | 12 files | ~200 KB |
-| UI components | 200+ files | ~50 KB |
+| UI components (brain_game_fla) | 200+ files | ~50 KB |
+| Utility classes | 15 files | ~30 KB |
 | Facebook SDK | 300+ files | ~200 KB |
+| Playfish coretech | 50+ files | ~100 KB |
+| RPC/networking | 25 files | ~80 KB |
 | Total AS files | 919 | ~1.2 MB |
+| Sprite assets | 6,791 | - |
+| Images | 16 | - |
+| Sounds | 15 | - |
+| Fonts | 10 | - |
 
 ---
 
 *Generated from decompiled ActionScript 3.0 source*
 *Original game: "Who Has The Biggest Brain?" by Playfish (EA)*
+*SWF Version: 2.6.7*

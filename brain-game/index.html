@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Has The Biggest Brain?</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .brain-game {
+            width: 100%;
+            max-width: 800px;
+            min-height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        .menu, .results { text-align: center; }
+        
+        h1 {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle { font-size: 1.2rem; color: #666; margin-bottom: 40px; }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 10px;
+        }
+        
+        button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        button:active { transform: translateY(0); }
+        
+        .mini-game { animation: fadeIn 0.5s; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .game-header h2 { font-size: 2rem; color: #667eea; }
+        .stats { display: flex; gap: 20px; font-size: 1.1rem; font-weight: bold; color: #555; }
+        
+        .block-container, .cards-grid, .math-problem, .instruction {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px 0;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+            user-select: none;
+        }
+        
+        .card:not(.revealed) { background: #ddd; color: #999; }
+        .card:hover:not(.revealed) { transform: scale(1.05); background: #ccc; }
+        .card.revealed { animation: flip 0.5s; }
+        
+        @keyframes flip {
+            0% { transform: rotateY(0deg); }
+            50% { transform: rotateY(90deg); }
+            100% { transform: rotateY(0deg); }
+        }
+        
+        .input-area, .math-problem {
+            display: flex; gap: 15px; align-items: center; justify-content: center; margin-top: 30px;
+        }
+        
+        input[type="number"] {
+            padding: 15px 25px;
+            font-size: 1.5rem;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus { outline: none; border-color: #667eea; }
+        input.correct { border-color: #4caf50; animation: correctPulse 0.5s; }
+        input.incorrect { border-color: #f44336; animation: shake 0.5s; }
+        
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); background: #e8f5e9; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .question { font-size: 3rem; font-weight: bold; color: #333; margin-bottom: 20px; }
+        .instruction { font-size: 1.3rem; color: #555; display: flex; align-items: center; margin-bottom: 20px; }
+        
+        .results-card { background: #f8f9fa; border-radius: 15px; padding: 30px; margin: 20px 0; }
+        .brain-size { font-size: 4rem; color: #667eea; font-weight: bold; margin: 20px 0; }
+        .brain-label { font-size: 2rem; color: #764ba2; margin-bottom: 30px; }
+        .score-breakdown { text-align: left; margin-top: 30px; }
+        .score-item {
+            display: flex; justify-content: space-between; padding: 15px; margin: 10px 0;
+            background: white; border-radius: 10px; font-size: 1.1rem;
+        }
+        
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 10px; margin: 30px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); transition: width 0.3s; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useCallback } = React;
+
+        const BlockCountingGame = ({ onComplete, difficulty }) => {
+            const [timeLeft, setTimeLeft] = useState(30);
+            const [score, setScore] = useState(0);
+            const [blocks, setBlocks] = useState([]);
+            const [answer, setAnswer] = useState('');
+            const [feedback, setFeedback] = useState(null);
+
+            const generateBlockProblem = useCallback(() => {
+                const numBlocks = Math.floor(5 + difficulty * 10 + Math.random() * 10);
+                const newBlocks = [];
+                const gridSize = 4 + Math.floor(difficulty * 2);
+                for (let i = 0; i < numBlocks; i++) {
+                    newBlocks.push({
+                        x: Math.floor(Math.random() * gridSize),
+                        y: Math.floor(Math.random() * (2 + difficulty)),
+                        z: Math.floor(Math.random() * gridSize)
+                    });
+                }
+                setBlocks(newBlocks);
+                setAnswer('');
+                setFeedback(null);
+            }, [difficulty]);
+
+            useEffect(() => { generateBlockProblem(); }, [generateBlockProblem]);
+
+            useEffect(() => {
+                if (timeLeft <= 0) { onComplete(score); return; }
+                const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+                return () => clearTimeout(timer);
+            }, [timeLeft, score, onComplete]);
+
+            const handleSubmit = () => {
+                const userAnswer = parseInt(answer);
+                if (userAnswer === blocks.length) {
+                    setFeedback('correct');
+                    setScore(s => s + Math.floor(100 * (1 + difficulty * 0.5)));
+                    setTimeout(generateBlockProblem, 500);
+                } else {
+                    setFeedback('incorrect');
+                    setTimeout(() => setFeedback(null), 500);
+                }
+            };
+
+            return (
+                <div className="mini-game">
+                    <div className="game-header">
+                        <h2>Block Counting</h2>
+                        <div className="stats"><span>Time: {timeLeft}s</span><span>Score: {score}</span></div>
+                    </div>
+                    <div className="block-container">
+                        <svg width="400" height="300" viewBox="0 0 400 300">
+                            {blocks.map((block, i) => {
+                                const isoX = 200 + (block.x - block.z) * 20;
+                                const isoY = 150 + (block.x + block.z) * 10 - block.y * 30;
+                                return (
+                                    <g key={i}>
+                                        <polygon points={`${isoX},${isoY} ${isoX+20},${isoY+10} ${isoX},${isoY+20} ${isoX-20},${isoY+10}`} fill="#4a90e2" stroke="#2c5aa0" strokeWidth="1"/>
+                                        <polygon points={`${isoX},${isoY} ${isoX-20},${isoY+10} ${isoX-20},${isoY+40} ${isoX},${isoY+30}`} fill="#357abd" stroke="#2c5aa0" strokeWidth="1"/>
+                                        <polygon points={`${isoX},${isoY} ${isoX+20},${isoY+10} ${isoX+20},${isoY+40} ${isoX},${isoY+30}`} fill="#5ba3e8" stroke="#2c5aa0" strokeWidth="1"/>
+                                    </g>
+                                );
+                            })}
+                        </svg>
+                    </div>
+                    <div className="input-area">
+                        <input type="number" value={answer} onChange={(e) => setAnswer(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSubmit()} placeholder="How many blocks?" className={feedback || ''} autoFocus/>
+                        <button onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
+            );
+        };
+
+        const MemoryCardsGame = ({ onComplete, difficulty }) => {
+            const [timeLeft, setTimeLeft] = useState(45);
+            const [score, setScore] = useState(0);
+            const [phase, setPhase] = useState('memorize');
+            const [cards, setCards] = useState([]);
+            const [revealedCards, setRevealedCards] = useState([]);
+            const [selectedCards, setSelectedCards] = useState([]);
+            const [memoryTime, setMemoryTime] = useState(5);
+            const cardSymbols = ['♠', '♥', '♦', '♣', '★', '●', '■', '▲'];
+
+            const generateCards = useCallback(() => {
+                const numPairs = 3 + Math.floor(difficulty * 2);
+                const symbols = [...cardSymbols].sort(() => Math.random() - 0.5).slice(0, numPairs);
+                const deck = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+                setCards(deck);
+                setRevealedCards([]);
+                setSelectedCards([]);
+                setPhase('memorize');
+                setMemoryTime(3 + numPairs);
+            }, [difficulty]);
+
+            useEffect(() => { generateCards(); }, [generateCards]);
+            useEffect(() => {
+                if (timeLeft <= 0) { onComplete(score); return; }
+                const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+                return () => clearTimeout(timer);
+            }, [timeLeft, score, onComplete]);
+
+            useEffect(() => {
+                if (phase === 'memorize') {
+                    if (memoryTime > 0) {
+                        const timer = setTimeout(() => setMemoryTime(t => t - 1), 1000);
+                        return () => clearTimeout(timer);
+                    } else { setPhase('recall'); }
+                }
+            }, [phase, memoryTime]);
+
+            useEffect(() => {
+                if (selectedCards.length === 2) {
+                    if (cards[selectedCards[0]] === cards[selectedCards[1]]) {
+                        setRevealedCards(prev => [...prev, ...selectedCards]);
+                        setScore(s => s + 100);
+                        setSelectedCards([]);
+                        if (revealedCards.length + 2 === cards.length) { setTimeout(generateCards, 1000); }
+                    } else { setTimeout(() => setSelectedCards([]), 800); }
+                }
+            }, [selectedCards, cards, revealedCards, generateCards]);
+
+            const handleCardClick = (index) => {
+                if (phase === 'memorize' || revealedCards.includes(index) || selectedCards.includes(index) || selectedCards.length >= 2) return;
+                setSelectedCards(prev => [...prev, index]);
+            };
+
+            return (
+                <div className="mini-game">
+                    <div className="game-header">
+                        <h2>Memory Cards</h2>
+                        <div className="stats">
+                            <span>Time: {timeLeft}s</span><span>Score: {score}</span>
+                            {phase === 'memorize' && <span>Memorize: {memoryTime}s</span>}
+                        </div>
+                    </div>
+                    <div className="cards-grid">
+                        {cards.map((symbol, index) => {
+                            const isRevealed = phase === 'memorize' || revealedCards.includes(index) || selectedCards.includes(index);
+                            return (<div key={index} className={`card ${isRevealed ? 'revealed' : ''}`} onClick={() => handleCardClick(index)}>{isRevealed ? symbol : '?'}</div>);
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        const MathGame = ({ onComplete, difficulty }) => {
+            const [timeLeft, setTimeLeft] = useState(40);
+            const [score, setScore] = useState(0);
+            const [problem, setProblem] = useState({ question: '', answer: 0 });
+            const [userAnswer, setUserAnswer] = useState('');
+            const [feedback, setFeedback] = useState(null);
+
+            const generateProblem = useCallback(() => {
+                const operations = ['+', '-', '*', '/'];
+                const op = operations[Math.floor(Math.random() * (difficulty > 0.5 ? 4 : 3))];
+                let a, b, correctAnswer;
+                if (op === '/') {
+                    b = Math.floor(2 + Math.random() * (5 + difficulty * 10));
+                    correctAnswer = Math.floor(2 + Math.random() * 20);
+                    a = b * correctAnswer;
+                } else {
+                    a = Math.floor(1 + Math.random() * (10 + difficulty * 40));
+                    b = Math.floor(1 + Math.random() * (10 + difficulty * 40));
+                    switch(op) {
+                        case '+': correctAnswer = a + b; break;
+                        case '-': correctAnswer = a - b; break;
+                        case '*': correctAnswer = a * b; break;
+                        default: correctAnswer = a;
+                    }
+                }
+                setProblem({ question: `${a} ${op} ${b} = ?`, answer: correctAnswer });
+                setUserAnswer('');
+                setFeedback(null);
+            }, [difficulty]);
+
+            useEffect(() => { generateProblem(); }, [generateProblem]);
+            useEffect(() => {
+                if (timeLeft <= 0) { onComplete(score); return; }
+                const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+                return () => clearTimeout(timer);
+            }, [timeLeft, score, onComplete]);
+
+            const handleSubmit = () => {
+                if (Math.abs(parseFloat(userAnswer) - problem.answer) < 0.01) {
+                    setFeedback('correct');
+                    setScore(s => s + Math.floor(50 + difficulty * 100));
+                    setTimeout(generateProblem, 500);
+                } else {
+                    setFeedback('incorrect');
+                    setTimeout(() => setFeedback(null), 500);
+                }
+            };
+
+            return (
+                <div className="mini-game">
+                    <div className="game-header">
+                        <h2>Quick Math</h2>
+                        <div className="stats"><span>Time: {timeLeft}s</span><span>Score: {score}</span></div>
+                    </div>
+                    <div className="math-problem">
+                        <div className="question">{problem.question}</div>
+                        <input type="number" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} onKeyPress={(e) => e.key === 'Enter' && handleSubmit()} className={feedback || ''} autoFocus/>
+                        <button onClick={handleSubmit}>Submit</button>
+                    </div>
+                </div>
+            );
+        };
+
+        const AsteroidGame = ({ onComplete, difficulty }) => {
+            const [timeLeft, setTimeLeft] = useState(35);
+            const [score, setScore] = useState(0);
+            const [asteroids, setAsteroids] = useState([]);
+            const [targetSize, setTargetSize] = useState(0);
+            const [clickedCorrect, setClickedCorrect] = useState(false);
+
+            const generateAsteroids = useCallback(() => {
+                const numAsteroids = 5 + Math.floor(difficulty * 5);
+                const sizes = Array.from({length: numAsteroids}, () => 20 + Math.random() * 40);
+                const target = sizes[Math.floor(Math.random() * sizes.length)];
+                setTargetSize(target);
+                setAsteroids(sizes.map((size, i) => ({
+                    size, x: Math.random() * 350, y: Math.random() * 250,
+                    vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, id: i
+                })));
+                setClickedCorrect(false);
+            }, [difficulty]);
+
+            useEffect(() => { generateAsteroids(); }, [generateAsteroids]);
+            useEffect(() => {
+                if (timeLeft <= 0) { onComplete(score); return; }
+                const timer = setTimeout(() => setTimeLeft(t => t - 1), 1000);
+                return () => clearTimeout(timer);
+            }, [timeLeft, score, onComplete]);
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setAsteroids(prev => prev.map(a => ({
+                        ...a, x: (a.x + a.vx + 400) % 400, y: (a.y + a.vy + 300) % 300
+                    })));
+                }, 50);
+                return () => clearInterval(interval);
+            }, []);
+
+            const handleAsteroidClick = (asteroid) => {
+                if (Math.abs(asteroid.size - targetSize) < 1) {
+                    setClickedCorrect(true);
+                    setScore(s => s + Math.floor(80 + difficulty * 100));
+                    setTimeout(generateAsteroids, 700);
+                }
+            };
+
+            return (
+                <div className="mini-game">
+                    <div className="game-header">
+                        <h2>Asteroid Sorting</h2>
+                        <div className="stats"><span>Time: {timeLeft}s</span><span>Score: {score}</span></div>
+                    </div>
+                    <div className="instruction">
+                        Click the asteroid matching this size:
+                        <svg width="60" height="60" style={{marginLeft: '10px'}}><circle cx="30" cy="30" r={targetSize / 2} fill="#888"/></svg>
+                    </div>
+                    <svg width="400" height="300" style={{background: '#000', border: '2px solid #333'}}>
+                        {asteroids.map(asteroid => (
+                            <circle key={asteroid.id} cx={asteroid.x} cy={asteroid.y} r={asteroid.size / 2}
+                                fill={clickedCorrect && Math.abs(asteroid.size - targetSize) < 1 ? '#0f0' : '#888'}
+                                stroke="#fff" strokeWidth="1" onClick={() => handleAsteroidClick(asteroid)} style={{cursor: 'pointer'}}/>
+                        ))}
+                    </svg>
+                </div>
+            );
+        };
+
+        const BrainGame = () => {
+            const [gameState, setGameState] = useState('menu');
+            const [currentMiniGame, setCurrentMiniGame] = useState(0);
+            const [roundScores, setRoundScores] = useState([]);
+            const [totalScore, setTotalScore] = useState(0);
+
+            const miniGames = [
+                { id: 'blocks', name: 'Block Counting', category: 'analysis', component: BlockCountingGame },
+                { id: 'memory', name: 'Memory Cards', category: 'memory', component: MemoryCardsGame },
+                { id: 'math', name: 'Quick Math', category: 'calculation', component: MathGame },
+                { id: 'asteroids', name: 'Asteroid Sorting', category: 'visual', component: AsteroidGame },
+            ];
+
+            const startGame = () => {
+                setGameState('playing');
+                setCurrentMiniGame(0);
+                setRoundScores([]);
+                setTotalScore(0);
+            };
+
+            const handleMiniGameComplete = (score) => {
+                const game = miniGames[currentMiniGame];
+                setRoundScores(prev => [...prev, { category: game.category, game: game.name, score }]);
+                setTotalScore(prev => prev + score);
+                if (currentMiniGame < miniGames.length - 1) { setCurrentMiniGame(prev => prev + 1); }
+                else { setGameState('results'); }
+            };
+
+            const getBrainSize = (score) => {
+                if (score < 500) return { size: 1200, label: 'Tiny Brain' };
+                if (score < 1000) return { size: 1500, label: 'Small Brain' };
+                if (score < 1500) return { size: 1800, label: 'Average Brain' };
+                if (score < 2000) return { size: 2100, label: 'Smart Brain' };
+                if (score < 2500) return { size: 2400, label: 'Genius' };
+                if (score < 3000) return { size: 2700, label: 'Einstein' };
+                return { size: 3000, label: 'Space Alien' };
+            };
+
+            const CurrentGameComponent = miniGames[currentMiniGame]?.component;
+
+            return (
+                <div className="brain-game">
+                    {gameState === 'menu' && (
+                        <div className="menu">
+                            <h1>🧠 Who Has The Biggest Brain?</h1>
+                            <p className="subtitle">Test your brain in 4 categories!</p>
+                            <button onClick={startGame}>Start Game</button>
+                        </div>
+                    )}
+                    {gameState === 'playing' && CurrentGameComponent && (
+                        <>
+                            <div className="progress-bar">
+                                <div className="progress-fill" style={{width: `${((currentMiniGame + 1) / miniGames.length) * 100}%`}}/>
+                            </div>
+                            <CurrentGameComponent onComplete={handleMiniGameComplete} difficulty={0.5}/>
+                        </>
+                    )}
+                    {gameState === 'results' && (
+                        <div className="results">
+                            <h1>🎉 Results!</h1>
+                            <div className="results-card">
+                                <div className="brain-size">{getBrainSize(totalScore).size} cm³</div>
+                                <div className="brain-label">{getBrainSize(totalScore).label}</div>
+                                <div className="score-breakdown">
+                                    <h3>Score Breakdown:</h3>
+                                    {roundScores.map((item, idx) => (
+                                        <div key={idx} className="score-item">
+                                            <span>{item.game}</span>
+                                            <span style={{fontWeight: 'bold', color: '#667eea'}}>{item.score}</span>
+                                        </div>
+                                    ))}
+                                    <div className="score-item" style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', fontWeight: 'bold', fontSize: '1.3rem'}}>
+                                        <span>Total Score</span><span>{totalScore}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onClick={startGame}>Play Again</button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        ReactDOM.render(<BrainGame />, document.getElementById('root'));
+    </script>
+</body>
+</html>

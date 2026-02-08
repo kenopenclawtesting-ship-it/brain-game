@@ -1,0 +1,11 @@
+# OpenClaw workspace files (private)
+AGENTS.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+BOOTSTRAP.md
+HEARTBEAT.md
+MEMORY.md
+memory/
+*.skill.md

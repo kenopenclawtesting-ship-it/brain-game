@@ -1,0 +1,16 @@
+package com.facebook.data
+{
+   public class FacebookErrorReason
+   {
+      
+      public static const CONNECT_TIMEOUT:String = "connectTimeout";
+      
+      public static const LOAD_TIMEOUT:String = "loadTimeout";
+       
+      
+      public function FacebookErrorReason()
+      {
+         super();
+      }
+   }
+}
