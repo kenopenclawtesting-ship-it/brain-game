@@ -1,7 +1,8 @@
 // MeteorSequence (Asteroids) - FROM SOURCE.md
 // Click floating meteors in ascending numerical order
+// CORRECT_SCORE: 11, INCORRECT_SCORE: -11
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
@@ -14,76 +15,162 @@ interface Meteor {
   y: number;
   vx: number;
   vy: number;
+  rotation: number;
+  rotationSpeed: number;
   clicked: boolean;
+  radius: number;
 }
 
-const NUMBER_WORDS = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN'];
+// Number words for display variety (from ActionScript NUM_TO_STRING)
+const NUMBER_WORDS = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN'];
+
+// Meteor colors
+const METEOR_COLORS = ['#cd853f', '#daa520', '#b8860b', '#d2691e', '#8b4513'];
 
 export function MeteorSequenceGame() {
   const [meteors, setMeteors] = useState<Meteor[]>([]);
-  const [nextValue, setNextValue] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
+  const [useLetters, setUseLetters] = useState(false);
   const frameRef = useRef<number>(0);
+  const starsRef = useRef<Array<{x: number, y: number, size: number, opacity: number}>>([]);
   
   const addCorrect = useGameStore((state) => state.addCorrect);
   const addIncorrect = useGameStore((state) => state.addIncorrect);
   const timeRemaining = useGameStore((state) => state.timeRemaining);
   const { playCorrect, playIncorrect } = useFeedbackSound();
 
+  // Generate stars once
+  useEffect(() => {
+    starsRef.current = Array.from({ length: 50 }).map(() => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 1 + Math.random() * 2,
+      opacity: 0.3 + Math.random() * 0.7,
+    }));
+  }, []);
+
   const generateMeteors = useCallback(() => {
-    // From SOURCE.md: numMeteors = Math.min(3 + Math.floor(totalCorrect / 4), 6)
+    // From ActionScript: numMeteors = min(3 + floor(totalCorrect / 4), 6)
     const numMeteors = Math.min(3 + Math.floor(totalCorrect / 4), 6);
-    const maxNumber = Math.min(15 + totalCorrect * 2, 50);
     
-    // Generate unique random numbers
+    // Speed increases with difficulty
+    const speedMultiplier = Math.min(1 + totalCorrect / 10, 3);
+    
+    // At round 2 with 25% chance: use LETTERS (A-Z)
+    const shouldUseLetters = totalCorrect % 4 === 2 && Math.random() < 0.25;
+    setUseLetters(shouldUseLetters);
+    
+    // Max number range increases with difficulty
+    const maxNumber = shouldUseLetters ? 26 : Math.min(15 + totalCorrect * 5, 100);
+    
+    // Generate unique random values (avoiding 6 and 9 which look similar)
     const values = new Set<number>();
     while (values.size < numMeteors) {
-      values.add(Math.floor(Math.random() * maxNumber) + 1);
+      const num = Math.floor(Math.random() * maxNumber);
+      const numStr = num.toString();
+      // Skip numbers containing 6 or 9 (as per ActionScript)
+      if (!numStr.includes('6') && !numStr.includes('9')) {
+        values.add(num);
+      }
     }
     
     const sortedValues = Array.from(values).sort((a, b) => a - b);
-    const useWords = totalCorrect >= 6 && Math.random() < 0.25;
     
-    return sortedValues.map((value, index) => ({
-      id: index,
-      value,
-      displayValue: useWords && value <= 10 ? NUMBER_WORDS[value - 1] : String(value),
-      x: 50 + Math.random() * 300,
-      y: 50 + Math.random() * 150,
-      vx: (Math.random() - 0.5) * 2,
-      vy: (Math.random() - 0.5) * 2,
-      clicked: false,
-    }));
+    // Determine display mode: letters, words, or numbers
+    const useWords = !shouldUseLetters && totalCorrect >= 5 && Math.random() < 0.3;
+    
+    return sortedValues.map((value, index) => {
+      let displayValue: string;
+      if (shouldUseLetters) {
+        displayValue = String.fromCharCode(65 + value); // A-Z
+      } else if (useWords && value < NUMBER_WORDS.length && Math.random() < 0.5) {
+        displayValue = NUMBER_WORDS[value];
+      } else {
+        displayValue = String(value);
+      }
+      
+      return {
+        id: index,
+        value,
+        displayValue,
+        x: 40 + Math.random() * 320,
+        y: 40 + Math.random() * 160,
+        vx: (Math.random() - 0.5) * 2 * speedMultiplier,
+        vy: (Math.random() - 0.5) * 2 * speedMultiplier,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 4,
+        clicked: false,
+        radius: 28,
+      };
+    });
   }, [totalCorrect]);
 
   useEffect(() => {
     setMeteors(generateMeteors());
-    setNextValue(0);
   }, []);
 
-  // Animation loop for meteor movement
+  // Animation loop for meteor movement with collision detection
   useEffect(() => {
     const animate = () => {
-      setMeteors((prev) => prev.map((meteor) => {
-        if (meteor.clicked) return meteor;
+      setMeteors((prev) => {
+        const updated = prev.map((meteor) => {
+          if (meteor.clicked) return meteor;
+          
+          let newX = meteor.x + meteor.vx;
+          let newY = meteor.y + meteor.vy;
+          let newVx = meteor.vx;
+          let newVy = meteor.vy;
+          
+          // Bounce off walls
+          if (newX < 35 || newX > 365) {
+            newVx = -newVx;
+            newX = Math.max(35, Math.min(365, newX));
+          }
+          if (newY < 35 || newY > 205) {
+            newVy = -newVy;
+            newY = Math.max(35, Math.min(205, newY));
+          }
+          
+          return { 
+            ...meteor, 
+            x: newX, 
+            y: newY, 
+            vx: newVx, 
+            vy: newVy,
+            rotation: meteor.rotation + meteor.rotationSpeed,
+          };
+        });
         
-        let newX = meteor.x + meteor.vx;
-        let newY = meteor.y + meteor.vy;
-        let newVx = meteor.vx;
-        let newVy = meteor.vy;
-        
-        // Bounce off walls
-        if (newX < 30 || newX > 370) {
-          newVx = -newVx;
-          newX = Math.max(30, Math.min(370, newX));
+        // Collision detection between meteors (from ActionScript)
+        for (let i = 0; i < updated.length; i++) {
+          for (let j = i + 1; j < updated.length; j++) {
+            const m1 = updated[i];
+            const m2 = updated[j];
+            if (m1.clicked || m2.clicked) continue;
+            
+            const dx = m2.x - m1.x;
+            const dy = m2.y - m1.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const minDist = m1.radius + m2.radius;
+            
+            if (dist < minDist && dist > 0) {
+              // Collision response - swap velocity components
+              const nx = dx / dist;
+              const ny = dy / dist;
+              const dvx = m1.vx - m2.vx;
+              const dvy = m1.vy - m2.vy;
+              const dvn = dvx * nx + dvy * ny;
+              
+              if (dvn > 0) {
+                updated[i] = { ...m1, vx: m1.vx - dvn * nx, vy: m1.vy - dvn * ny };
+                updated[j] = { ...m2, vx: m2.vx + dvn * nx, vy: m2.vy + dvn * ny };
+              }
+            }
+          }
         }
-        if (newY < 30 || newY > 200) {
-          newVy = -newVy;
-          newY = Math.max(30, Math.min(200, newY));
-        }
         
-        return { ...meteor, x: newX, y: newY, vx: newVx, vy: newVy };
-      }));
+        return updated;
+      });
       
       frameRef.current = requestAnimationFrame(animate);
     };
@@ -116,12 +203,15 @@ export function MeteorSequenceGame() {
         setTotalCorrect((prev) => prev + 1);
         setTimeout(() => {
           setMeteors(generateMeteors());
-          setNextValue(0);
         }, 500);
       }
     } else {
       playIncorrect();
       addIncorrect();
+      // Reset on wrong answer
+      setTimeout(() => {
+        setMeteors(generateMeteors());
+      }, 500);
     }
   };
 
@@ -135,53 +225,84 @@ export function MeteorSequenceGame() {
   return (
     <GameContainer>
       <div className="flex flex-col items-center h-full">
-        <div className="text-sm text-gray-500 mb-2">
-          Click meteors in ascending order! Next: <strong>{nextExpected}</strong>
+        <div 
+          className="text-sm text-gray-300 mb-2"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
+          Click {useLetters ? 'letters' : 'meteors'} in order: <span className="text-yellow-400 font-bold">{nextExpected}</span>
         </div>
         
-        {/* Meteor field */}
-        <div className="relative w-[400px] h-[250px] bg-gradient-to-b from-gray-900 to-blue-900 rounded-lg overflow-hidden">
+        {/* Meteor field - space background */}
+        <div 
+          className="relative w-[400px] h-[240px] rounded-xl overflow-hidden"
+          style={{
+            background: 'linear-gradient(180deg, #0a0a20 0%, #1a1a40 50%, #0a1a30 100%)',
+            boxShadow: 'inset 0 0 50px rgba(0,0,50,0.5)'
+          }}
+        >
           {/* Stars background */}
-          {Array.from({ length: 30 }).map((_, i) => (
+          {starsRef.current.map((star, i) => (
             <div
               key={i}
-              className="absolute w-1 h-1 bg-white rounded-full opacity-50"
+              className="absolute rounded-full bg-white"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${star.x}%`,
+                top: `${star.y}%`,
+                width: star.size,
+                height: star.size,
+                opacity: star.opacity,
               }}
             />
           ))}
           
           {/* Meteors */}
-          {meteors.map((meteor) => (
-            <motion.button
-              key={meteor.id}
-              onClick={() => handleMeteorClick(meteor)}
-              className={`
-                absolute transform -translate-x-1/2 -translate-y-1/2
-                w-14 h-14 rounded-full flex items-center justify-center
-                font-bold text-lg transition-all
-                ${meteor.clicked 
-                  ? 'bg-green-500/50 text-green-200 scale-75' 
-                  : 'bg-orange-500 hover:bg-orange-400 text-white cursor-pointer'
-                }
-              `}
-              style={{
-                left: meteor.x,
-                top: meteor.y,
-              }}
-              whileHover={!meteor.clicked ? { scale: 1.2 } : {}}
-              whileTap={!meteor.clicked ? { scale: 0.9 } : {}}
-              disabled={meteor.clicked}
-            >
-              {meteor.displayValue}
-            </motion.button>
-          ))}
+          <AnimatePresence>
+            {meteors.map((meteor) => (
+              <motion.button
+                key={meteor.id}
+                onClick={() => handleMeteorClick(meteor)}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: meteor.clicked ? 0 : 1, 
+                  opacity: meteor.clicked ? 0 : 1,
+                  x: meteor.x - 28,
+                  y: meteor.y - 28,
+                  rotate: meteor.rotation,
+                }}
+                exit={{ scale: 0, opacity: 0 }}
+                transition={{ 
+                  x: { duration: 0.016, ease: 'linear' },
+                  y: { duration: 0.016, ease: 'linear' },
+                  scale: { duration: 0.3 },
+                  opacity: { duration: 0.3 },
+                }}
+                className="absolute w-14 h-14 rounded-full flex items-center justify-center font-bold cursor-pointer"
+                style={{
+                  background: `radial-gradient(circle at 30% 30%, ${METEOR_COLORS[meteor.id % METEOR_COLORS.length]}, #3d2817)`,
+                  boxShadow: meteor.clicked 
+                    ? 'none' 
+                    : `0 0 15px rgba(255, 150, 50, 0.5), inset 0 -5px 10px rgba(0,0,0,0.3)`,
+                  border: '2px solid rgba(255,200,100,0.3)',
+                  fontFamily: 'Baveuse, cursive',
+                  fontSize: meteor.displayValue.length > 3 ? '10px' : '16px',
+                  color: 'white',
+                  textShadow: '1px 1px 2px black',
+                }}
+                whileHover={!meteor.clicked ? { scale: 1.15, boxShadow: '0 0 25px rgba(255, 200, 100, 0.7)' } : {}}
+                whileTap={!meteor.clicked ? { scale: 0.9 } : {}}
+                disabled={meteor.clicked}
+              >
+                {meteor.displayValue}
+              </motion.button>
+            ))}
+          </AnimatePresence>
         </div>
         
-        <div className="mt-4 text-gray-500 text-sm">
-          {meteors.filter((m) => !m.clicked).length} meteors remaining
+        <div 
+          className="mt-3 text-gray-400 text-sm"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
+          {meteors.filter((m) => !m.clicked).length} remaining
         </div>
       </div>
     </GameContainer>
