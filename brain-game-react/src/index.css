@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Custom fonts - matching Flash original */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
@@ -25,31 +23,6 @@ body {
 /* Game-specific styles */
 .game-title {
   font-family: 'Fredoka One', cursive;
-}
-
-/* Number pad button styles */
-.numpad-btn {
-  @apply w-14 h-14 bg-gray-200 hover:bg-gray-300 rounded-lg text-xl font-bold transition-colors active:scale-95;
-}
-
-/* Card flip animation */
-.card-flip {
-  transform-style: preserve-3d;
-  transition: transform 0.3s;
-}
-
-.card-flip.flipped {
-  transform: rotateY(180deg);
-}
-
-/* Pulse animation for timer warning */
-@keyframes pulse-warning {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-.timer-warning {
-  animation: pulse-warning 0.5s ease-in-out infinite;
 }
 
 /* Disable text selection in game area */
