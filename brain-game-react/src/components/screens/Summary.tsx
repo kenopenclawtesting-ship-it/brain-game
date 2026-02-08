@@ -3,52 +3,30 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
-import { Button } from '../ui/Button';
 import { GameCanvas, GameCanvasWrapper } from '../layout/GameCanvas';
 import { CATEGORY_NAMES, getBrainType } from '../../lib/constants';
 import { Category } from '../../types';
 
-// Brain emojis by tier (roughly mapping to categories)
-const BRAIN_EMOJIS: Record<number, string> = {
-  0: '🦠', // Amoeba
-  1: '🪱', // Earthworm
-  2: '🐌', // Snail
-  3: '🐀', // Rat
-  4: '🐱', // Cat
-  5: '🐕', // Dog
-  6: '🐐', // Goat
-  7: '🐵', // Chimp
-  8: '🦍', // Gorilla
-  9: '🧑‍🦲', // Missing Link
-  10: '🧔', // Neanderthal
-  11: '🧑', // Average Joe
-  12: '🤓', // Geek
-  13: '👨‍💻', // Nerd
-  14: '🎓', // Scholar
-  15: '👨‍🔬', // Scientist
-  16: '🧠', // Genius
-  17: '🚀', // Space Ace
-  18: '🤖', // Cyborg
-  19: '👽', // Alien
-  20: '🦑', // Squidlian
-  21: '💻', // Bitbot
-  22: '🛸', // Spacebot
-  23: '🔢', // Calcubot
-  24: '🧬', // Encephalobot
-  25: '🤖', // Brainbot
-  26: '⚡', // Neurobot
-  27: '💾', // Computron
-  28: '✨', // Xenos
-  29: '🌟', // Neuronian
-  30: '🌌', // Aeonian
-  31: '🌠', // Galaxian
+// Category colors for score boxes
+const CATEGORY_BG: Record<Category, string> = {
+  0: 'bg-red-100 border-red-300',
+  1: 'bg-yellow-100 border-yellow-300',
+  2: 'bg-green-100 border-green-300',
+  3: 'bg-blue-100 border-blue-300',
+};
+
+const CATEGORY_TEXT: Record<Category, string> = {
+  0: 'text-red-700',
+  1: 'text-yellow-700',
+  2: 'text-green-700',
+  3: 'text-blue-700',
 };
 
 export function Summary() {
   const categoryScores = useGameStore((state) => state.categoryScores);
   const setScreen = useGameStore((state) => state.setScreen);
   const resetGame = useGameStore((state) => state.resetGame);
-  const { play } = useSound();
+  const { play, playClick } = useSound();
   
   const [displayTotal, setDisplayTotal] = useState(0);
   const [revealBrain, setRevealBrain] = useState(false);
@@ -80,6 +58,7 @@ export function Summary() {
   }, [totalScore, play]);
 
   const handlePlayAgain = () => {
+    playClick();
     resetGame();
     setScreen('menu');
   };
@@ -87,11 +66,13 @@ export function Summary() {
   return (
     <GameCanvasWrapper>
       <GameCanvas>
-        <div className="flex flex-col items-center justify-center h-full p-6">
+        <div className="relative w-full h-full bg-gradient-to-b from-amber-50 to-white overflow-hidden">
+          {/* Title */}
           <motion.h1
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="text-2xl font-bold text-gray-800 mb-4"
+            className="absolute top-4 left-0 right-0 text-center text-2xl text-amber-700"
+            style={{ fontFamily: 'Baveuse, cursive' }}
           >
             Your Brain Size
           </motion.h1>
@@ -101,12 +82,20 @@ export function Summary() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="grid grid-cols-2 gap-3 mb-6 w-full max-w-sm"
+            className="absolute top-14 left-4 right-4 grid grid-cols-4 gap-2"
           >
             {categoryScores.map((score, i) => (
-              <div key={i} className="bg-gray-100 rounded-lg p-3 text-center">
-                <div className="text-xs text-gray-500">{CATEGORY_NAMES[i as Category]}</div>
-                <div className="text-xl font-bold text-gray-800">{score}</div>
+              <div 
+                key={i} 
+                className={`${CATEGORY_BG[i as Category]} rounded-lg p-2 text-center border-2 shadow-sm`}
+              >
+                <div className="text-xs text-gray-600">{CATEGORY_NAMES[i as Category]}</div>
+                <div 
+                  className={`text-xl font-bold ${CATEGORY_TEXT[i as Category]}`}
+                  style={{ fontFamily: 'Baveuse, cursive' }}
+                >
+                  {score}
+                </div>
               </div>
             ))}
           </motion.div>
@@ -116,10 +105,20 @@ export function Summary() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-center mb-6"
+            className="absolute top-36 left-0 right-0 text-center"
           >
-            <div className="text-sm text-gray-500">TOTAL SCORE</div>
-            <div className="text-5xl font-bold text-blue-600">{displayTotal}</div>
+            <div 
+              className="text-sm text-gray-500"
+              style={{ fontFamily: 'Baveuse, cursive' }}
+            >
+              TOTAL SCORE
+            </div>
+            <div 
+              className="text-6xl font-bold text-amber-600"
+              style={{ fontFamily: 'Baveuse, cursive' }}
+            >
+              {displayTotal}
+            </div>
           </motion.div>
 
           {/* Brain type reveal */}
@@ -128,13 +127,25 @@ export function Summary() {
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: 'spring', bounce: 0.5 }}
-              className="text-center mb-6"
+              className="absolute top-56 left-0 right-0 flex flex-col items-center"
             >
-              <div className="text-6xl mb-2">{BRAIN_EMOJIS[brainType.index] || '🧠'}</div>
-              <div className="text-2xl font-bold text-purple-600 mb-1">
+              {/* Brain sprite */}
+              <img
+                src={`/assets/sprites/brain-type-${brainType.index + 1}.png`}
+                alt={brainType.name}
+                className="w-32 h-32 object-contain mb-2"
+              />
+              
+              {/* Brain type name */}
+              <div 
+                className="text-3xl font-bold text-purple-600 mb-1"
+                style={{ fontFamily: 'Baveuse, cursive' }}
+              >
                 {brainType.name}
               </div>
-              <div className="text-sm text-gray-600 max-w-xs">
+              
+              {/* Description */}
+              <div className="text-sm text-gray-600 max-w-xs text-center px-4">
                 {brainType.description}
               </div>
             </motion.div>
@@ -142,16 +153,18 @@ export function Summary() {
 
           {/* Play again button */}
           {revealBrain && (
-            <motion.div
+            <motion.button
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="flex gap-4"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handlePlayAgain}
+              className="absolute bottom-6 left-1/2 transform -translate-x-1/2 px-12 py-4 bg-gradient-to-b from-green-400 to-green-600 text-white text-xl rounded-xl shadow-lg border-4 border-white/30"
+              style={{ fontFamily: 'Baveuse, cursive' }}
             >
-              <Button variant="primary" size="large" onClick={handlePlayAgain}>
-                PLAY AGAIN
-              </Button>
-            </motion.div>
+              PLAY AGAIN
+            </motion.button>
           )}
         </div>
       </GameCanvas>
