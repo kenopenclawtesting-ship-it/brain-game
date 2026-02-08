@@ -1,0 +1,1 @@
+Immediate access is only available to payment methods that clear instantly such as credit cards. Access will be granted automatically once payment has cleared for other payment methods such as eCheck and TrialPay offers that do not credit instantly. Please e-mail support@playfish.com if you have any queries.
