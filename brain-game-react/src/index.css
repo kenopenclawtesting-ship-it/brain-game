@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
 
 @font-face {
   font-family: 'Baveuse';
@@ -10,113 +9,471 @@
 }
 
 :root {
-  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  font-family: 'Baveuse', system-ui, -apple-system, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* DARK TV game show background */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================
+   PAGE - Dark TV Game Show
+   ============================ */
 body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
-  background: #0a0e27;
+  background: #080b1a;
+  overflow-x: hidden;
 }
 
-/* Spotlight effect layer */
-.spotlight-bg {
+.game-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: radial-gradient(ellipse at 50% 20%, #12153a 0%, #080b1a 70%);
+}
+
+/* ============================
+   SPOTLIGHTS - Theater beams
+   ============================ */
+.spotlight {
   position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 40% 60% at 30% 0%, rgba(26, 42, 90, 0.4) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 70% at 70% 0%, rgba(42, 26, 90, 0.3) 0%, transparent 70%),
-    radial-gradient(ellipse 30% 50% at 50% 0%, rgba(60, 60, 120, 0.3) 0%, transparent 60%);
   pointer-events: none;
+  z-index: 0;
 }
 
-/* Game canvas container - DARK with glow */
+.spotlight-left {
+  top: -100px;
+  left: 10%;
+  width: 400px;
+  height: 120vh;
+  background: linear-gradient(
+    170deg,
+    rgba(80, 60, 160, 0.15) 0%,
+    rgba(80, 60, 160, 0.06) 30%,
+    transparent 60%
+  );
+  transform: skewX(10deg);
+}
+
+.spotlight-right {
+  top: -100px;
+  right: 10%;
+  width: 400px;
+  height: 120vh;
+  background: linear-gradient(
+    190deg,
+    rgba(60, 80, 160, 0.15) 0%,
+    rgba(60, 80, 160, 0.06) 30%,
+    transparent 60%
+  );
+  transform: skewX(-10deg);
+}
+
+.spotlight-center {
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 80vh;
+  background: radial-gradient(
+    ellipse 50% 40% at 50% 0%,
+    rgba(100, 80, 180, 0.12) 0%,
+    transparent 70%
+  );
+}
+
+/* ============================
+   PAGE HEADER - Title above frame
+   ============================ */
+.page-header {
+  text-align: center;
+  padding: 20px 0 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-title {
+  font-family: 'Baveuse', cursive;
+  font-size: 28px;
+  color: #f0e6d0;
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+}
+
+.page-subtitle {
+  font-family: 'Baveuse', cursive;
+  font-size: 13px;
+  color: #8888aa;
+  margin-top: 2px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+/* ============================
+   GAME FRAME - The main 640x480 area
+   ============================ */
+.game-frame {
+  width: 660px;
+  max-width: 95vw;
+  position: relative;
+  z-index: 1;
+  padding: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(80, 80, 180, 0.25) 0%,
+    rgba(60, 40, 120, 0.2) 50%,
+    rgba(40, 20, 80, 0.25) 100%
+  );
+  border-radius: 16px;
+  box-shadow:
+    0 0 50px rgba(100, 80, 200, 0.35),
+    0 0 100px rgba(80, 60, 180, 0.15),
+    inset 0 0 30px rgba(100, 80, 200, 0.1);
+  border: 1px solid rgba(120, 100, 200, 0.3);
+}
+
+.game-frame-inner {
+  width: 640px;
+  max-width: 100%;
+  height: 480px;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(40, 30, 80, 1) 0%, rgba(20, 15, 50, 1) 70%),
+    linear-gradient(180deg, #1a1040 0%, #0d0820 100%);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(100, 80, 180, 0.2);
+}
+
+/* Subtle inner vignette */
+.game-frame-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================
+   BRAIN LOGO - Top of game frame
+   ============================ */
+.logo-area {
+  text-align: center;
+  padding-top: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.brain-logo-container {
+  display: inline-block;
+  padding: 8px 24px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(60, 40, 100, 0.5) 0%,
+    transparent 70%
+  );
+  border-radius: 12px;
+}
+
+.brain-logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+}
+
+.logo-who {
+  font-family: 'Baveuse', cursive;
+  font-size: 14px;
+  color: #e0d8c8;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.logo-brain {
+  font-family: 'Baveuse', cursive;
+  font-size: 42px;
+  color: #ffd700;
+  text-shadow:
+    0 0 15px rgba(255, 215, 0, 0.6),
+    0 0 30px rgba(255, 180, 0, 0.3),
+    0 3px 6px rgba(0, 0, 0, 0.5);
+  letter-spacing: 4px;
+}
+
+.logo-question {
+  font-family: 'Baveuse', cursive;
+  font-size: 50px;
+  color: #ff6b6b;
+  text-shadow:
+    0 0 15px rgba(255, 100, 100, 0.5),
+    0 3px 6px rgba(0, 0, 0, 0.5);
+  margin-top: -10px;
+}
+
+/* ============================
+   MENU CONTENT - Buttons + Speech
+   ============================ */
+.menu-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 10px 20px 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* 2x2 Button Grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 310px;
+}
+
+.menu-btn-wrapper {
+  cursor: pointer;
+  transition: transform 0.15s ease-out, filter 0.15s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-btn-wrapper:hover {
+  transform: scale(1.08);
+  filter: brightness(1.15);
+}
+
+.menu-btn-wrapper:active {
+  transform: scale(0.95);
+}
+
+.menu-btn-img {
+  width: 140px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* Custom styled buttons (Challenge, Profile) */
+.menu-btn-custom {
+  width: 140px;
+  height: 80px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.menu-btn-icon {
+  width: 50px;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.menu-btn-label {
+  font-family: 'Baveuse', cursive;
+  font-size: 14px;
+  color: #ffd700;
+  text-shadow:
+    0 0 8px rgba(255, 215, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+.challenge-btn {
+  background: linear-gradient(180deg, #2ab5a0 0%, #1a8a7a 40%, #146b5e 100%);
+}
+
+.profile-btn {
+  background: linear-gradient(180deg, #9a6dd7 0%, #7a4db7 40%, #5a2d97 100%);
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  opacity: 0.9;
+}
+
+/* ============================
+   SPEECH BUBBLE
+   ============================ */
+.speech-bubble {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  max-width: 200px;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  font-family: 'Baveuse', cursive;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+.speech-tail {
+  position: absolute;
+  left: -10px;
+  bottom: 25px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 12px 8px 0;
+  border-color: transparent #ffffff transparent transparent;
+}
+
+/* ============================
+   PROFESSOR + PODIUM
+   ============================ */
+.professor-area {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+.professor-img {
+  width: auto;
+  height: 150px;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+  cursor: pointer;
+}
+
+.podium {
+  width: 200px;
+  height: 55px;
+  background: linear-gradient(
+    180deg,
+    #b8b8c8 0%,
+    #909098 15%,
+    #a0a0b0 30%,
+    #808088 50%,
+    #707078 70%,
+    #606068 100%
+  );
+  border-radius: 100px 100px 8px 8px / 40px 40px 8px 8px;
+  position: relative;
+  margin-top: -20px;
+  z-index: 1;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Metallic light bands on podium */
+.podium-light {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 5%,
+    rgba(255, 255, 255, 0.3) 20%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 80%,
+    transparent 95%
+  );
+}
+
+.podium-light-1 { top: 12px; }
+.podium-light-2 { top: 28px; opacity: 0.7; }
+.podium-light-3 { top: 42px; opacity: 0.4; }
+
+/* ============================
+   FOOTER
+   ============================ */
+.page-footer {
+  text-align: center;
+  padding: 16px 0;
+  font-family: 'Baveuse', cursive;
+  font-size: 11px;
+  color: #555570;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================
+   GAME CANVAS (for other screens)
+   ============================ */
 .game-canvas {
   width: 640px;
   height: 480px;
-  background: linear-gradient(180deg, #1a1a4a 0%, #2a1a3a 100%);
-  border-radius: 12px;
-  box-shadow: 
-    0 0 40px rgba(100, 100, 255, 0.4),
-    0 0 80px rgba(100, 80, 200, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(40, 30, 80, 1) 0%, rgba(20, 15, 50, 1) 70%),
+    linear-gradient(180deg, #1a1040 0%, #0d0820 100%);
+  border-radius: 10px;
+  box-shadow:
+    0 0 50px rgba(100, 80, 200, 0.35),
+    0 0 100px rgba(80, 60, 180, 0.15);
   position: relative;
   overflow: hidden;
-  border: 2px solid rgba(100, 100, 200, 0.3);
+  border: 1px solid rgba(120, 100, 200, 0.3);
 }
 
-/* Baveuse font utility */
 .font-baveuse {
   font-family: 'Baveuse', cursive;
 }
 
-/* Gold text with glow */
 .gold-glow {
   color: #ffd700;
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(255, 215, 0, 0.8),
-    0 0 20px rgba(255, 215, 0, 0.4),
-    0 0 30px rgba(255, 180, 0, 0.2);
+    0 0 20px rgba(255, 215, 0, 0.4);
 }
 
-/* Disable text selection in game area */
 .game-area {
   user-select: none;
   -webkit-user-select: none;
 }
 
-/* Sprite button hover effect */
+/* Sprite button (used across screens) */
 .sprite-button {
-  transition: transform 0.15s ease-out, filter 0.15s ease-out;
   cursor: pointer;
+  transition: transform 0.15s ease-out, filter 0.15s ease-out;
 }
 
 .sprite-button:hover {
   transform: scale(1.08);
-  filter: brightness(1.1);
+  filter: brightness(1.15);
 }
 
 .sprite-button:active {
   transform: scale(0.95);
 }
 
-/* Professor podium - metallic silver semi-ellipse */
-.professor-podium {
-  background: linear-gradient(180deg, #c0c0c0 0%, #808080 50%, #606060 100%);
-  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.5),
-    inset 0 2px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Speech bubble */
-.speech-bubble {
-  background: white;
-  border-radius: 16px;
-  padding: 16px;
-  position: relative;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.speech-bubble::before {
-  content: '';
-  position: absolute;
-  left: -12px;
-  bottom: 30px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent white transparent transparent;
-}
-
-/* Menu button base style */
+/* Menu buttons for other screens */
 .menu-button {
   display: flex;
   align-items: center;
@@ -128,16 +485,6 @@ body {
   font-size: 18px;
   color: white;
   cursor: pointer;
-  transition: transform 0.15s, filter 0.15s;
   border: 2px solid rgba(255, 255, 255, 0.2);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.menu-button:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-
-.menu-button:active {
-  transform: scale(0.95);
 }

@@ -1,8 +1,8 @@
-// Main Menu Screen - DARK TV Game Show Theme
+// Main Menu Screen - 1:1 Flash Game Show Theme
+// Written by CTO - pixel-matched to original Flash game screenshot
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
-import { GameCanvas, GameCanvasWrapper } from '../layout/GameCanvas';
 import { useEffect, useState } from 'react';
 
 export function MainMenu() {
@@ -20,154 +20,144 @@ export function MainMenu() {
     setScreen('gameSelect');
   };
 
-  const handleTrophiesClick = () => {
-    playClick();
-    // TODO: trophies screen
-  };
-
   const handleChallengeClick = () => {
     playClick();
-    // TODO: challenge mode
+  };
+
+  const handleTrophiesClick = () => {
+    playClick();
   };
 
   const handleProfileClick = () => {
     playClick();
-    // TODO: profile screen
   };
 
   return (
-    <GameCanvasWrapper>
-      <GameCanvas>
-        <div className="relative w-full h-full overflow-hidden">
-          {/* Title with gold glow */}
+    <div className="game-page">
+      {/* Spotlight beams */}
+      <div className="spotlight spotlight-left" />
+      <div className="spotlight spotlight-right" />
+      <div className="spotlight spotlight-center" />
+
+      {/* Page title - ABOVE the game frame */}
+      <div className="page-header">
+        <h1 className="page-title">WHO HAS THE BIGGEST BRAIN?</h1>
+        <p className="page-subtitle">Pro Player Club</p>
+      </div>
+
+      {/* Game frame with glow */}
+      <div className="game-frame">
+        <div className="game-frame-inner">
+
+          {/* Brain Logo / Title Area */}
           <motion.div
-            initial={{ y: -30, opacity: 0 }}
+            className="logo-area"
+            initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="absolute top-4 left-0 right-0 text-center"
+            transition={{ duration: 0.4 }}
           >
-            <h1 
-              className="text-2xl gold-glow"
-              style={{ fontFamily: 'Baveuse, cursive' }}
-            >
-              WHO HAS THE
-            </h1>
-            <h1 
-              className="text-4xl gold-glow mt-1"
-              style={{ fontFamily: 'Baveuse, cursive' }}
-            >
-              BIGGEST BRAIN?
-            </h1>
+            <div className="brain-logo-container">
+              <div className="brain-logo-text">
+                <span className="logo-who">WHO HAS THE BIGGEST</span>
+                <span className="logo-brain">BRAIN</span>
+                <span className="logo-question">?</span>
+              </div>
+            </div>
           </motion.div>
 
-          {/* 2x2 Button Grid - center-left */}
-          <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="absolute left-8 top-28 grid grid-cols-2 gap-3"
-          >
-            {/* PLAY button */}
-            <motion.img
-              src="/assets/sprites/button-play.png"
-              alt="Play"
-              className="sprite-button w-[130px] h-auto"
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handlePlayClick}
-              draggable={false}
-            />
-
-            {/* CHALLENGE button - teal/green */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleChallengeClick}
-              className="menu-button w-[130px] h-[60px]"
-              style={{ 
-                background: 'linear-gradient(180deg, #20b2aa 0%, #008080 100%)',
-              }}
+          {/* Main content area */}
+          <div className="menu-content">
+            {/* 2x2 Button Grid */}
+            <motion.div
+              className="button-grid"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
             >
-              <span>👤</span>
-              <span>CHALLENGE</span>
-            </motion.button>
+              {/* PLAY button - top left */}
+              <div className="menu-btn-wrapper" onClick={handlePlayClick}>
+                <img
+                  src="/assets/sprites/button-play.png"
+                  alt="Play"
+                  className="menu-btn-img"
+                  draggable={false}
+                />
+              </div>
 
-            {/* TROPHIES button */}
-            <motion.img
-              src="/assets/sprites/button-trophies.png"
-              alt="Trophies"
-              className="sprite-button w-[130px] h-auto"
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleTrophiesClick}
-              draggable={false}
-            />
+              {/* CHALLENGE button - top right */}
+              <div className="menu-btn-wrapper" onClick={handleChallengeClick}>
+                <div className="menu-btn-custom challenge-btn">
+                  <img src="/assets/sprites/button-invite.png" alt="Challenge" className="menu-btn-icon" draggable={false} />
+                  <span className="menu-btn-label">CHALLENGE</span>
+                </div>
+              </div>
 
-            {/* PROFILE button - purple */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleProfileClick}
-              className="menu-button w-[130px] h-[60px]"
-              style={{ 
-                background: 'linear-gradient(180deg, #9370db 0%, #663399 100%)',
-              }}
+              {/* TROPHIES button - bottom left */}
+              <div className="menu-btn-wrapper" onClick={handleTrophiesClick}>
+                <img
+                  src="/assets/sprites/button-trophies.png"
+                  alt="Trophies"
+                  className="menu-btn-img"
+                  draggable={false}
+                />
+              </div>
+
+              {/* PROFILE button - bottom right */}
+              <div className="menu-btn-wrapper" onClick={handleProfileClick}>
+                <div className="menu-btn-custom profile-btn">
+                  <div className="profile-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                      <circle cx="20" cy="14" r="8" fill="#fff" opacity="0.9"/>
+                      <ellipse cx="20" cy="36" rx="14" ry="10" fill="#fff" opacity="0.9"/>
+                    </svg>
+                  </div>
+                  <span className="menu-btn-label">PROFILE</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Speech bubble */}
+            <motion.div
+              className="speech-bubble"
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
             >
-              <span>👤</span>
-              <span>PROFILE</span>
-            </motion.button>
-          </motion.div>
+              <p>
+                <strong>Welcome!</strong> Got a Big BRAIN? Play Who Has The Biggest Brain? to find out!
+              </p>
+              <div className="speech-tail" />
+            </motion.div>
+          </div>
 
-          {/* Speech bubble - right side */}
+          {/* Professor on podium */}
           <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.5, type: 'spring' }}
-            className="speech-bubble absolute right-6 top-32 max-w-[180px]"
-          >
-            <p className="text-sm text-gray-800 leading-snug">
-              <strong>Welcome!</strong> Got a Big BRAIN? Play Who Has The Biggest Brain to find out!
-            </p>
-          </motion.div>
-
-          {/* Professor on podium - bottom center */}
-          <motion.div
-            initial={{ y: 50, opacity: 0 }}
+            className="professor-area"
+            initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="absolute bottom-0 left-1/2 transform -translate-x-1/2"
           >
-            {/* Podium */}
-            <div 
-              className="professor-podium absolute bottom-0 left-1/2 transform -translate-x-1/2"
-              style={{ width: '180px', height: '40px' }}
-            />
-            
-            {/* Professor */}
             <img
               src={professorImg}
               alt="Professor"
-              className="relative z-10 h-[180px] w-auto"
+              className="professor-img"
               onMouseEnter={() => setProfessorImg('/assets/sprites/professor-talk.png')}
               onMouseLeave={() => setProfessorImg('/assets/sprites/professor-happy.png')}
               draggable={false}
             />
+            <div className="podium">
+              <div className="podium-light podium-light-1" />
+              <div className="podium-light podium-light-2" />
+              <div className="podium-light podium-light-3" />
+            </div>
           </motion.div>
-
-          {/* Bottom decoration bar */}
-          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-600 via-blue-500 to-purple-600 opacity-50" />
         </div>
-      </GameCanvas>
+      </div>
 
-      {/* Bottom links bar */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="mt-4 text-center text-xs text-gray-500"
-      >
-        <span className="opacity-50">© Playfish • Terms • Privacy</span>
-      </motion.div>
-    </GameCanvasWrapper>
+      {/* Footer bar */}
+      <div className="page-footer">
+        <span>&copy; 2007-2009 Playfish Ltd. All Rights Reserved.</span>
+      </div>
+    </div>
   );
 }
