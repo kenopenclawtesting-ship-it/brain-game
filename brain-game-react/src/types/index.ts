@@ -5,6 +5,7 @@ export type GameMode = 'menu' | 'fullTest' | 'practice' | 'challenge';
 export type Screen = 
   | 'splash'
   | 'menu'
+  | 'gameSelect'
   | 'tutorial'
   | 'countdown'
   | 'game'

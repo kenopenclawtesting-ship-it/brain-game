@@ -12,10 +12,7 @@ type SoundName =
   | 'start'
   | 'correct'
   | 'wrong'
-  | 'applause'
-  | 'cheer'
-  | 'scoreCount'
-  | 'scoreCountEnd';
+  | 'applause';
 
 interface SoundConfig {
   src: string;
@@ -23,19 +20,17 @@ interface SoundConfig {
   volume?: number;
 }
 
+// Updated paths to use /assets/sounds/
 const SOUND_CONFIG: Record<SoundName, SoundConfig> = {
-  theme: { src: '/sounds/ThemeMusic.mp3', loop: true, volume: 0.5 },
-  ingame: { src: '/sounds/IngameMusic.mp3', loop: true, volume: 0.5 },
-  buttonMenu: { src: '/sounds/ButtonMenu.mp3', volume: 0.7 },
-  buttonInGame: { src: '/sounds/ButtonInGame.mp3', volume: 0.7 },
-  timer: { src: '/sounds/TimerSound.mp3', volume: 0.8 },
-  start: { src: '/sounds/StartSound.mp3', volume: 0.8 },
-  correct: { src: '/sounds/Correct.mp3', volume: 0.6 },
-  wrong: { src: '/sounds/Wrong.mp3', volume: 0.6 },
-  applause: { src: '/sounds/ApplauseSound.mp3', volume: 0.7 },
-  cheer: { src: '/sounds/CrowdCheerSound.mp3', volume: 0.7 },
-  scoreCount: { src: '/sounds/ScoreCountSound.mp3', volume: 0.5 },
-  scoreCountEnd: { src: '/sounds/ScoreCountEndSound.mp3', volume: 0.6 },
+  theme: { src: '/assets/sounds/theme-music.mp3', loop: true, volume: 0.5 },
+  ingame: { src: '/assets/sounds/ingame-music.mp3', loop: true, volume: 0.5 },
+  buttonMenu: { src: '/assets/sounds/button-menu.mp3', volume: 0.7 },
+  buttonInGame: { src: '/assets/sounds/button-ingame.mp3', volume: 0.7 },
+  timer: { src: '/assets/sounds/timer-sound.mp3', volume: 0.8 },
+  start: { src: '/assets/sounds/start-sound.mp3', volume: 0.8 },
+  correct: { src: '/assets/sounds/button-ingame.mp3', volume: 0.6 },
+  wrong: { src: '/assets/sounds/button-ingame.mp3', volume: 0.4 },
+  applause: { src: '/assets/sounds/applause.mp3', volume: 0.7 },
 };
 
 // Singleton sound manager with lazy loading
@@ -49,7 +44,6 @@ class SoundManager {
     this.initialized = true;
     
     try {
-      // Pre-load all sounds
       Object.entries(SOUND_CONFIG).forEach(([name, config]) => {
         try {
           const sound = new Howl({
@@ -141,7 +135,6 @@ export function useSound() {
 
   useEffect(() => {
     managerRef.current = getSoundManager();
-    // Lazy init sounds on first use
     managerRef.current.init();
   }, []);
 
@@ -165,7 +158,12 @@ export function useSound() {
     managerRef.current?.fadeOut(name, duration);
   }, []);
 
-  return { play, stop, stopAll, fadeOut };
+  // Quick helper for menu button clicks
+  const playClick = useCallback(() => {
+    managerRef.current?.play('buttonMenu');
+  }, []);
+
+  return { play, stop, stopAll, fadeOut, playClick };
 }
 
 // Hook for playing correct/incorrect sounds with feedback

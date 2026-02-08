@@ -10,7 +10,7 @@ interface GameCanvasProps {
 export function GameCanvas({ children, className = '' }: GameCanvasProps) {
   return (
     <div 
-      className={`relative bg-white rounded-lg shadow-lg overflow-hidden ${className}`}
+      className={`game-canvas relative overflow-hidden ${className}`}
       style={{ 
         width: CANVAS_WIDTH, 
         height: CANVAS_HEIGHT,
@@ -23,10 +23,15 @@ export function GameCanvas({ children, className = '' }: GameCanvasProps) {
   );
 }
 
-// Full-screen responsive wrapper that scales the canvas
+// Full-screen responsive wrapper that scales the canvas - LIGHT background like original
 export function GameCanvasWrapper({ children }: { children: ReactNode }) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 to-purple-900 p-4">
+    <div 
+      className="flex items-center justify-center min-h-screen p-4"
+      style={{
+        background: 'linear-gradient(180deg, #e8f4f8 0%, #ffffff 100%)',
+      }}
+    >
       <div 
         className="relative"
         style={{

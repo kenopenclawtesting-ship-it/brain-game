@@ -57,7 +57,7 @@ export function Summary() {
   const brainType = getBrainType(totalScore);
 
   useEffect(() => {
-    play('cheer');
+    play('applause');
     
     // Animate total score counting
     const duration = 2000;
@@ -67,11 +67,9 @@ export function Summary() {
     
     const timer = setInterval(() => {
       current += increment;
-      play('scoreCount');
       if (current >= totalScore) {
         setDisplayTotal(totalScore);
         clearInterval(timer);
-        play('scoreCountEnd');
         setTimeout(() => setRevealBrain(true), 500);
       } else {
         setDisplayTotal(Math.floor(current));
