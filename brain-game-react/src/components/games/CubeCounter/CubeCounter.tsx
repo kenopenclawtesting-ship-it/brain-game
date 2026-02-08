@@ -1,7 +1,8 @@
 // CubeCounter Game - FROM SOURCE.md
 // Count 3D cubes in an isometric view, including hidden ones
+// CORRECT_SCORE: 49, INCORRECT_SCORE: -33
 import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
@@ -9,12 +10,18 @@ import { GameContainer } from '../GameContainer';
 interface CubeStructure {
   grid: number[][]; // Height at each x,y position
   totalCubes: number;
+  baseWidth: number;
 }
+
+// Cube colors that alternate for visibility
+const CUBE_COLORS = ['#60a5fa', '#818cf8', '#a78bfa', '#c084fc', '#e879f9'];
 
 export function CubeCounterGame() {
   const [structure, setStructure] = useState<CubeStructure | null>(null);
   const [input, setInput] = useState('');
   const [totalCorrect, setTotalCorrect] = useState(0);
+  const [showCubes, setShowCubes] = useState(false);
+  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   
   const addCorrect = useGameStore((state) => state.addCorrect);
   const addIncorrect = useGameStore((state) => state.addIncorrect);
@@ -22,36 +29,72 @@ export function CubeCounterGame() {
   const { playCorrect, playIncorrect } = useFeedbackSound();
 
   const generateStructure = useCallback((): CubeStructure => {
-    // From SOURCE.md: difficulty scaling
+    // From ActionScript: difficulty = totalCorrect / 1.5
     const difficulty = Math.floor(totalCorrect / 1.5);
-    const baseWidth = Math.min(2 + Math.floor(difficulty / 4), 4);
-    const baseDepth = Math.min(2 + Math.floor(difficulty / 4), 4);
-    const maxHeight = Math.min(2 + Math.floor(difficulty / 3), 4);
     
+    // baseWidth = rnd(2, 5 + floor(difficulty/8))
+    const baseWidthBonus = Math.floor(difficulty / 8);
+    const baseWidth = 2 + Math.floor(Math.random() * (3 + baseWidthBonus));
+    
+    // maxHeight = rnd(max(floor(difficulty/8)+1, 3), MAX_HEIGHT+1) where MAX_HEIGHT=4
+    const minHeight = Math.max(Math.floor(difficulty / 8) + 1, 3);
+    const maxHeight = Math.min(minHeight + Math.floor(Math.random() * 2), 4);
+    
+    // numBlocks = min(rnd(2,6) + difficulty, baseWidth^2 * maxHeight)
+    const maxPossibleCubes = baseWidth * baseWidth * maxHeight;
+    const targetCubes = Math.min(
+      2 + Math.floor(Math.random() * 4) + difficulty,
+      maxPossibleCubes
+    );
+    
+    // Build the structure ensuring cubes can't float
     const grid: number[][] = [];
-    let totalCubes = 0;
-    
     for (let x = 0; x < baseWidth; x++) {
       grid[x] = [];
-      for (let y = 0; y < baseDepth; y++) {
-        // Random height at each position, with some empty spaces
-        const height = Math.random() < 0.8 ? Math.floor(Math.random() * maxHeight) + 1 : 0;
-        grid[x][y] = height;
-        totalCubes += height;
+      for (let y = 0; y < baseWidth; y++) {
+        grid[x][y] = 0;
       }
     }
     
-    // Ensure at least some cubes
-    if (totalCubes < 3) {
-      grid[0][0] = Math.max(grid[0][0], 2);
-      totalCubes = grid.flat().reduce((a, b) => a + b, 0);
+    // Place cubes following visibility rules from ActionScript
+    let placed = 0;
+    let attempts = 0;
+    while (placed < targetCubes && attempts < 1000) {
+      const x = Math.floor(Math.random() * baseWidth);
+      const y = Math.floor(Math.random() * baseWidth);
+      
+      // Check if we can place here (not exceeding maxHeight)
+      if (grid[x][y] < maxHeight) {
+        // ActionScript validation: ensure cubes behind don't get hidden
+        let canPlace = true;
+        
+        // Check diagonal visibility constraint
+        if (x > 0 && y > 0) {
+          const diagHeight = grid[x-1][y-1];
+          if (diagHeight <= grid[x][y]) {
+            canPlace = false;
+          }
+        }
+        
+        if (canPlace) {
+          grid[x][y]++;
+          placed++;
+        }
+      }
+      attempts++;
     }
     
-    return { grid, totalCubes };
+    const totalCubes = grid.flat().reduce((a, b) => a + b, 0);
+    
+    return { grid, totalCubes, baseWidth };
   }, [totalCorrect]);
 
   useEffect(() => {
-    setStructure(generateStructure());
+    const newStructure = generateStructure();
+    setStructure(newStructure);
+    setShowCubes(false);
+    // Animate cubes dropping in
+    setTimeout(() => setShowCubes(true), 100);
   }, []);
 
   const checkAnswer = useCallback(() => {
@@ -63,57 +106,114 @@ export function CubeCounterGame() {
       playCorrect();
       addCorrect();
       setTotalCorrect((prev) => prev + 1);
+      setFeedback('correct');
     } else {
       playIncorrect();
       addIncorrect();
+      setFeedback('incorrect');
     }
     
-    setInput('');
-    setStructure(generateStructure());
+    setTimeout(() => {
+      setFeedback(null);
+      setInput('');
+      const newStructure = generateStructure();
+      setStructure(newStructure);
+      setShowCubes(false);
+      setTimeout(() => setShowCubes(true), 100);
+    }, 500);
   }, [structure, input, addCorrect, addIncorrect, playCorrect, playIncorrect, generateStructure]);
 
   const handleKeyPress = (key: string) => {
     if (key === 'enter') {
       checkAnswer();
-    } else if (key === 'backspace') {
-      setInput((prev) => prev.slice(0, -1));
+    } else if (key === 'C') {
+      setInput('');
     } else if (/^\d$/.test(key) && input.length < 3) {
       setInput((prev) => prev + key);
     }
   };
 
+  // Keyboard support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key >= '0' && e.key <= '9') {
+        handleKeyPress(e.key);
+      } else if (e.key === 'Enter') {
+        handleKeyPress('enter');
+      } else if (e.key === 'Backspace') {
+        setInput((prev) => prev.slice(0, -1));
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [input, structure]);
+
   if (!structure || timeRemaining <= 0) return null;
 
   // Render isometric cubes
-  const cubeSize = 30;
-  const offsetX = 200;
-  const offsetY = 100;
+  const cubeSize = Math.min(35, 140 / structure.baseWidth);
+  const offsetX = 280;
+  const offsetY = 80;
 
   return (
     <GameContainer>
-      <div className="flex flex-col items-center justify-center h-full">
-        <div className="text-sm text-gray-500 mb-4">
+      <div className="flex flex-col items-center justify-center h-full relative">
+        {/* Feedback overlay */}
+        <AnimatePresence>
+          {feedback && (
+            <motion.div
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
+            >
+              <span className={`text-8xl ${feedback === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
+                {feedback === 'correct' ? '✓' : '✗'}
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div 
+          className="text-sm text-gray-400 mb-2"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
           Count ALL the cubes (including hidden ones!)
         </div>
         
         {/* Isometric cube display */}
-        <div className="relative mb-6" style={{ width: 400, height: 200 }}>
-          <svg width="400" height="200" viewBox="0 0 400 200">
-            {structure.grid.map((row, x) =>
+        <div className="relative mb-4" style={{ width: 400, height: 180 }}>
+          <svg width="400" height="180" viewBox="0 0 400 180">
+            {showCubes && structure.grid.map((row, x) =>
               row.map((height, y) =>
                 Array.from({ length: height }).map((_, z) => {
                   // Isometric projection
                   const isoX = offsetX + (x - y) * cubeSize * 0.866;
-                  const isoY = offsetY + (x + y) * cubeSize * 0.5 - z * cubeSize;
+                  const isoY = offsetY + (x + y) * cubeSize * 0.5 - z * cubeSize * 0.75;
+                  
+                  // Alternate colors for visibility
+                  const colorIndex = (x + y + z) % CUBE_COLORS.length;
                   
                   return (
-                    <IsometricCube
+                    <motion.g
                       key={`${x}-${y}-${z}`}
-                      x={isoX}
-                      y={isoY}
-                      size={cubeSize}
-                      color={z % 2 === 0 ? '#60a5fa' : '#3b82f6'}
-                    />
+                      initial={{ y: -200, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ 
+                        delay: (x + y + z) * 0.05,
+                        type: 'spring',
+                        stiffness: 200,
+                        damping: 15
+                      }}
+                    >
+                      <IsometricCube
+                        x={isoX}
+                        y={isoY}
+                        size={cubeSize}
+                        color={CUBE_COLORS[colorIndex]}
+                      />
+                    </motion.g>
                   );
                 })
               )
@@ -122,37 +222,68 @@ export function CubeCounterGame() {
         </div>
 
         {/* Input display */}
-        <div className="w-24 h-14 bg-white border-4 border-blue-500 rounded-lg flex items-center justify-center mb-4">
-          <span className="text-3xl font-bold">{input || '_'}</span>
+        <div 
+          className="w-28 h-14 rounded-xl flex items-center justify-center mb-4 shadow-lg"
+          style={{
+            background: 'linear-gradient(180deg, #2a2a5a 0%, #1a1a3a 100%)',
+            border: '3px solid #ffd700',
+            boxShadow: '0 0 15px rgba(255, 215, 0, 0.3)'
+          }}
+        >
+          <span 
+            className="text-3xl font-bold text-yellow-400"
+            style={{ fontFamily: 'Baveuse, cursive' }}
+          >
+            {input || '_'}
+          </span>
         </div>
 
         {/* Number pad */}
         <div className="grid grid-cols-5 gap-2">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((key) => (
-            <button
+            <motion.button
               key={key}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               onClick={() => handleKeyPress(String(key))}
-              className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg text-xl font-bold transition-colors"
+              className="w-11 h-11 rounded-lg text-lg font-bold text-white shadow-md"
+              style={{ 
+                fontFamily: 'Baveuse, cursive',
+                background: 'linear-gradient(180deg, #4a4a8a 0%, #2a2a5a 100%)',
+                border: '2px solid rgba(255,255,255,0.1)'
+              }}
             >
               {key}
-            </button>
+            </motion.button>
           ))}
         </div>
         
-        <div className="flex gap-2 mt-2">
-          <button
-            onClick={() => handleKeyPress('backspace')}
-            className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-lg font-bold"
+        <div className="flex gap-2 mt-3">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setInput('')}
+            className="px-4 py-2 rounded-lg font-bold text-white shadow-md"
+            style={{ 
+              fontFamily: 'Baveuse, cursive',
+              background: 'linear-gradient(180deg, #e74c3c 0%, #c0392b 100%)'
+            }}
           >
-            ← Back
-          </button>
-          <button
+            CLEAR
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={checkAnswer}
             disabled={!input}
-            className="px-6 py-2 bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white font-bold rounded-lg"
+            className="px-6 py-2 rounded-lg font-bold text-white shadow-md disabled:opacity-50"
+            style={{ 
+              fontFamily: 'Baveuse, cursive',
+              background: 'linear-gradient(180deg, #27ae60 0%, #1e8449 100%)'
+            }}
           >
             SUBMIT
-          </button>
+          </motion.button>
         </div>
       </div>
     </GameContainer>
@@ -161,7 +292,7 @@ export function CubeCounterGame() {
 
 // Isometric cube component
 function IsometricCube({ x, y, size, color }: { x: number; y: number; size: number; color: string }) {
-  const h = size;
+  const h = size * 0.75;
   const w = size * 0.866;
   
   // Three visible faces of an isometric cube
@@ -171,9 +302,9 @@ function IsometricCube({ x, y, size, color }: { x: number; y: number; size: numb
 
   return (
     <g>
-      <polygon points={topPoints} fill={color} stroke="#1e40af" strokeWidth="1" />
-      <polygon points={leftPoints} fill={adjustBrightness(color, -30)} stroke="#1e40af" strokeWidth="1" />
-      <polygon points={rightPoints} fill={adjustBrightness(color, -60)} stroke="#1e40af" strokeWidth="1" />
+      <polygon points={topPoints} fill={color} stroke="#1e1e4e" strokeWidth="1.5" />
+      <polygon points={leftPoints} fill={adjustBrightness(color, -40)} stroke="#1e1e4e" strokeWidth="1.5" />
+      <polygon points={rightPoints} fill={adjustBrightness(color, -70)} stroke="#1e1e4e" strokeWidth="1.5" />
     </g>
   );
 }
