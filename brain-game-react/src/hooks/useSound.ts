@@ -1,6 +1,6 @@
 // Sound system using Howler.js - matches Flash sound triggers from SOURCE.md
 import { useCallback, useEffect, useRef } from 'react';
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 import { useGameStore } from '../store/gameStore';
 
 type SoundName = 
@@ -38,53 +38,90 @@ const SOUND_CONFIG: Record<SoundName, SoundConfig> = {
   scoreCountEnd: { src: '/sounds/ScoreCountEndSound.mp3', volume: 0.6 },
 };
 
-// Singleton sound manager
+// Singleton sound manager with lazy loading
 class SoundManager {
   private sounds: Map<SoundName, Howl> = new Map();
   private muted = false;
+  private initialized = false;
 
-  constructor() {
-    // Pre-load all sounds
-    Object.entries(SOUND_CONFIG).forEach(([name, config]) => {
-      const sound = new Howl({
-        src: [config.src],
-        loop: config.loop || false,
-        volume: config.volume || 1,
-        preload: true,
+  init() {
+    if (this.initialized) return;
+    this.initialized = true;
+    
+    try {
+      // Pre-load all sounds
+      Object.entries(SOUND_CONFIG).forEach(([name, config]) => {
+        try {
+          const sound = new Howl({
+            src: [config.src],
+            loop: config.loop || false,
+            volume: config.volume || 1,
+            preload: true,
+            onloaderror: (id, err) => {
+              console.warn(`Failed to load sound ${name}:`, err);
+            },
+          });
+          this.sounds.set(name as SoundName, sound);
+        } catch (e) {
+          console.warn(`Error creating sound ${name}:`, e);
+        }
       });
-      this.sounds.set(name as SoundName, sound);
-    });
+    } catch (e) {
+      console.warn('Error initializing sound manager:', e);
+    }
   }
 
   play(name: SoundName) {
     if (this.muted) return;
-    const sound = this.sounds.get(name);
-    if (sound) {
-      sound.play();
+    try {
+      const sound = this.sounds.get(name);
+      if (sound) {
+        sound.play();
+      }
+    } catch (e) {
+      console.warn(`Error playing sound ${name}:`, e);
     }
   }
 
   stop(name: SoundName) {
-    const sound = this.sounds.get(name);
-    if (sound) {
-      sound.stop();
+    try {
+      const sound = this.sounds.get(name);
+      if (sound) {
+        sound.stop();
+      }
+    } catch (e) {
+      console.warn(`Error stopping sound ${name}:`, e);
     }
   }
 
   stopAll() {
-    this.sounds.forEach(sound => sound.stop());
+    this.sounds.forEach(sound => {
+      try {
+        sound.stop();
+      } catch (e) {
+        // ignore
+      }
+    });
   }
 
   setMuted(muted: boolean) {
     this.muted = muted;
-    Howler.mute(muted);
+    try {
+      Howler.mute(muted);
+    } catch (e) {
+      // ignore
+    }
   }
 
   fadeOut(name: SoundName, duration = 500) {
-    const sound = this.sounds.get(name);
-    if (sound) {
-      sound.fade(sound.volume(), 0, duration);
-      setTimeout(() => sound.stop(), duration);
+    try {
+      const sound = this.sounds.get(name);
+      if (sound) {
+        sound.fade(sound.volume(), 0, duration);
+        setTimeout(() => sound.stop(), duration);
+      }
+    } catch (e) {
+      // ignore
     }
   }
 }
@@ -104,6 +141,8 @@ export function useSound() {
 
   useEffect(() => {
     managerRef.current = getSoundManager();
+    // Lazy init sounds on first use
+    managerRef.current.init();
   }, []);
 
   useEffect(() => {
