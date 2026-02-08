@@ -10,6 +10,14 @@ import { ScoreDisplay, FeedbackFlash } from '../layout/ScoreDisplay';
 import { MINIGAMES, CATEGORY_NAMES } from '../../lib/constants';
 import { Category } from '../../types';
 
+// Category header colors
+const CATEGORY_HEADER_BG: Record<Category, string> = {
+  0: 'from-red-500 to-red-600',
+  1: 'from-yellow-500 to-yellow-600',
+  2: 'from-green-500 to-green-600',
+  3: 'from-blue-500 to-blue-600',
+};
+
 interface GameContainerProps {
   children: ReactNode;
 }
@@ -23,6 +31,7 @@ export function GameContainer({ children }: GameContainerProps) {
 
   const game = MINIGAMES[currentMinigame];
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
+  const headerBg = CATEGORY_HEADER_BG[currentCategory as Category];
 
   useEffect(() => {
     if (currentScreen === 'game') {
@@ -39,20 +48,25 @@ export function GameContainer({ children }: GameContainerProps) {
   return (
     <div className="flex flex-col items-center">
       {/* Header with category and game name */}
-      <div className="w-full max-w-[640px] mb-2">
-        <div className="flex justify-between items-center px-4 py-2 bg-gray-800 text-white rounded-t-lg">
-          <div className="text-sm font-medium text-gray-300">{categoryName}</div>
-          <div className="text-lg font-bold">{game.name}</div>
-          <div className="text-sm font-medium text-gray-300">
+      <div className="w-full max-w-[640px]">
+        <div className={`flex justify-between items-center px-4 py-2 bg-gradient-to-r ${headerBg} text-white rounded-t-xl shadow-md`}>
+          <div className="text-sm font-medium text-white/80">{categoryName}</div>
+          <div 
+            className="text-lg font-bold"
+            style={{ fontFamily: 'Baveuse, cursive' }}
+          >
+            {game.name}
+          </div>
+          <div className="text-sm font-medium text-white/80">
             +{game.correctPoints} / {game.incorrectPoints}
           </div>
         </div>
       </div>
 
       {/* Game area */}
-      <GameCanvas>
+      <GameCanvas className="rounded-t-none">
         {/* Top bar with timer and score */}
-        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4 bg-gradient-to-b from-gray-100 to-transparent">
+        <div className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4 bg-gradient-to-b from-white via-white/90 to-transparent">
           <Timer />
           <ScoreDisplay />
         </div>
@@ -63,7 +77,7 @@ export function GameContainer({ children }: GameContainerProps) {
         </div>
 
         {/* Game content */}
-        <div className="absolute inset-0 pt-20 pb-16 px-4">
+        <div className="absolute inset-0 pt-20 pb-16 px-4 bg-gradient-to-b from-sky-50 to-white">
           {children}
         </div>
 
@@ -87,9 +101,14 @@ export function Countdown({ onComplete }: { onComplete: () => void }) {
   }, [onComplete, play]);
 
   return (
-    <GameCanvas className="flex items-center justify-center">
+    <GameCanvas className="flex items-center justify-center bg-gradient-to-b from-sky-100 to-white">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-4">{game.name}</h2>
+        <h2 
+          className="text-2xl font-bold mb-4 text-gray-800"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
+          {game.name}
+        </h2>
         <CountdownAnimation />
       </div>
     </GameCanvas>
@@ -104,6 +123,7 @@ function CountdownAnimation() {
           <motion.div
             key={num}
             className="absolute inset-0 flex items-center justify-center text-6xl font-bold text-blue-600"
+            style={{ fontFamily: 'Baveuse, cursive' }}
             initial={{ scale: 2, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
@@ -135,7 +155,12 @@ export function TimeUpOverlay() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, type: 'spring' }}
       >
-        <div className="text-6xl font-bold mb-4">TIME'S UP!</div>
+        <div 
+          className="text-6xl font-bold mb-4"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
+          TIME'S UP!
+        </div>
       </motion.div>
     </motion.div>
   );

@@ -1,7 +1,7 @@
 // Score display component
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export function ScoreDisplay() {
   const currentScore = useGameStore((state) => state.currentScore);
@@ -9,29 +9,52 @@ export function ScoreDisplay() {
   const currentIncorrect = useGameStore((state) => state.currentIncorrect);
 
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex items-center gap-4">
       <div className="text-center">
-        <div className="text-sm font-medium text-gray-600">SCORE</div>
-        <AnimatedNumber value={currentScore} className="text-3xl font-bold text-gray-800" />
+        <div className="text-xs font-medium text-gray-500">SCORE</div>
+        <AnimatedNumber 
+          value={currentScore} 
+          className="text-2xl font-bold text-amber-600" 
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        />
       </div>
-      <div className="text-center">
-        <div className="text-sm font-medium text-green-600">✓</div>
-        <div className="text-xl font-bold text-green-600">{currentCorrect}</div>
-      </div>
-      <div className="text-center">
-        <div className="text-sm font-medium text-red-600">✗</div>
-        <div className="text-xl font-bold text-red-600">{currentIncorrect}</div>
+      <div className="flex gap-2">
+        <div className="bg-green-100 rounded-lg px-2 py-1 text-center min-w-[40px]">
+          <div 
+            className="text-lg font-bold text-green-600"
+            style={{ fontFamily: 'Baveuse, cursive' }}
+          >
+            {currentCorrect}
+          </div>
+        </div>
+        <div className="bg-red-100 rounded-lg px-2 py-1 text-center min-w-[40px]">
+          <div 
+            className="text-lg font-bold text-red-600"
+            style={{ fontFamily: 'Baveuse, cursive' }}
+          >
+            {currentIncorrect}
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
 // Animated number display for score counting
-function AnimatedNumber({ value, className = '' }: { value: number; className?: string }) {
+function AnimatedNumber({ 
+  value, 
+  className = '',
+  style = {}
+}: { 
+  value: number; 
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const [displayValue, setDisplayValue] = useState(value);
+  const prevValue = useRef(value);
 
   useEffect(() => {
-    if (displayValue === value) return;
+    if (prevValue.current === value) return;
     
     const diff = value - displayValue;
     const step = diff > 0 ? Math.ceil(diff / 10) : Math.floor(diff / 10);
@@ -48,15 +71,17 @@ function AnimatedNumber({ value, className = '' }: { value: number; className?: 
       });
     }, duration);
 
+    prevValue.current = value;
     return () => clearInterval(timer);
   }, [value, displayValue]);
 
   return (
     <motion.div
       className={className}
+      style={style}
       key={value}
       initial={{ scale: 1 }}
-      animate={{ scale: [1, 1.2, 1] }}
+      animate={{ scale: [1, 1.15, 1] }}
       transition={{ duration: 0.2 }}
     >
       {displayValue}
@@ -69,35 +94,37 @@ export function FeedbackFlash() {
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
   const currentCorrect = useGameStore((state) => state.currentCorrect);
   const currentIncorrect = useGameStore((state) => state.currentIncorrect);
-  const prevCorrect = useState(currentCorrect)[0];
-  const prevIncorrect = useState(currentIncorrect)[0];
+  const prevCorrect = useRef(currentCorrect);
+  const prevIncorrect = useRef(currentIncorrect);
 
   useEffect(() => {
-    if (currentCorrect > prevCorrect) {
+    if (currentCorrect > prevCorrect.current) {
       setFeedback('correct');
-      setTimeout(() => setFeedback(null), 500);
+      setTimeout(() => setFeedback(null), 300);
     }
-  }, [currentCorrect, prevCorrect]);
+    prevCorrect.current = currentCorrect;
+  }, [currentCorrect]);
 
   useEffect(() => {
-    if (currentIncorrect > prevIncorrect) {
+    if (currentIncorrect > prevIncorrect.current) {
       setFeedback('incorrect');
-      setTimeout(() => setFeedback(null), 500);
+      setTimeout(() => setFeedback(null), 300);
     }
-  }, [currentIncorrect, prevIncorrect]);
+    prevIncorrect.current = currentIncorrect;
+  }, [currentIncorrect]);
 
   return (
     <AnimatePresence>
       {feedback && (
         <motion.div
           className={`
-            fixed inset-0 pointer-events-none z-50
-            ${feedback === 'correct' ? 'bg-green-500' : 'bg-red-500'}
+            absolute inset-0 pointer-events-none z-40
+            ${feedback === 'correct' ? 'bg-green-400' : 'bg-red-400'}
           `}
-          initial={{ opacity: 0.3 }}
+          initial={{ opacity: 0.4 }}
           animate={{ opacity: 0 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
         />
       )}
     </AnimatePresence>
