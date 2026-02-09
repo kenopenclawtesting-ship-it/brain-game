@@ -5,7 +5,7 @@ import { useGameStore } from '../../store/gameStore';
 import { useGameTimer } from '../../hooks/useGameTimer';
 import { useSound } from '../../hooks/useSound';
 import { GameCanvas } from '../layout/GameCanvas';
-import { Timer, TimerCompact } from '../layout/Timer';
+import { Timer } from '../layout/Timer';
 import { ScoreDisplay, FeedbackFlash } from '../layout/ScoreDisplay';
 import { MINIGAMES, CATEGORY_NAMES } from '../../lib/constants';
 import { Category } from '../../types';
@@ -91,10 +91,7 @@ export function GameContainer({ children }: GameContainerProps) {
           <ScoreDisplay />
         </div>
 
-        {/* Timer bar at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-4">
-          <TimerCompact categoryColor={categoryColor} />
-        </div>
+        {/* Bottom timer bar removed — top-left Timer is sufficient */}
 
         {/* Game content - category-themed background */}
         <div className="absolute inset-0">
@@ -122,7 +119,7 @@ export function GameContainer({ children }: GameContainerProps) {
             }}
           />
           {/* Game content */}
-          <div className="relative h-full pt-20 pb-16 px-4">
+          <div className="relative h-full pt-20 pb-4 px-4">
             {children}
           </div>
         </div>
