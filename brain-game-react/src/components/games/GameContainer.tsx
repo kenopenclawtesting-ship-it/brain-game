@@ -55,7 +55,8 @@ export function GameContainer({ children }: GameContainerProps) {
   }, [currentScreen, play, stop, resetTimer, startTimer]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="game-page" style={{ justifyContent: 'center' }}>
+     <div className="flex flex-col items-center" style={{ position: 'relative', zIndex: 1 }}>
       {/* Header with category and game name */}
       <div className="w-full max-w-[640px]">
         <div 
@@ -129,6 +130,7 @@ export function GameContainer({ children }: GameContainerProps) {
         {/* Feedback flash overlay */}
         <FeedbackFlash />
       </GameCanvas>
+     </div>
     </div>
   );
 }

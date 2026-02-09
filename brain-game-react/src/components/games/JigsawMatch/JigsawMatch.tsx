@@ -1,224 +1,269 @@
-// JigsawMatch Game - FROM SOURCE.md
-// Match jigsaw pieces to their correct outlines
+// JigsawMatch Game - Rewritten from original JigsawMatch.as
+// Original: picture board with jigsaw pieces cut out. Player clicks correct
+// pieces from a mix of correct + wrong distractors at bottom.
+// React version: colorful mosaic grid with holes. Pieces at bottom colored
+// to match grid positions. Correct pieces fill holes, wrong ones are decoys.
+// Click correct → +score per piece. Click wrong → -score + puzzle restart.
+// CORRECT_SCORE: 19, INCORRECT_SCORE: -13
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
 
-// Simple shapes as "jigsaw pieces"
-const PIECES = [
-  { path: 'M0,0 L30,0 L30,30 L0,30 Z', name: 'square' },
-  { path: 'M15,0 L30,30 L0,30 Z', name: 'triangle' },
-  { path: 'M15,0 L30,15 L15,30 L0,15 Z', name: 'diamond' },
-  { path: 'M0,15 Q15,0 30,15 Q15,30 0,15', name: 'oval' },
-  { path: 'M15,0 L20,10 L30,12 L22,20 L25,30 L15,25 L5,30 L8,20 L0,12 L10,10 Z', name: 'star' },
-  { path: 'M0,10 L10,10 L10,0 L20,0 L20,10 L30,10 L30,20 L20,20 L20,30 L10,30 L10,20 L0,20 Z', name: 'cross' },
-];
+const GRID_COLS = 5;
+const GRID_ROWS = 4;
+const TOTAL_CELLS = GRID_COLS * GRID_ROWS;
+const CELL_SIZE = 50;
+const CELL_GAP = 2;
 
-const COLORS = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#8b5cf6', '#ec4899'];
-
-interface Piece {
-  id: number;
-  shapeIndex: number;
-  color: string;
-  rotation: number;
+// Golden angle distribution for maximally distinct hues
+function getCellStyle(cellIndex: number, seed: number) {
+  const hue = ((cellIndex * 137.508 + seed * 47.3) % 360 + 360) % 360;
+  const hue2 = (hue + 35) % 360;
+  // Vary saturation and lightness slightly for extra distinction
+  const sat = 60 + (cellIndex % 3) * 8;
+  const lit = 48 + (cellIndex % 5) * 4;
+  return {
+    bg: `linear-gradient(135deg, hsl(${hue}, ${sat}%, ${lit + 10}%) 0%, hsl(${hue2}, ${sat - 10}%, ${lit - 8}%) 100%)`,
+    border: `hsl(${hue}, ${sat}%, ${lit + 20}%)`,
+  };
 }
 
-interface Slot {
-  id: number;
-  shapeIndex: number;
-  rotation: number;
-  matched: boolean;
+interface BoardPiece {
+  cellIndex: number;
+  isCorrect: boolean;
+  uid: number;
 }
+
+interface Puzzle {
+  seed: number;
+  missingCells: number[];
+  pieces: BoardPiece[];
+  foundCells: number[];
+}
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+let uidCounter = 0;
 
 export function JigsawMatchGame() {
-  const [pieces, setPieces] = useState<Piece[]>([]);
-  const [slots, setSlots] = useState<Slot[]>([]);
-  const [selectedPiece, setSelectedPiece] = useState<number | null>(null);
+  const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
   const [totalCorrect, setTotalCorrect] = useState(0);
-  
-  const addCorrect = useGameStore((state) => state.addCorrect);
-  const addIncorrect = useGameStore((state) => state.addIncorrect);
-  const timeRemaining = useGameStore((state) => state.timeRemaining);
+  const [locked, setLocked] = useState(false);
+
+  const addCorrect = useGameStore((s) => s.addCorrect);
+  const addIncorrect = useGameStore((s) => s.addIncorrect);
+  const timeRemaining = useGameStore((s) => s.timeRemaining);
   const { playCorrect, playIncorrect } = useFeedbackSound();
 
-  const generatePuzzle = useCallback(() => {
-    const numPieces = Math.min(3 + Math.floor(totalCorrect / 3), 5);
-    
-    // Select random shapes
-    const shapeIndices = Array.from({ length: PIECES.length }, (_, i) => i)
-      .sort(() => Math.random() - 0.5)
-      .slice(0, numPieces);
-    
-    // Create pieces (with random colors)
-    const newPieces = shapeIndices.map((shapeIndex, i) => ({
-      id: i,
-      shapeIndex,
-      color: COLORS[i % COLORS.length],
-      rotation: 0,
+  const generatePuzzle = useCallback((): Puzzle => {
+    // From JigsawMatch.as restart():
+    // numCorrect = 1 + totalCorrect/4, numWrong = min(2 + totalCorrect/8, 3)
+    const numCorrect = Math.min(1 + Math.floor(totalCorrect / 4), 6);
+    const numWrong = Math.min(2 + Math.floor(totalCorrect / 8), 3);
+
+    const seed = Math.floor(Math.random() * 10000);
+    const allIndices = shuffle(Array.from({ length: TOTAL_CELLS }, (_, i) => i));
+
+    const missingCells = allIndices.slice(0, numCorrect);
+    const filledCells = allIndices.slice(numCorrect);
+
+    // Correct pieces — colors match the holes (not visible on board)
+    const correct: BoardPiece[] = missingCells.map((ci) => ({
+      cellIndex: ci,
+      isCorrect: true,
+      uid: ++uidCounter,
     }));
-    
-    // Create slots (in different order)
-    const shuffledIndices = [...shapeIndices].sort(() => Math.random() - 0.5);
-    const newSlots = shuffledIndices.map((shapeIndex, i) => ({
-      id: i,
-      shapeIndex,
-      rotation: 0,
-      matched: false,
+
+    // Wrong pieces — colors match VISIBLE cells (decoys)
+    const wrongCells = shuffle(filledCells).slice(0, numWrong);
+    const wrong: BoardPiece[] = wrongCells.map((ci) => ({
+      cellIndex: ci,
+      isCorrect: false,
+      uid: ++uidCounter,
     }));
-    
-    setPieces(newPieces.sort(() => Math.random() - 0.5));
-    setSlots(newSlots);
-    setSelectedPiece(null);
+
+    return {
+      seed,
+      missingCells,
+      pieces: shuffle([...correct, ...wrong]),
+      foundCells: [],
+    };
   }, [totalCorrect]);
 
   useEffect(() => {
-    generatePuzzle();
+    setPuzzle(generatePuzzle());
   }, []);
 
-  const handlePieceClick = (pieceId: number) => {
-    const piece = pieces.find((p) => p.id === pieceId);
-    if (!piece) return;
-    
-    // Check if already matched
-    const isMatched = slots.some(
-      (s) => s.matched && s.shapeIndex === piece.shapeIndex
-    );
-    if (isMatched) return;
-    
-    setSelectedPiece(pieceId);
-  };
+  const handlePieceClick = (pieceIndex: number) => {
+    if (!puzzle || locked) return;
+    const piece = puzzle.pieces[pieceIndex];
 
-  const handleSlotClick = (slotId: number) => {
-    if (selectedPiece === null) return;
-    
-    const piece = pieces.find((p) => p.id === selectedPiece);
-    const slot = slots.find((s) => s.id === slotId);
-    
-    if (!piece || !slot || slot.matched) return;
-    
-    if (piece.shapeIndex === slot.shapeIndex) {
+    if (piece.isCorrect) {
       playCorrect();
       addCorrect();
-      
-      setSlots((prev) => prev.map((s) =>
-        s.id === slotId ? { ...s, matched: true } : s
-      ));
-      
-      // Check if all matched
-      const allMatched = slots.filter((s) => s.id !== slotId).every((s) => s.matched);
-      if (allMatched) {
+
+      const newFound = [...puzzle.foundCells, piece.cellIndex];
+      const newPieces = puzzle.pieces.filter((_, i) => i !== pieceIndex);
+      const remainingCorrect = newPieces.filter((p) => p.isCorrect);
+
+      if (remainingCorrect.length === 0) {
+        // All correct pieces found → next puzzle
         setTotalCorrect((prev) => prev + 1);
-        setTimeout(() => generatePuzzle(), 500);
+        setLocked(true);
+        setTimeout(() => {
+          setPuzzle(generatePuzzle());
+          setLocked(false);
+        }, 600);
+      } else {
+        setPuzzle({ ...puzzle, foundCells: newFound, pieces: newPieces });
       }
     } else {
+      // Wrong piece → fail + restart puzzle (from original: fail(true,...))
       playIncorrect();
       addIncorrect();
+      setLocked(true);
+      setTimeout(() => {
+        setPuzzle(generatePuzzle());
+        setLocked(false);
+      }, 800);
     }
-    
-    setSelectedPiece(null);
   };
 
-  if (timeRemaining <= 0) return null;
+  if (!puzzle || timeRemaining <= 0) return null;
+
+  const holesLeft = puzzle.missingCells.length - puzzle.foundCells.length;
+  const gridW = GRID_COLS * CELL_SIZE + (GRID_COLS - 1) * CELL_GAP;
 
   return (
     <GameContainer>
       <div className="flex flex-col items-center justify-center h-full">
         <div
-          className="text-sm text-gray-300 mb-4"
+          className="text-sm text-gray-300 mb-2"
           style={{ fontFamily: 'Baveuse, cursive' }}
         >
-          {selectedPiece !== null
-            ? 'Now click a slot to place the piece'
-            : 'Click a piece, then click its matching slot'
-          }
+          Find the {holesLeft} missing piece{holesLeft !== 1 ? 's' : ''}!
         </div>
 
-        {/* Slots (outlines) with jigsaw frame */}
-        <div className="relative mb-8 p-4 rounded-xl" style={{ background: 'rgba(20,20,50,0.5)', border: '2px solid rgba(255,255,255,0.1)' }}>
-          <div className="flex gap-4">
-            {slots.map((slot) => (
-              <motion.button
-                key={slot.id}
-                onClick={() => handleSlotClick(slot.id)}
-                className="w-20 h-20 rounded-xl flex items-center justify-center overflow-hidden relative"
-                style={{
-                  background: slot.matched
-                    ? 'linear-gradient(180deg, #1a4a2a 0%, #0a3a1a 100%)'
-                    : 'linear-gradient(180deg, #2a2a4a 0%, #1a1a3a 100%)',
-                  border: slot.matched ? '3px solid #22c55e' : '3px dashed rgba(255,255,255,0.2)',
-                  boxShadow: slot.matched ? '0 0 12px rgba(34,197,94,0.4)' : 'none',
-                }}
-                whileHover={!slot.matched ? { scale: 1.05, borderColor: 'rgba(255,215,0,0.6)' } : {}}
-              >
-                <svg width="40" height="40" viewBox="0 0 30 30">
-                  <path
-                    d={PIECES[slot.shapeIndex].path}
-                    fill={slot.matched ? '#22c55e' : 'none'}
-                    stroke={slot.matched ? '#22c55e' : 'rgba(255,255,255,0.3)'}
-                    strokeWidth="2"
-                    strokeDasharray={slot.matched ? 'none' : '4'}
-                  />
-                </svg>
-                {slot.matched && (
-                  <img
-                    src="/assets/generated/jigsaw-piece-glow.png"
-                    className="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none"
-                    alt=""
-                  />
-                )}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-
-        {/* Pieces */}
-        <div className="flex gap-4">
-          {pieces.map((piece) => {
-            const isMatched = slots.some(
-              (s) => s.matched && s.shapeIndex === piece.shapeIndex
-            );
+        {/* Mosaic Board */}
+        <div
+          className="rounded-xl overflow-hidden mb-3"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${GRID_COLS}, ${CELL_SIZE}px)`,
+            gap: `${CELL_GAP}px`,
+            background: 'rgba(0,0,0,0.6)',
+            padding: '4px',
+            border: '2px solid rgba(255,255,255,0.12)',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+          }}
+        >
+          {Array.from({ length: TOTAL_CELLS }).map((_, i) => {
+            const isMissing =
+              puzzle.missingCells.includes(i) && !puzzle.foundCells.includes(i);
+            const isFound = puzzle.foundCells.includes(i);
+            const style = getCellStyle(i, puzzle.seed);
 
             return (
-              <motion.button
-                key={piece.id}
-                onClick={() => handlePieceClick(piece.id)}
-                className="w-20 h-20 rounded-xl flex items-center justify-center transition-all overflow-hidden"
+              <motion.div
+                key={i}
+                animate={
+                  isFound
+                    ? { scale: [0.7, 1.08, 1], opacity: [0.4, 1] }
+                    : {}
+                }
+                transition={{ duration: 0.35, ease: 'easeOut' }}
                 style={{
-                  opacity: isMatched ? 0.25 : 1,
-                  background: selectedPiece === piece.id
-                    ? 'linear-gradient(180deg, #3a3a8a 0%, #2a2a6a 100%)'
-                    : 'linear-gradient(180deg, #3a3a6a 0%, #2a2a4a 100%)',
-                  border: selectedPiece === piece.id
-                    ? '3px solid #ffd700'
-                    : '3px solid rgba(255,255,255,0.15)',
-                  boxShadow: selectedPiece === piece.id ? '0 0 15px rgba(255,215,0,0.4)' : 'none',
-                  cursor: isMatched ? 'not-allowed' : 'pointer',
+                  width: CELL_SIZE,
+                  height: CELL_SIZE,
+                  background: isMissing
+                    ? 'rgba(8,8,30,0.9)'
+                    : style.bg,
+                  border: isMissing
+                    ? '2px dashed rgba(255,215,0,0.3)'
+                    : isFound
+                      ? `2px solid rgba(34,197,94,0.5)`
+                      : `1px solid rgba(255,255,255,0.06)`,
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: isFound
+                    ? '0 0 10px rgba(34,197,94,0.25)'
+                    : isMissing
+                      ? 'inset 0 2px 8px rgba(0,0,0,0.4)'
+                      : 'none',
                 }}
-                whileHover={!isMatched ? { scale: 1.05, boxShadow: '0 0 15px rgba(255,215,0,0.3)' } : {}}
-                whileTap={!isMatched ? { scale: 0.95 } : {}}
-                disabled={isMatched}
               >
-                <svg width="40" height="40" viewBox="0 0 30 30">
-                  <path
-                    d={PIECES[piece.shapeIndex].path}
-                    fill={piece.color}
-                    stroke={piece.color}
-                    strokeWidth="1"
-                    filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"
-                  />
-                </svg>
-              </motion.button>
+                {isMissing && (
+                  <span
+                    style={{
+                      color: 'rgba(255,215,0,0.2)',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    ?
+                  </span>
+                )}
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Pieces to choose */}
+        <div
+          className="flex flex-wrap justify-center gap-2"
+          style={{ maxWidth: gridW + 40 }}
+        >
+          {puzzle.pieces.map((piece, i) => {
+            const style = getCellStyle(piece.cellIndex, puzzle.seed);
+            return (
+              <motion.button
+                key={piece.uid}
+                onClick={() => handlePieceClick(i)}
+                disabled={locked}
+                className="rounded-lg"
+                style={{
+                  width: CELL_SIZE + 6,
+                  height: CELL_SIZE + 6,
+                  background: style.bg,
+                  border: '3px solid rgba(255,255,255,0.2)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+                  cursor: locked ? 'not-allowed' : 'pointer',
+                }}
+                whileHover={
+                  !locked
+                    ? {
+                        scale: 1.12,
+                        boxShadow: '0 0 20px rgba(255,215,0,0.5)',
+                        borderColor: 'rgba(255,215,0,0.6)',
+                      }
+                    : {}
+                }
+                whileTap={!locked ? { scale: 0.9 } : {}}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.04, duration: 0.25 }}
+              />
             );
           })}
         </div>
 
         <div
-          className="mt-6 text-sm text-gray-400"
+          className="mt-2 text-xs text-gray-500"
           style={{ fontFamily: 'Baveuse, cursive' }}
         >
-          {slots.filter((s) => s.matched).length} / {slots.length} matched
+          {puzzle.pieces.filter((p) => p.isCorrect).length} correct /{' '}
+          {puzzle.pieces.length} pieces
         </div>
       </div>
     </GameContainer>
