@@ -1,0 +1,682 @@
+{
+  "card-back.png": {
+    "prompt": "Playing card back design, ornate purple and gold pattern, swirling motifs, premium game card, square format, centered on solid black background, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:54:31.357Z"
+  },
+  "card-front-star.png": {
+    "prompt": "Glowing golden star symbol on dark purple card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:54:40.009Z"
+  },
+  "card-front-moon.png": {
+    "prompt": "Glowing silver crescent moon symbol on dark blue card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:54:46.966Z"
+  },
+  "card-front-sun.png": {
+    "prompt": "Glowing orange sun symbol on dark red card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:54:55.112Z"
+  },
+  "card-front-lightning.png": {
+    "prompt": "Glowing yellow lightning bolt symbol on dark teal card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:02.868Z"
+  },
+  "card-front-diamond.png": {
+    "prompt": "Glowing cyan diamond gem symbol on dark purple card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:09.095Z"
+  },
+  "card-front-heart.png": {
+    "prompt": "Glowing pink heart symbol on dark magenta card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:16.044Z"
+  },
+  "card-front-crown.png": {
+    "prompt": "Glowing gold crown symbol on dark navy card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:20.853Z"
+  },
+  "card-front-flame.png": {
+    "prompt": "Glowing orange flame symbol on dark crimson card face, game card illustration, centered design, ornate border, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:25.884Z"
+  },
+  "card-match-effect.png": {
+    "prompt": "Sparkle burst effect, golden particles radiating outward, celebration sparkles, transparent background, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:30.942Z"
+  },
+  "shape-circle.png": {
+    "prompt": "Glossy 3D sphere, vibrant red gradient, glass reflection highlight, floating game piece, single object centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:38.229Z"
+  },
+  "shape-square.png": {
+    "prompt": "Glossy 3D cube, vibrant blue gradient, glass reflection highlight, floating game piece, single object centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:44.580Z"
+  },
+  "shape-triangle.png": {
+    "prompt": "Glossy 3D pyramid, vibrant green gradient, glass reflection highlight, floating game piece, single object centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:50.132Z"
+  },
+  "shape-star.png": {
+    "prompt": "Glossy 3D star shape, vibrant yellow gradient, metallic sheen, floating game piece, single object centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:55:58.039Z"
+  },
+  "shape-diamond.png": {
+    "prompt": "Glossy 3D diamond shape, vibrant purple gradient, crystalline reflections, floating game piece, single object centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:02.665Z"
+  },
+  "shape-hexagon.png": {
+    "prompt": "Glossy 3D hexagon, vibrant orange gradient, glass reflection highlight, floating game piece, single object centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:13.234Z"
+  },
+  "shape-slot-empty.png": {
+    "prompt": "Empty rounded square slot, dark glass panel with subtle dashed glow border, placeholder indicator, game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:20.272Z"
+  },
+  "shape-slot-correct.png": {
+    "prompt": "Rounded square slot with bright green glow border, correct answer indicator, glass panel, game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:25.145Z"
+  },
+  "calc-display-panel.png": {
+    "prompt": "Futuristic holographic display panel, dark glass with electric blue glow edges, math equation display screen, wide format, sci-fi game UI, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T15:56:31.814Z"
+  },
+  "calc-number-tile.png": {
+    "prompt": "Number tile button, dark glass with blue neon glow edge, rounded square, game UI button element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:36.273Z"
+  },
+  "calc-operator-plus.png": {
+    "prompt": "Plus sign mathematical operator, green neon glow, glossy 3D button, math game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:49.763Z"
+  },
+  "calc-operator-minus.png": {
+    "prompt": "Minus sign mathematical operator, red neon glow, glossy 3D button, math game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:56:57.482Z"
+  },
+  "calc-operator-multiply.png": {
+    "prompt": "Multiply sign X mathematical operator, orange neon glow, glossy 3D button, math game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:03.436Z"
+  },
+  "calc-operator-divide.png": {
+    "prompt": "Division sign mathematical operator, purple neon glow, glossy 3D button, math game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:10.584Z"
+  },
+  "calc-equals.png": {
+    "prompt": "Equals sign, golden neon glow, glossy 3D button, math game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:18.336Z"
+  },
+  "missing-sign-question.png": {
+    "prompt": "Glowing question mark inside neon circle, mystery symbol, blue and purple neon glow, game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:23.658Z"
+  },
+  "cube-blue.png": {
+    "prompt": "Single isometric cube, blue gradient with subtle shadow, clean geometric edges, game piece, 3D render, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:29.034Z"
+  },
+  "cube-red.png": {
+    "prompt": "Single isometric cube, red gradient with subtle shadow, clean geometric edges, game piece, 3D render, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:34.929Z"
+  },
+  "cube-green.png": {
+    "prompt": "Single isometric cube, green gradient with subtle shadow, clean geometric edges, game piece, 3D render, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:40.267Z"
+  },
+  "cube-yellow.png": {
+    "prompt": "Single isometric cube, yellow gradient with subtle shadow, clean geometric edges, game piece, 3D render, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:47.248Z"
+  },
+  "cube-grid-base.png": {
+    "prompt": "Isometric grid floor platform, subtle grid lines, dark glass surface with faint blue glow, perspective view, game board base, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T15:57:51.524Z"
+  },
+  "scale-balance.png": {
+    "prompt": "Golden ornate balance scale, two hanging platforms, scientific weighing instrument, centered composition, game prop illustration, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "landscape_16_9",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:57:56.678Z"
+  },
+  "weight-anvil.png": {
+    "prompt": "Cartoon anvil, heavy dark metallic, stylized game object, single item centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:02.739Z"
+  },
+  "weight-feather.png": {
+    "prompt": "Single colorful feather, light and delicate, floating, stylized game object, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:13.069Z"
+  },
+  "weight-brick.png": {
+    "prompt": "Red brick, heavy looking, textured, stylized cartoon game object, single item, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:18.034Z"
+  },
+  "weight-ball.png": {
+    "prompt": "Iron cannonball, heavy dark metallic sphere, stylized game object, single item, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:28.055Z"
+  },
+  "weight-balloon.png": {
+    "prompt": "Colorful helium balloon with string, light floating, stylized game object, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:34.608Z"
+  },
+  "weight-rock.png": {
+    "prompt": "Grey stone rock, heavy granite, stylized cartoon game object, single item, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:41.395Z"
+  },
+  "weight-cloud.png": {
+    "prompt": "Fluffy white cloud, light and airy, cartoon style, stylized game object, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:46.546Z"
+  },
+  "weight-gold-bar.png": {
+    "prompt": "Gold bar ingot, shiny precious metal, heavy looking, stylized game object, single item, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:58:56.265Z"
+  },
+  "meteor-red.png": {
+    "prompt": "Flaming red meteor with fire trail, glowing space rock, game sprite, dynamic angle, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:01.913Z"
+  },
+  "meteor-blue.png": {
+    "prompt": "Icy blue meteor with frost crystal trail, glowing space rock, game sprite, dynamic angle, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:08.243Z"
+  },
+  "meteor-green.png": {
+    "prompt": "Glowing green meteor with energy trail, radioactive space rock, game sprite, dynamic angle, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:14.599Z"
+  },
+  "meteor-yellow.png": {
+    "prompt": "Golden meteor with spark trail, bright space rock, game sprite, dynamic angle, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:20.327Z"
+  },
+  "meteor-purple.png": {
+    "prompt": "Mystic purple meteor with magic particle trail, space rock, game sprite, dynamic angle, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:24.778Z"
+  },
+  "meteor-explosion.png": {
+    "prompt": "Colorful explosion burst, impact shockwave effect, space debris particles, game VFX, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:29.821Z"
+  },
+  "space-bg-game.png": {
+    "prompt": "Deep space starfield with colorful nebula clouds, dark blues and purples, stars twinkling, game background, wide format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T15:59:33.521Z"
+  },
+  "jigsaw-frame.png": {
+    "prompt": "Empty jigsaw puzzle frame, dark polished wood texture border, empty center area, game board, wide format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T15:59:37.240Z"
+  },
+  "jigsaw-piece-glow.png": {
+    "prompt": "Single jigsaw puzzle piece with golden glow outline, highlighted selection, game UI element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:43.786Z"
+  },
+  "jigsaw-complete-effect.png": {
+    "prompt": "Completion celebration effect, golden sparkles and confetti burst radiating outward, game VFX, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:48.865Z"
+  },
+  "number-bubble-1.png": {
+    "prompt": "Number 1 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T15:59:53.588Z"
+  },
+  "number-bubble-2.png": {
+    "prompt": "Number 2 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:00.579Z"
+  },
+  "number-bubble-3.png": {
+    "prompt": "Number 3 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:05.674Z"
+  },
+  "number-bubble-4.png": {
+    "prompt": "Number 4 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:10.566Z"
+  },
+  "number-bubble-5.png": {
+    "prompt": "Number 5 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:19.338Z"
+  },
+  "number-bubble-6.png": {
+    "prompt": "Number 6 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:24.783Z"
+  },
+  "number-bubble-7.png": {
+    "prompt": "Number 7 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:32.462Z"
+  },
+  "number-bubble-8.png": {
+    "prompt": "Number 8 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:39.035Z"
+  },
+  "number-bubble-9.png": {
+    "prompt": "Number 9 digit inside glossy floating translucent bubble, colorful iridescent gradient, game UI element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:45.996Z"
+  },
+  "number-target-display.png": {
+    "prompt": "Target number display panel, golden ornate frame with LED style display area, dark center, game UI scoreboard, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T16:00:49.730Z"
+  },
+  "number-pop-effect.png": {
+    "prompt": "Bubble pop splash effect, colorful liquid droplets splashing outward, game VFX, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:00:57.509Z"
+  },
+  "memory-orb-red.png": {
+    "prompt": "Glowing red mystical energy sphere orb, inner light, magical aura, game element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:04.434Z"
+  },
+  "memory-orb-blue.png": {
+    "prompt": "Glowing blue mystical energy sphere orb, inner light, magical aura, game element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:12.344Z"
+  },
+  "memory-orb-green.png": {
+    "prompt": "Glowing green mystical energy sphere orb, inner light, magical aura, game element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:21.939Z"
+  },
+  "memory-orb-yellow.png": {
+    "prompt": "Glowing yellow mystical energy sphere orb, inner light, magical aura, game element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:29.018Z"
+  },
+  "memory-orb-purple.png": {
+    "prompt": "Glowing purple mystical energy sphere orb, inner light, magical aura, game element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:35.972Z"
+  },
+  "memory-orb-dim.png": {
+    "prompt": "Dim grey translucent sphere orb, inactive state, subtle faint inner glow, game element, centered, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:42.627Z"
+  },
+  "memory-grid-bg.png": {
+    "prompt": "Mystical stone platform with glowing rune circle markings, dark atmospheric, magical game board surface, wide format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T16:01:47.052Z"
+  },
+  "hex-tile-inactive.png": {
+    "prompt": "Dark hexagon tile with subtle border edge glow, inactive muted state, game piece, geometric, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:52.158Z"
+  },
+  "hex-tile-active.png": {
+    "prompt": "Bright glowing hexagon tile, vivid neon blue energy fill, active highlighted state, game piece, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:01:58.315Z"
+  },
+  "hex-tile-correct.png": {
+    "prompt": "Bright green glowing hexagon tile, correct success state, emerald energy, game piece, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:06.327Z"
+  },
+  "hex-tile-wrong.png": {
+    "prompt": "Red flashing hexagon tile, error wrong state, crimson glow, game piece, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:11.160Z"
+  },
+  "hex-grid-bg.png": {
+    "prompt": "Hexagonal grid pattern background, dark surface with subtle neon blue lines forming hexagons, circuit board tech style, wide format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T16:02:15.194Z"
+  },
+  "car-red.png": {
+    "prompt": "Cartoon red sports car, top-down aerial view, stylized game sprite, clean design, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:20.520Z"
+  },
+  "car-blue.png": {
+    "prompt": "Cartoon blue sedan car, top-down aerial view, stylized game sprite, clean design, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:27.473Z"
+  },
+  "car-green.png": {
+    "prompt": "Cartoon green SUV car, top-down aerial view, stylized game sprite, clean design, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:33.803Z"
+  },
+  "car-yellow.png": {
+    "prompt": "Cartoon yellow taxi cab car, top-down aerial view, stylized game sprite, clean design, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:38.739Z"
+  },
+  "car-purple.png": {
+    "prompt": "Cartoon purple muscle car, top-down aerial view, stylized game sprite, clean design, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:02:44.734Z"
+  },
+  "road-tile.png": {
+    "prompt": "Road segment tile, dark asphalt with white lane markings, top-down view, game tile, square format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "square",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T16:02:48.893Z"
+  },
+  "intersection-tile.png": {
+    "prompt": "Road intersection crossroads tile, dark asphalt with lane markings, top-down view, game tile, square format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "square",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T16:02:53.359Z"
+  },
+  "road-bg.png": {
+    "prompt": "Miniature city aerial view with roads and colorful buildings, cartoon tilt-shift style, game background, wide format, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": false,
+    "size": "landscape_16_9",
+    "cost": 0.04,
+    "timestamp": "2026-02-09T16:02:57.213Z"
+  },
+  "correct-feedback.png": {
+    "prompt": "Green checkmark with sparkle burst particles, correct answer celebration, game feedback icon, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:03:02.525Z"
+  },
+  "wrong-feedback.png": {
+    "prompt": "Red X mark with shake motion lines, wrong answer indicator, game feedback icon, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:03:08.626Z"
+  },
+  "score-display.png": {
+    "prompt": "Score counter display panel, dark glass with golden frame, LED style number area, game HUD element, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "square",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:03:15.050Z"
+  },
+  "timer-bar-frame.png": {
+    "prompt": "Progress bar frame border, dark glass panel with golden edge trim, horizontal bar shape, game UI, premium mobile game art style, glossy 3D render, rich gradients, deep purple and gold color palette with neon accents, high detail, 4K quality",
+    "model": "fal-ai/flux-pro/v1.1",
+    "bgRemoved": true,
+    "size": "landscape_16_9",
+    "cost": 0.05,
+    "timestamp": "2026-02-09T16:03:20.627Z"
+  }
+}
