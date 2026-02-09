@@ -6,8 +6,16 @@ import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
 
-const CARD_COLORS = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#6b7280', '#8b5cf6', '#ec4899', '#f97316'];
-const CARD_SHAPES = ['●', '■', '★', '▲', '◆', '♠', '♥', '♣'];
+const CARD_FRONTS = [
+  '/assets/generated/card-front-star.png',
+  '/assets/generated/card-front-moon.png',
+  '/assets/generated/card-front-sun.png',
+  '/assets/generated/card-front-lightning.png',
+  '/assets/generated/card-front-diamond.png',
+  '/assets/generated/card-front-heart.png',
+  '/assets/generated/card-front-crown.png',
+  '/assets/generated/card-front-flame.png',
+];
 
 interface Card {
   id: number;
@@ -135,53 +143,73 @@ export function MatchCardGame() {
   return (
     <GameContainer>
       <div className="flex flex-col items-center justify-center h-full">
-        <div className="text-sm text-gray-500 mb-4">
+        <div
+          className="text-sm text-gray-300 mb-4"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
           {isRevealing ? 'Memorize the cards!' : 'Find the matching pairs!'}
         </div>
-        
-        <div 
-          className="grid gap-2"
+
+        <div
+          className="grid gap-3"
           style={{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }}
         >
           {cards.map((card) => (
             <motion.button
               key={card.id}
               onClick={() => handleCardClick(card.id)}
-              className={`
-                w-16 h-20 rounded-lg font-bold text-2xl transition-all
-                ${card.isMatched ? 'opacity-30' : ''}
-                ${card.isFlipped ? 'bg-white border-2 border-gray-300' : 'bg-blue-500 hover:bg-blue-600'}
-              `}
-              whileHover={!card.isFlipped && !card.isMatched ? { scale: 1.05 } : {}}
-              whileTap={!card.isFlipped && !card.isMatched ? { scale: 0.95 } : {}}
+              className="relative w-[68px] h-[84px] rounded-xl overflow-hidden"
+              style={{
+                opacity: card.isMatched ? 0.35 : 1,
+                filter: card.isMatched ? 'grayscale(0.5)' : 'none',
+                boxShadow: card.isFlipped && !card.isMatched
+                  ? '0 0 12px rgba(255,215,0,0.4)'
+                  : '0 4px 8px rgba(0,0,0,0.3)',
+              }}
+              whileHover={!card.isFlipped && !card.isMatched ? { scale: 1.08, boxShadow: '0 0 18px rgba(255,215,0,0.6)' } : {}}
+              whileTap={!card.isFlipped && !card.isMatched ? { scale: 0.93 } : {}}
               disabled={card.isFlipped || card.isMatched || !canClick}
             >
               <AnimatePresence mode="wait">
                 {card.isFlipped ? (
-                  <motion.span
+                  <motion.img
+                    key="front"
+                    src={CARD_FRONTS[card.value % CARD_FRONTS.length]}
                     initial={{ rotateY: 90 }}
                     animate={{ rotateY: 0 }}
                     exit={{ rotateY: 90 }}
-                    style={{ color: CARD_COLORS[card.value % CARD_COLORS.length] }}
-                  >
-                    {CARD_SHAPES[card.value % CARD_SHAPES.length]}
-                  </motion.span>
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                    alt=""
+                  />
                 ) : (
-                  <motion.span
+                  <motion.img
+                    key="back"
+                    src="/assets/generated/card-back.png"
                     initial={{ rotateY: -90 }}
                     animate={{ rotateY: 0 }}
                     exit={{ rotateY: -90 }}
-                    className="text-white"
-                  >
-                    ?
-                  </motion.span>
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                    alt=""
+                  />
                 )}
               </AnimatePresence>
+              {card.isMatched && (
+                <img
+                  src="/assets/generated/card-match-effect.png"
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-70"
+                  alt=""
+                />
+              )}
             </motion.button>
           ))}
         </div>
-        
-        <div className="mt-4 text-sm text-gray-500">
+
+        <div
+          className="mt-4 text-sm text-gray-400"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
           Round {round + 1} • {cards.filter((c) => !c.isMatched).length / 2} pairs left
         </div>
       </div>

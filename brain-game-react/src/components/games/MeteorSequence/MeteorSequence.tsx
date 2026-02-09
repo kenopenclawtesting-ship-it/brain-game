@@ -24,8 +24,14 @@ interface Meteor {
 // Number words for display variety (from ActionScript NUM_TO_STRING)
 const NUMBER_WORDS = ['ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN'];
 
-// Meteor colors
-const METEOR_COLORS = ['#cd853f', '#daa520', '#b8860b', '#d2691e', '#8b4513'];
+// Meteor AI-generated images
+const METEOR_IMAGES = [
+  '/assets/generated/meteor-red.png',
+  '/assets/generated/meteor-blue.png',
+  '/assets/generated/meteor-green.png',
+  '/assets/generated/meteor-yellow.png',
+  '/assets/generated/meteor-purple.png',
+];
 
 export function MeteorSequenceGame() {
   const [meteors, setMeteors] = useState<Meteor[]>([]);
@@ -233,28 +239,16 @@ export function MeteorSequenceGame() {
         </div>
         
         {/* Meteor field - space background */}
-        <div 
+        <div
           className="relative w-[400px] h-[240px] rounded-xl overflow-hidden"
-          style={{
-            background: 'linear-gradient(180deg, #0a0a20 0%, #1a1a40 50%, #0a1a30 100%)',
-            boxShadow: 'inset 0 0 50px rgba(0,0,50,0.5)'
-          }}
+          style={{ boxShadow: 'inset 0 0 50px rgba(0,0,50,0.5)' }}
         >
-          {/* Stars background */}
-          {starsRef.current.map((star, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-white"
-              style={{
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-                width: star.size,
-                height: star.size,
-                opacity: star.opacity,
-              }}
-            />
-          ))}
-          
+          <img
+            src="/assets/generated/space-bg-game.png"
+            className="absolute inset-0 w-full h-full object-cover"
+            alt=""
+          />
+
           {/* Meteors */}
           <AnimatePresence>
             {meteors.map((meteor) => (
@@ -262,37 +256,38 @@ export function MeteorSequenceGame() {
                 key={meteor.id}
                 onClick={() => handleMeteorClick(meteor)}
                 initial={{ scale: 0, opacity: 0 }}
-                animate={{ 
-                  scale: meteor.clicked ? 0 : 1, 
+                animate={{
+                  scale: meteor.clicked ? 0 : 1,
                   opacity: meteor.clicked ? 0 : 1,
                   x: meteor.x - 28,
                   y: meteor.y - 28,
                   rotate: meteor.rotation,
                 }}
                 exit={{ scale: 0, opacity: 0 }}
-                transition={{ 
+                transition={{
                   x: { duration: 0.016, ease: 'linear' },
                   y: { duration: 0.016, ease: 'linear' },
                   scale: { duration: 0.3 },
                   opacity: { duration: 0.3 },
                 }}
-                className="absolute w-14 h-14 rounded-full flex items-center justify-center font-bold cursor-pointer"
+                className="absolute w-14 h-14 flex items-center justify-center font-bold cursor-pointer"
                 style={{
-                  background: `radial-gradient(circle at 30% 30%, ${METEOR_COLORS[meteor.id % METEOR_COLORS.length]}, #3d2817)`,
-                  boxShadow: meteor.clicked 
-                    ? 'none' 
-                    : `0 0 15px rgba(255, 150, 50, 0.5), inset 0 -5px 10px rgba(0,0,0,0.3)`,
-                  border: '2px solid rgba(255,200,100,0.3)',
                   fontFamily: 'Baveuse, cursive',
                   fontSize: meteor.displayValue.length > 3 ? '10px' : '16px',
                   color: 'white',
-                  textShadow: '1px 1px 2px black',
+                  textShadow: '1px 1px 3px black',
                 }}
-                whileHover={!meteor.clicked ? { scale: 1.15, boxShadow: '0 0 25px rgba(255, 200, 100, 0.7)' } : {}}
+                whileHover={!meteor.clicked ? { scale: 1.15, filter: 'brightness(1.3)' } : {}}
                 whileTap={!meteor.clicked ? { scale: 0.9 } : {}}
                 disabled={meteor.clicked}
               >
-                {meteor.displayValue}
+                <img
+                  src={METEOR_IMAGES[meteor.id % METEOR_IMAGES.length]}
+                  className="absolute inset-0 w-full h-full object-contain"
+                  draggable={false}
+                  alt=""
+                />
+                <span className="relative z-10">{meteor.displayValue}</span>
               </motion.button>
             ))}
           </AnimatePresence>

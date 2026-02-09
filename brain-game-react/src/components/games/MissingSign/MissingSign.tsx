@@ -129,9 +129,11 @@ export function MissingSignGame() {
               exit={{ scale: 0.5, opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
             >
-              <span className={`text-8xl ${feedback === 'correct' ? 'text-green-500' : 'text-red-500'}`}>
-                {feedback === 'correct' ? '✓' : '✗'}
-              </span>
+              <img
+                src={feedback === 'correct' ? '/assets/generated/correct-feedback.png' : '/assets/generated/wrong-feedback.png'}
+                className="w-24 h-24 object-contain"
+                alt=""
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -145,13 +147,17 @@ export function MissingSignGame() {
           style={{ fontFamily: 'Baveuse, cursive' }}
         >
           <span>{question.num1}</span>
-          <motion.span 
-            className="w-16 h-16 bg-gradient-to-b from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center text-4xl text-gray-900 shadow-lg border-4 border-yellow-300"
+          <motion.div
+            className="relative w-16 h-16 rounded-2xl overflow-hidden"
             animate={{ rotate: [0, 5, -5, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
-            ?
-          </motion.span>
+            <img
+              src="/assets/generated/missing-sign-question.png"
+              className="w-full h-full object-cover"
+              alt="?"
+            />
+          </motion.div>
           <span>{question.num2}</span>
           <span className="text-gray-400">=</span>
           <span>{question.result}</span>
@@ -159,21 +165,38 @@ export function MissingSignGame() {
 
         {/* Operator buttons */}
         <div className="grid grid-cols-4 gap-4">
-          {OPERATORS.map((op) => (
-            <motion.button
-              key={op}
-              onClick={() => handleOperatorClick(op)}
-              className="w-20 h-20 bg-gradient-to-b from-blue-500 to-blue-700 hover:from-blue-400 hover:to-blue-600 text-white text-4xl font-bold rounded-2xl shadow-lg border-2 border-blue-400"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              style={{ fontFamily: 'Baveuse, cursive' }}
-            >
-              {op}
-            </motion.button>
-          ))}
+          {OPERATORS.map((op) => {
+            const opImageMap: Record<string, string> = {
+              '+': '/assets/generated/calc-operator-plus.png',
+              '-': '/assets/generated/calc-operator-minus.png',
+              '×': '/assets/generated/calc-operator-multiply.png',
+              '÷': '/assets/generated/calc-operator-divide.png',
+            };
+            return (
+              <motion.button
+                key={op}
+                onClick={() => handleOperatorClick(op)}
+                className="relative w-20 h-20 rounded-2xl overflow-hidden shadow-lg"
+                whileHover={{ scale: 1.1, y: -2, boxShadow: '0 0 20px rgba(255,215,0,0.5)' }}
+                whileTap={{ scale: 0.93 }}
+              >
+                <img
+                  src={opImageMap[op]}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  alt={op}
+                />
+                <span
+                  className="relative z-10 text-white text-4xl font-bold"
+                  style={{ fontFamily: 'Baveuse, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
+                >
+                  {op}
+                </span>
+              </motion.button>
+            );
+          })}
         </div>
 
-        <div 
+        <div
           className="mt-8 text-gray-400 text-lg"
           style={{ fontFamily: 'Baveuse, cursive' }}
         >

@@ -168,9 +168,11 @@ export function CubeCounterGame() {
               exit={{ scale: 0.5, opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
             >
-              <span className={`text-8xl ${feedback === 'correct' ? 'text-green-400' : 'text-red-400'}`}>
-                {feedback === 'correct' ? '✓' : '✗'}
-              </span>
+              <img
+                src={feedback === 'correct' ? '/assets/generated/correct-feedback.png' : '/assets/generated/wrong-feedback.png'}
+                className="w-24 h-24 object-contain"
+                alt=""
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -183,8 +185,13 @@ export function CubeCounterGame() {
         </div>
         
         {/* Isometric cube display */}
-        <div className="relative mb-4" style={{ width: 400, height: 180 }}>
-          <svg width="400" height="180" viewBox="0 0 400 180">
+        <div className="relative mb-4 rounded-xl overflow-hidden" style={{ width: 400, height: 180 }}>
+          <img
+            src="/assets/generated/cube-grid-base.png"
+            className="absolute inset-0 w-full h-full object-cover opacity-30"
+            alt=""
+          />
+          <svg width="400" height="180" viewBox="0 0 400 180" className="relative z-10">
             {showCubes && structure.grid.map((row, x) =>
               row.map((height, y) =>
                 Array.from({ length: height }).map((_, z) => {

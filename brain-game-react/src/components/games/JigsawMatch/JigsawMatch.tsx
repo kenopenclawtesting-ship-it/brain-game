@@ -125,39 +125,52 @@ export function JigsawMatchGame() {
   return (
     <GameContainer>
       <div className="flex flex-col items-center justify-center h-full">
-        <div className="text-sm text-gray-500 mb-4">
-          {selectedPiece !== null 
-            ? 'Now click a slot to place the piece' 
+        <div
+          className="text-sm text-gray-300 mb-4"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
+          {selectedPiece !== null
+            ? 'Now click a slot to place the piece'
             : 'Click a piece, then click its matching slot'
           }
         </div>
 
-        {/* Slots (outlines) */}
-        <div className="flex gap-4 mb-8">
-          {slots.map((slot) => (
-            <motion.button
-              key={slot.id}
-              onClick={() => handleSlotClick(slot.id)}
-              className={`
-                w-20 h-20 rounded-lg border-4 flex items-center justify-center
-                ${slot.matched 
-                  ? 'bg-green-100 border-green-500' 
-                  : 'bg-gray-100 border-dashed border-gray-400 hover:border-blue-500'
-                }
-              `}
-              whileHover={!slot.matched ? { scale: 1.05 } : {}}
-            >
-              <svg width="40" height="40" viewBox="0 0 30 30">
-                <path
-                  d={PIECES[slot.shapeIndex].path}
-                  fill={slot.matched ? '#22c55e' : 'none'}
-                  stroke={slot.matched ? '#22c55e' : '#9ca3af'}
-                  strokeWidth="2"
-                  strokeDasharray={slot.matched ? 'none' : '4'}
-                />
-              </svg>
-            </motion.button>
-          ))}
+        {/* Slots (outlines) with jigsaw frame */}
+        <div className="relative mb-8 p-4 rounded-xl" style={{ background: 'rgba(20,20,50,0.5)', border: '2px solid rgba(255,255,255,0.1)' }}>
+          <div className="flex gap-4">
+            {slots.map((slot) => (
+              <motion.button
+                key={slot.id}
+                onClick={() => handleSlotClick(slot.id)}
+                className="w-20 h-20 rounded-xl flex items-center justify-center overflow-hidden relative"
+                style={{
+                  background: slot.matched
+                    ? 'linear-gradient(180deg, #1a4a2a 0%, #0a3a1a 100%)'
+                    : 'linear-gradient(180deg, #2a2a4a 0%, #1a1a3a 100%)',
+                  border: slot.matched ? '3px solid #22c55e' : '3px dashed rgba(255,255,255,0.2)',
+                  boxShadow: slot.matched ? '0 0 12px rgba(34,197,94,0.4)' : 'none',
+                }}
+                whileHover={!slot.matched ? { scale: 1.05, borderColor: 'rgba(255,215,0,0.6)' } : {}}
+              >
+                <svg width="40" height="40" viewBox="0 0 30 30">
+                  <path
+                    d={PIECES[slot.shapeIndex].path}
+                    fill={slot.matched ? '#22c55e' : 'none'}
+                    stroke={slot.matched ? '#22c55e' : 'rgba(255,255,255,0.3)'}
+                    strokeWidth="2"
+                    strokeDasharray={slot.matched ? 'none' : '4'}
+                  />
+                </svg>
+                {slot.matched && (
+                  <img
+                    src="/assets/generated/jigsaw-piece-glow.png"
+                    className="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none"
+                    alt=""
+                  />
+                )}
+              </motion.button>
+            ))}
+          </div>
         </div>
 
         {/* Pieces */}
@@ -166,22 +179,24 @@ export function JigsawMatchGame() {
             const isMatched = slots.some(
               (s) => s.matched && s.shapeIndex === piece.shapeIndex
             );
-            
+
             return (
               <motion.button
                 key={piece.id}
                 onClick={() => handlePieceClick(piece.id)}
-                className={`
-                  w-20 h-20 rounded-lg border-4 flex items-center justify-center
-                  transition-all
-                  ${isMatched 
-                    ? 'opacity-30 cursor-not-allowed' 
-                    : selectedPiece === piece.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-300 bg-white hover:border-blue-400'
-                  }
-                `}
-                whileHover={!isMatched ? { scale: 1.05 } : {}}
+                className="w-20 h-20 rounded-xl flex items-center justify-center transition-all overflow-hidden"
+                style={{
+                  opacity: isMatched ? 0.25 : 1,
+                  background: selectedPiece === piece.id
+                    ? 'linear-gradient(180deg, #3a3a8a 0%, #2a2a6a 100%)'
+                    : 'linear-gradient(180deg, #3a3a6a 0%, #2a2a4a 100%)',
+                  border: selectedPiece === piece.id
+                    ? '3px solid #ffd700'
+                    : '3px solid rgba(255,255,255,0.15)',
+                  boxShadow: selectedPiece === piece.id ? '0 0 15px rgba(255,215,0,0.4)' : 'none',
+                  cursor: isMatched ? 'not-allowed' : 'pointer',
+                }}
+                whileHover={!isMatched ? { scale: 1.05, boxShadow: '0 0 15px rgba(255,215,0,0.3)' } : {}}
                 whileTap={!isMatched ? { scale: 0.95 } : {}}
                 disabled={isMatched}
               >
@@ -191,6 +206,7 @@ export function JigsawMatchGame() {
                     fill={piece.color}
                     stroke={piece.color}
                     strokeWidth="1"
+                    filter="drop-shadow(0 2px 3px rgba(0,0,0,0.3))"
                   />
                 </svg>
               </motion.button>
@@ -198,7 +214,10 @@ export function JigsawMatchGame() {
           })}
         </div>
 
-        <div className="mt-6 text-sm text-gray-500">
+        <div
+          className="mt-6 text-sm text-gray-400"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
           {slots.filter((s) => s.matched).length} / {slots.length} matched
         </div>
       </div>

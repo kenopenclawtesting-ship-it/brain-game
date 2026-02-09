@@ -146,56 +146,77 @@ export function SequenceMatchGame() {
       <div className="flex flex-col items-center justify-center h-full">
         {/* Target sequence */}
         <div className="mb-4">
-          <div className="text-sm text-gray-500 mb-2">Find this sequence:</div>
+          <div className="text-sm text-gray-300 mb-2" style={{ fontFamily: 'Baveuse, cursive' }}>Find this sequence:</div>
           <div className="flex gap-2">
             {puzzle.sequence.map((colorIdx, i) => (
               <div
                 key={i}
-                className={`w-8 h-8 rounded-full border-2 ${
-                  i < selectedCells.length ? 'border-green-500' : 'border-gray-300'
-                }`}
-                style={{ backgroundColor: COLORS[colorIdx] }}
-              />
+                className="w-8 h-8 rounded-full relative overflow-hidden"
+                style={{
+                  border: i < selectedCells.length ? '2px solid #22c55e' : '2px solid rgba(255,255,255,0.2)',
+                  boxShadow: i < selectedCells.length ? '0 0 8px rgba(34,197,94,0.5)' : 'none',
+                  backgroundColor: COLORS[colorIdx],
+                }}
+              >
+                <img
+                  src={i < selectedCells.length ? '/assets/generated/hex-tile-correct.png' : '/assets/generated/hex-tile-active.png'}
+                  className="absolute inset-0 w-full h-full object-cover opacity-40"
+                  alt=""
+                />
+              </div>
             ))}
           </div>
         </div>
 
         {/* Hex grid */}
-        <div className="relative" style={{ height: puzzle.rows * hexSize * 1.5 + 20 }}>
-          {puzzle.grid.map((row, rowIdx) => (
-            <div 
-              key={rowIdx}
-              className="flex gap-1"
-              style={{ marginLeft: rowIdx % 2 === 1 ? hexSize / 2 : 0 }}
-            >
-              {row.map((cell, colIdx) => {
-                const isSelected = selectedCells.some(([r, c]) => r === rowIdx && c === colIdx);
-                const selectIndex = selectedCells.findIndex(([r, c]) => r === rowIdx && c === colIdx);
-                
-                return (
-                  <motion.button
-                    key={colIdx}
-                    onClick={() => handleCellClick(rowIdx, colIdx)}
-                    className="rounded-full flex items-center justify-center font-bold text-white transition-all"
-                    style={{
-                      width: hexSize,
-                      height: hexSize,
-                      backgroundColor: COLORS[cell.color],
-                      border: isSelected ? '4px solid white' : '2px solid rgba(0,0,0,0.2)',
-                      boxShadow: isSelected ? '0 0 10px rgba(0,0,0,0.5)' : 'none',
-                    }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    {isSelected && (selectIndex + 1)}
-                  </motion.button>
-                );
-              })}
-            </div>
-          ))}
+        <div className="relative rounded-xl p-3" style={{ height: puzzle.rows * hexSize * 1.5 + 40, background: 'rgba(15,15,40,0.5)', border: '2px solid rgba(255,255,255,0.05)' }}>
+          <img
+            src="/assets/generated/hex-grid-bg.png"
+            className="absolute inset-0 w-full h-full object-cover rounded-xl opacity-20"
+            alt=""
+          />
+          <div className="relative z-10">
+            {puzzle.grid.map((row, rowIdx) => (
+              <div
+                key={rowIdx}
+                className="flex gap-1"
+                style={{ marginLeft: rowIdx % 2 === 1 ? hexSize / 2 : 0 }}
+              >
+                {row.map((cell, colIdx) => {
+                  const isSelected = selectedCells.some(([r, c]) => r === rowIdx && c === colIdx);
+                  const selectIndex = selectedCells.findIndex(([r, c]) => r === rowIdx && c === colIdx);
+
+                  return (
+                    <motion.button
+                      key={colIdx}
+                      onClick={() => handleCellClick(rowIdx, colIdx)}
+                      className="rounded-full flex items-center justify-center font-bold text-white transition-all relative overflow-hidden"
+                      style={{
+                        width: hexSize,
+                        height: hexSize,
+                        backgroundColor: COLORS[cell.color],
+                        border: isSelected ? '3px solid #ffd700' : '2px solid rgba(0,0,0,0.3)',
+                        boxShadow: isSelected ? '0 0 12px rgba(255,215,0,0.5)' : '0 2px 4px rgba(0,0,0,0.3)',
+                        fontFamily: 'Baveuse, cursive',
+                      }}
+                      whileHover={{ scale: 1.1, boxShadow: '0 0 12px rgba(255,215,0,0.3)' }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <img
+                        src={isSelected ? '/assets/generated/hex-tile-active.png' : '/assets/generated/hex-tile-inactive.png'}
+                        className="absolute inset-0 w-full h-full object-cover opacity-30"
+                        alt=""
+                      />
+                      <span className="relative z-10">{isSelected && (selectIndex + 1)}</span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="mt-4 text-sm text-gray-500">
+        <div className="mt-4 text-sm text-gray-400" style={{ fontFamily: 'Baveuse, cursive' }}>
           {selectedCells.length} / {puzzle.sequence.length} selected
         </div>
       </div>

@@ -7,17 +7,17 @@ import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
 
-// Shape definitions with colors
+// Shape definitions with AI-generated images
 const SHAPES = [
-  { icon: '●', color: '#ef4444', name: 'circle' },
-  { icon: '■', color: '#3b82f6', name: 'square' },
-  { icon: '▲', color: '#22c55e', name: 'triangle' },
-  { icon: '★', color: '#fbbf24', name: 'star' },
-  { icon: '◆', color: '#a855f7', name: 'diamond' },
-  { icon: '♥', color: '#ec4899', name: 'heart' },
-  { icon: '⬡', color: '#06b6d4', name: 'hexagon' },
-  { icon: '✦', color: '#f97316', name: 'sparkle' },
-];
+  { image: '/assets/generated/shape-circle.png', color: '#ef4444', name: 'circle' },
+  { image: '/assets/generated/shape-square.png', color: '#3b82f6', name: 'square' },
+  { image: '/assets/generated/shape-triangle.png', color: '#22c55e', name: 'triangle' },
+  { image: '/assets/generated/shape-star.png', color: '#fbbf24', name: 'star' },
+  { image: '/assets/generated/shape-diamond.png', color: '#a855f7', name: 'diamond' },
+  { image: '/assets/generated/shape-hexagon.png', color: '#06b6d4', name: 'hexagon' },
+  { image: '/assets/generated/shape-circle.png', color: '#ec4899', name: 'heart', hueRotate: 300 },
+  { image: '/assets/generated/shape-star.png', color: '#f97316', name: 'sparkle', hueRotate: 30 },
+] as const;
 
 // Difficulty parameters from ActionScript DIFFICULTY_LEVEL_PARAMS
 const DIFFICULTY_PARAMS = [
@@ -167,38 +167,46 @@ export function ShapeOrderGame() {
 
         {/* Top panel - shows sequence positions */}
         <div className="flex gap-2 mb-4">
-          {topPanelShapes.map((shape, i) => (
-            <motion.div
-              key={i}
-              className="w-12 h-12 rounded-lg flex items-center justify-center text-3xl"
-              style={{
-                background: phase === 'showing' && showingIndex === i
-                  ? 'linear-gradient(180deg, #4a4a8a 0%, #3a3a6a 100%)'
-                  : 'linear-gradient(180deg, #2a2a4a 0%, #1a1a3a 100%)',
-                border: phase === 'input' && i === userSequence.length
-                  ? '2px solid #ffd700'
-                  : '2px solid rgba(255,255,255,0.1)',
-                boxShadow: phase === 'showing' && showingIndex === i
-                  ? '0 0 15px rgba(100,100,255,0.5)'
-                  : 'none',
-              }}
-              animate={{
-                scale: phase === 'showing' && showingIndex === i ? 1.1 : 1,
-              }}
-            >
-              {phase === 'showing' && showingIndex === i ? (
-                <span style={{ color: SHAPES[sequence[i]]?.color }}>
-                  {SHAPES[sequence[i]]?.icon}
-                </span>
-              ) : shape !== null ? (
-                <span style={{ color: SHAPES[shape]?.color }}>
-                  {SHAPES[shape]?.icon}
-                </span>
-              ) : (
-                <span className="text-gray-600 text-xl">?</span>
-              )}
-            </motion.div>
-          ))}
+          {topPanelShapes.map((shape, i) => {
+            const isActive = phase === 'showing' && showingIndex === i;
+            const isCurrent = phase === 'input' && i === userSequence.length;
+            const shapeData = isActive ? SHAPES[sequence[i]] : shape !== null ? SHAPES[shape] : null;
+            return (
+              <motion.div
+                key={i}
+                className="w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden"
+                style={{
+                  background: isActive
+                    ? 'linear-gradient(180deg, #4a4a8a 0%, #3a3a6a 100%)'
+                    : 'linear-gradient(180deg, #2a2a4a 0%, #1a1a3a 100%)',
+                  border: isCurrent
+                    ? '2px solid #ffd700'
+                    : '2px solid rgba(255,255,255,0.1)',
+                  boxShadow: isActive
+                    ? '0 0 15px rgba(100,100,255,0.5)'
+                    : 'none',
+                }}
+                animate={{ scale: isActive ? 1.1 : 1 }}
+              >
+                {shapeData ? (
+                  <img
+                    src={shapeData.image}
+                    className="w-9 h-9 object-contain"
+                    style={{ filter: 'hueRotate' in shapeData ? `hue-rotate(${shapeData.hueRotate}deg)` : undefined }}
+                    draggable={false}
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    src="/assets/generated/shape-slot-empty.png"
+                    className="w-9 h-9 object-contain opacity-40"
+                    draggable={false}
+                    alt=""
+                  />
+                )}
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Main display area during showing phase */}
@@ -210,21 +218,23 @@ export function ShapeOrderGame() {
             exit={{ scale: 0, opacity: 0 }}
             className="h-24 mb-4 flex items-center justify-center"
           >
-            <span 
-              className="text-8xl"
-              style={{ 
-                color: SHAPES[sequence[showingIndex]]?.color,
-                textShadow: `0 0 20px ${SHAPES[sequence[showingIndex]]?.color}66`
-              }}
-            >
-              {SHAPES[sequence[showingIndex]]?.icon}
-            </span>
+            {SHAPES[sequence[showingIndex]] && (
+              <img
+                src={SHAPES[sequence[showingIndex]].image}
+                className="h-20 w-20 object-contain drop-shadow-lg"
+                style={{
+                  filter: `drop-shadow(0 0 20px ${SHAPES[sequence[showingIndex]].color}66)${'hueRotate' in SHAPES[sequence[showingIndex]] ? ` hue-rotate(${(SHAPES[sequence[showingIndex]] as any).hueRotate}deg)` : ''}`,
+                }}
+                draggable={false}
+                alt=""
+              />
+            )}
           </motion.div>
         )}
 
         {/* Shape selection - shown after reveal */}
         {(phase === 'ready' || phase === 'input') && (
-          <motion.div 
+          <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             className="flex gap-3 flex-wrap justify-center mt-4"
@@ -236,23 +246,27 @@ export function ShapeOrderGame() {
                   e.stopPropagation();
                   handleShapeClick(shapeIdx);
                 }}
-                className="w-16 h-16 rounded-xl flex items-center justify-center text-4xl"
+                className="w-16 h-16 rounded-xl flex items-center justify-center overflow-hidden"
                 style={{
                   background: 'linear-gradient(180deg, #3a3a6a 0%, #2a2a4a 100%)',
                   border: '2px solid rgba(255,255,255,0.2)',
-                  color: SHAPES[shapeIdx].color,
                   cursor: phase === 'input' ? 'pointer' : 'not-allowed',
                   opacity: phase === 'input' ? 1 : 0.5,
-                  textShadow: `0 0 10px ${SHAPES[shapeIdx].color}44`,
                 }}
-                whileHover={phase === 'input' ? { 
-                  scale: 1.1, 
-                  boxShadow: `0 0 20px ${SHAPES[shapeIdx].color}66` 
+                whileHover={phase === 'input' ? {
+                  scale: 1.1,
+                  boxShadow: `0 0 20px ${SHAPES[shapeIdx].color}66`
                 } : {}}
                 whileTap={phase === 'input' ? { scale: 0.9 } : {}}
                 disabled={phase !== 'input'}
               >
-                {SHAPES[shapeIdx].icon}
+                <img
+                  src={SHAPES[shapeIdx].image}
+                  className="w-11 h-11 object-contain"
+                  style={{ filter: 'hueRotate' in SHAPES[shapeIdx] ? `hue-rotate(${(SHAPES[shapeIdx] as any).hueRotate}deg)` : undefined }}
+                  draggable={false}
+                  alt=""
+                />
               </motion.button>
             ))}
           </motion.div>

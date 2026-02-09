@@ -7,11 +7,11 @@ import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
 
 const SWITCH_COLORS = [
-  { base: '#3b82f6', lit: '#60a5fa', name: 'blue' },
-  { base: '#ef4444', lit: '#f87171', name: 'red' },
-  { base: '#22c55e', lit: '#4ade80', name: 'green' },
-  { base: '#eab308', lit: '#facc15', name: 'yellow' },
-  { base: '#8b5cf6', lit: '#a78bfa', name: 'purple' },
+  { base: '#3b82f6', lit: '#60a5fa', name: 'blue', image: '/assets/generated/memory-orb-blue.png' },
+  { base: '#ef4444', lit: '#f87171', name: 'red', image: '/assets/generated/memory-orb-red.png' },
+  { base: '#22c55e', lit: '#4ade80', name: 'green', image: '/assets/generated/memory-orb-green.png' },
+  { base: '#eab308', lit: '#facc15', name: 'yellow', image: '/assets/generated/memory-orb-yellow.png' },
+  { base: '#8b5cf6', lit: '#a78bfa', name: 'purple', image: '/assets/generated/memory-orb-purple.png' },
 ];
 
 type Phase = 'showing' | 'input' | 'feedback';
@@ -121,47 +121,61 @@ export function MemorySequenceGame() {
   return (
     <GameContainer>
       <div className="flex flex-col items-center justify-center h-full">
-        <div className="text-sm text-gray-500 mb-6">
-          {phase === 'showing' 
-            ? 'Watch the sequence...' 
+        <div
+          className="text-sm text-gray-300 mb-6"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
+          {phase === 'showing'
+            ? 'Watch the sequence...'
             : `Repeat the sequence (${userSequence.length}/${sequence.length})`
           }
         </div>
 
         {/* Switches in a circle layout */}
         <div className="relative w-64 h-64 mb-6">
+          <img
+            src="/assets/generated/memory-grid-bg.png"
+            className="absolute inset-0 w-full h-full object-cover rounded-full opacity-20"
+            alt=""
+          />
           {Array.from({ length: numSwitches }).map((_, idx) => {
             const angle = (idx / numSwitches) * 2 * Math.PI - Math.PI / 2;
             const x = Math.cos(angle) * 80 + 128;
             const y = Math.sin(angle) * 80 + 128;
             const color = SWITCH_COLORS[idx];
             const isLit = litSwitch === idx;
-            
+
             return (
               <motion.button
                 key={idx}
                 onClick={() => handleSwitchClick(idx)}
-                className="absolute w-16 h-16 rounded-full transition-all"
+                className="absolute w-16 h-16 rounded-full overflow-hidden"
                 style={{
                   left: x - 32,
                   top: y - 32,
-                  backgroundColor: isLit ? color.lit : color.base,
-                  boxShadow: isLit ? `0 0 20px ${color.lit}` : 'none',
+                  boxShadow: isLit ? `0 0 25px ${color.lit}` : '0 4px 8px rgba(0,0,0,0.3)',
                 }}
                 whileHover={phase === 'input' ? { scale: 1.1 } : {}}
                 whileTap={phase === 'input' ? { scale: 0.9 } : {}}
                 disabled={phase !== 'input'}
-                animate={isLit ? { scale: 1.1 } : { scale: 1 }}
-              />
+                animate={isLit ? { scale: 1.15 } : { scale: 1 }}
+              >
+                <img
+                  src={isLit ? color.image : '/assets/generated/memory-orb-dim.png'}
+                  className="w-full h-full object-cover"
+                  style={{ filter: isLit ? 'brightness(1.3)' : 'brightness(0.6)' }}
+                  alt=""
+                />
+              </motion.button>
             );
           })}
-          
+
           {/* Center indicator */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-            <div className="text-2xl font-bold text-gray-700">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10">
+            <div className="text-2xl font-bold text-white" style={{ fontFamily: 'Baveuse, cursive', textShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
               {phase === 'showing' ? showingIndex + 1 : userSequence.length}
             </div>
-            <div className="text-xs text-gray-500">/ {sequence.length}</div>
+            <div className="text-xs text-gray-400">/ {sequence.length}</div>
           </div>
         </div>
 
@@ -170,11 +184,14 @@ export function MemorySequenceGame() {
           {sequence.map((_, i) => (
             <div
               key={i}
-              className={`w-2 h-2 rounded-full ${
-                phase === 'showing' && i <= showingIndex ? 'bg-yellow-500' :
-                phase === 'input' && i < userSequence.length ? 'bg-green-500' :
-                'bg-gray-300'
-              }`}
+              className="w-2 h-2 rounded-full"
+              style={{
+                background: phase === 'showing' && i <= showingIndex ? '#ffd700' :
+                  phase === 'input' && i < userSequence.length ? '#22c55e' :
+                  'rgba(255,255,255,0.2)',
+                boxShadow: (phase === 'showing' && i <= showingIndex) || (phase === 'input' && i < userSequence.length)
+                  ? '0 0 4px currentColor' : 'none',
+              }}
             />
           ))}
         </div>

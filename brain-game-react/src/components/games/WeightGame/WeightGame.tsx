@@ -6,7 +6,16 @@ import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
 import { GameContainer } from '../GameContainer';
 
-const SHAPES = ['🔴', '🔵', '🟢', '🟡', '🟣', '🟠'];
+const WEIGHT_IMAGES = [
+  '/assets/generated/weight-anvil.png',
+  '/assets/generated/weight-feather.png',
+  '/assets/generated/weight-brick.png',
+  '/assets/generated/weight-ball.png',
+  '/assets/generated/weight-balloon.png',
+  '/assets/generated/weight-rock.png',
+  '/assets/generated/weight-cloud.png',
+  '/assets/generated/weight-gold-bar.png',
+];
 
 interface Scale {
   left: number[];
@@ -100,38 +109,68 @@ export function WeightGameGame() {
   return (
     <GameContainer>
       <div className="flex flex-col items-center justify-center h-full">
-        <div className="text-sm text-gray-500 mb-4">
+        <div
+          className="text-sm text-gray-300 mb-4"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
           Which object is the HEAVIEST?
         </div>
 
         {/* Scales display */}
         <div className="flex flex-wrap justify-center gap-4 mb-6">
           {puzzle.scales.map((scale, i) => (
-            <div key={i} className="bg-gray-100 rounded-lg p-4">
-              <div className="flex items-center gap-2">
+            <div
+              key={i}
+              className="rounded-xl p-4 relative"
+              style={{
+                background: 'linear-gradient(180deg, rgba(40,40,80,0.8) 0%, rgba(20,20,50,0.9) 100%)',
+                border: '2px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <div className="flex items-center gap-3">
                 {/* Left side */}
                 <div className="flex gap-1">
                   {scale.left.map((item) => (
-                    <span key={item} className="text-3xl">{SHAPES[item]}</span>
+                    <img
+                      key={item}
+                      src={WEIGHT_IMAGES[item % WEIGHT_IMAGES.length]}
+                      className="w-10 h-10 object-contain"
+                      alt=""
+                    />
                   ))}
                 </div>
-                
-                {/* Scale indicator */}
+
+                {/* Scale indicator with AI image */}
                 <div className="flex flex-col items-center">
-                  <div className={`w-20 h-1 bg-gray-800 transform ${
-                    scale.result === 'left' ? '-rotate-12' :
-                    scale.result === 'right' ? 'rotate-12' : ''
-                  }`} />
-                  <div className="text-xs text-gray-500 mt-1">
-                    {scale.result === 'left' ? '⬅️ heavier' :
-                     scale.result === 'right' ? 'heavier ➡️' : '= equal'}
+                  <div className="relative w-20 h-12">
+                    <img
+                      src="/assets/generated/scale-balance.png"
+                      className="w-full h-full object-contain"
+                      style={{
+                        transform: scale.result === 'left' ? 'rotate(-12deg)' :
+                          scale.result === 'right' ? 'rotate(12deg)' : 'rotate(0deg)',
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    className="text-xs text-gray-400 mt-1"
+                    style={{ fontFamily: 'Baveuse, cursive' }}
+                  >
+                    {scale.result === 'left' ? '← heavier' :
+                     scale.result === 'right' ? 'heavier →' : '= equal'}
                   </div>
                 </div>
-                
+
                 {/* Right side */}
                 <div className="flex gap-1">
                   {scale.right.map((item) => (
-                    <span key={item} className="text-3xl">{SHAPES[item]}</span>
+                    <img
+                      key={item}
+                      src={WEIGHT_IMAGES[item % WEIGHT_IMAGES.length]}
+                      className="w-10 h-10 object-contain"
+                      alt=""
+                    />
                   ))}
                 </div>
               </div>
@@ -145,16 +184,27 @@ export function WeightGameGame() {
             <motion.button
               key={i}
               onClick={() => handleItemClick(i)}
-              className="w-20 h-20 bg-white border-4 border-gray-300 hover:border-blue-500 rounded-xl flex items-center justify-center text-4xl transition-colors"
-              whileHover={{ scale: 1.1 }}
+              className="w-20 h-20 rounded-xl flex items-center justify-center overflow-hidden"
+              style={{
+                background: 'linear-gradient(180deg, #3a3a6a 0%, #2a2a4a 100%)',
+                border: '3px solid rgba(255,255,255,0.15)',
+              }}
+              whileHover={{ scale: 1.1, boxShadow: '0 0 20px rgba(255,215,0,0.5)' }}
               whileTap={{ scale: 0.9 }}
             >
-              {SHAPES[i]}
+              <img
+                src={WEIGHT_IMAGES[i % WEIGHT_IMAGES.length]}
+                className="w-14 h-14 object-contain"
+                alt=""
+              />
             </motion.button>
           ))}
         </div>
-        
-        <div className="mt-4 text-gray-500 text-sm">
+
+        <div
+          className="mt-4 text-gray-400 text-sm"
+          style={{ fontFamily: 'Baveuse, cursive' }}
+        >
           Use the scale comparisons to find the heaviest object
         </div>
       </div>

@@ -96,59 +96,87 @@ export function MathCombinationGame() {
     <GameContainer>
       <div className="flex flex-col items-center justify-center h-full">
         {/* Target */}
-        <div className="text-center mb-6">
-          <div className="text-sm text-gray-500">Find numbers that add up to</div>
-          <div className="text-5xl font-bold text-blue-600">{puzzle.target}</div>
+        <div className="text-center mb-5 relative">
+          <div className="relative inline-block px-8 py-3 rounded-xl" style={{ background: 'linear-gradient(180deg, #2a2a5a 0%, #1a1a3a 100%)', border: '2px solid rgba(255,215,0,0.3)' }}>
+            <img
+              src="/assets/generated/number-target-display.png"
+              className="absolute inset-0 w-full h-full object-cover rounded-xl opacity-30"
+              alt=""
+            />
+            <div className="relative z-10">
+              <div className="text-sm text-gray-400" style={{ fontFamily: 'Baveuse, cursive' }}>Find numbers that add up to</div>
+              <div className="text-5xl font-bold text-yellow-400" style={{ fontFamily: 'Baveuse, cursive', textShadow: '0 0 15px rgba(255,215,0,0.4)' }}>{puzzle.target}</div>
+            </div>
+          </div>
         </div>
 
         {/* Current sum */}
-        <div className="mb-6 flex items-center gap-2">
-          <span className="text-gray-500">Current sum:</span>
+        <div className="mb-5 flex items-center gap-2">
+          <span className="text-gray-400" style={{ fontFamily: 'Baveuse, cursive' }}>Sum:</span>
           <span className={`text-2xl font-bold ${
-            currentSum === puzzle.target ? 'text-green-600' :
-            currentSum > puzzle.target ? 'text-red-600' : 'text-gray-800'
-          }`}>
+            currentSum === puzzle.target ? 'text-green-400' :
+            currentSum > puzzle.target ? 'text-red-400' : 'text-white'
+          }`} style={{ fontFamily: 'Baveuse, cursive' }}>
             {currentSum}
           </span>
           {selected.length > 0 && (
-            <span className="text-sm text-gray-400">
+            <span className="text-sm text-gray-500">
               ({selected.map((i) => puzzle.numbers[i]).join(' + ')})
             </span>
           )}
         </div>
 
         {/* Number buttons */}
-        <div className="flex gap-3 flex-wrap justify-center max-w-md mb-6">
-          {puzzle.numbers.map((num, idx) => (
-            <motion.button
-              key={idx}
-              onClick={() => handleNumberClick(idx)}
-              className={`
-                w-16 h-16 rounded-xl text-2xl font-bold transition-all
-                ${selected.includes(idx)
-                  ? 'bg-blue-500 text-white border-4 border-blue-700'
-                  : 'bg-white border-4 border-gray-300 hover:border-blue-400 text-gray-800'
-                }
-              `}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {num}
-            </motion.button>
-          ))}
+        <div className="flex gap-3 flex-wrap justify-center max-w-md mb-5">
+          {puzzle.numbers.map((num, idx) => {
+            const isSelected = selected.includes(idx);
+            const bubbleNum = Math.abs(num % 9) + 1;
+            return (
+              <motion.button
+                key={idx}
+                onClick={() => handleNumberClick(idx)}
+                className="relative w-16 h-16 rounded-xl flex items-center justify-center overflow-hidden"
+                style={{
+                  border: isSelected ? '3px solid #ffd700' : '3px solid rgba(255,255,255,0.1)',
+                  boxShadow: isSelected ? '0 0 15px rgba(255,215,0,0.5)' : '0 4px 8px rgba(0,0,0,0.3)',
+                }}
+                whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(255,215,0,0.4)' }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <img
+                  src={`/assets/generated/number-bubble-${bubbleNum}.png`}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ filter: isSelected ? 'brightness(1.3)' : 'brightness(0.9)' }}
+                  alt=""
+                />
+                <span
+                  className="relative z-10 text-2xl font-bold text-white"
+                  style={{ fontFamily: 'Baveuse, cursive', textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}
+                >
+                  {num}
+                </span>
+              </motion.button>
+            );
+          })}
         </div>
 
         {/* Clear button */}
         {selected.length > 0 && (
-          <button
+          <motion.button
             onClick={handleClear}
-            className="px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg font-medium text-gray-700"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-2 rounded-lg font-bold text-white"
+            style={{
+              fontFamily: 'Baveuse, cursive',
+              background: 'linear-gradient(180deg, #e74c3c 0%, #c0392b 100%)',
+            }}
           >
             Clear Selection
-          </button>
+          </motion.button>
         )}
 
-        <div className="mt-4 text-gray-500 text-sm">
+        <div className="mt-4 text-gray-400 text-sm" style={{ fontFamily: 'Baveuse, cursive' }}>
           Select numbers that add up to {puzzle.target}
         </div>
       </div>

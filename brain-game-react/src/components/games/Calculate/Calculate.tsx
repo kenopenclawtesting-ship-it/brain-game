@@ -233,9 +233,11 @@ export function CalculateGame() {
               exit={{ scale: 0.5, opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none"
             >
-              <span className={`text-8xl ${feedback === 'correct' ? 'text-green-500' : 'text-red-500'}`}>
-                {feedback === 'correct' ? '✓' : '✗'}
-              </span>
+              <img
+                src={feedback === 'correct' ? '/assets/generated/correct-feedback.png' : '/assets/generated/wrong-feedback.png'}
+                className="w-24 h-24 object-contain"
+                alt=""
+              />
             </motion.div>
           )}
         </AnimatePresence>
@@ -271,15 +273,20 @@ export function CalculateGame() {
         </motion.div>
 
         {/* Input display */}
-        <div 
-          className="w-36 h-16 bg-gradient-to-b from-gray-800 to-gray-900 border-4 border-yellow-500 rounded-xl flex items-center justify-center mb-6 shadow-lg"
-        >
-          <span 
-            className="text-4xl font-bold text-yellow-400"
-            style={{ fontFamily: 'Baveuse, cursive' }}
-          >
-            {input || '_'}
-          </span>
+        <div className="relative w-40 h-16 mb-6">
+          <img
+            src="/assets/generated/calc-display-panel.png"
+            className="absolute inset-0 w-full h-full object-fill rounded-xl"
+            alt=""
+          />
+          <div className="relative w-full h-full flex items-center justify-center">
+            <span
+              className="text-4xl font-bold text-yellow-400"
+              style={{ fontFamily: 'Baveuse, cursive', textShadow: '0 0 10px rgba(255,215,0,0.4)' }}
+            >
+              {input || '_'}
+            </span>
+          </div>
         </div>
 
         {/* Number pad */}
@@ -287,19 +294,26 @@ export function CalculateGame() {
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, '⏎'].map((key) => (
             <motion.button
               key={key}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05, boxShadow: '0 0 12px rgba(255,215,0,0.4)' }}
+              whileTap={{ scale: 0.93 }}
               onClick={() => handleKeyPress(key === '⏎' ? 'enter' : String(key))}
-              className={`w-16 h-16 rounded-xl text-2xl font-bold transition-all shadow-md ${
-                key === '⏎'
-                  ? 'bg-gradient-to-b from-green-500 to-green-700 text-white'
-                  : key === 'C'
-                  ? 'bg-gradient-to-b from-red-500 to-red-700 text-white'
-                  : 'bg-gradient-to-b from-gray-600 to-gray-800 text-white hover:from-gray-500 hover:to-gray-700'
-              }`}
+              className="relative w-16 h-16 rounded-xl text-2xl font-bold transition-all overflow-hidden"
               style={{ fontFamily: 'Baveuse, cursive' }}
             >
-              {key}
+              <img
+                src={key === '⏎'
+                  ? '/assets/generated/calc-equals.png'
+                  : '/assets/generated/calc-number-tile.png'
+                }
+                className="absolute inset-0 w-full h-full object-cover"
+                alt=""
+              />
+              <span className="relative z-10 text-white" style={{
+                textShadow: '1px 1px 3px rgba(0,0,0,0.7)',
+                color: key === 'C' ? '#ff6b6b' : key === '⏎' ? '#90EE90' : 'white',
+              }}>
+                {key}
+              </span>
             </motion.button>
           ))}
         </div>
