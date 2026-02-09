@@ -1,4 +1,4 @@
-// Tutorial Screen - Game instructions with stage background
+// Tutorial Screen — v2 with category-specific AI backgrounds
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -10,6 +10,13 @@ const CATEGORY_COLORS: Record<Category, string> = {
   1: '#f1c40f',
   2: '#2ecc71',
   3: '#3498db',
+};
+
+const CATEGORY_BGS: Record<Category, string> = {
+  0: '/assets/generated/cat-bg-analyse.png',
+  1: '/assets/generated/cat-bg-calculate.png',
+  2: '/assets/generated/cat-bg-memory.png',
+  3: '/assets/generated/cat-bg-identify.png',
 };
 
 const GAME_INSTRUCTIONS: Record<MinigameId, { description: string; tips: string[] }> = {
@@ -72,6 +79,7 @@ export function Tutorial() {
   const game = MINIGAMES[currentMinigame];
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
   const categoryColor = CATEGORY_COLORS[currentCategory as Category];
+  const categoryBg = CATEGORY_BGS[currentCategory as Category];
   const instructions = GAME_INSTRUCTIONS[currentMinigame];
 
   const handleStart = () => {
@@ -82,43 +90,33 @@ export function Tutorial() {
   return (
     <div className="game-page">
       <div className="page-header">
-        <h1 className="page-title">WHO HAS THE BIGGEST BRAIN?</h1>
+        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
       </div>
 
       <div className="game-stage">
-        <img
-          src="/assets/sprites/stage-bg.png"
-          alt=""
-          className="stage-bg"
-          draggable={false}
-        />
+        {/* Category-specific AI background */}
+        <img src={categoryBg} alt="" className="stage-bg" draggable={false} />
+
+        {/* Dark overlay for text readability */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'rgba(0,0,0,0.45)',
+          pointerEvents: 'none',
+        }} />
 
         <div className="stage-overlay">
+          <div className="tut-container">
           {/* Category badge */}
           <motion.div
             initial={{ y: -15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
+            className="tut-cat-badge"
             style={{
-              position: 'absolute',
-              top: '14%',
-              left: '35%',
-              transform: 'translateX(-50%)',
-              zIndex: 3,
+              background: `linear-gradient(180deg, ${categoryColor}, ${categoryColor}cc)`,
+              boxShadow: `0 3px 12px ${categoryColor}66`,
             }}
           >
-            <span
-              style={{
-                fontFamily: 'Baveuse, cursive',
-                fontSize: 12,
-                color: '#fff',
-                background: `linear-gradient(180deg, ${categoryColor}, ${categoryColor}cc)`,
-                padding: '3px 14px',
-                borderRadius: 12,
-                boxShadow: `0 3px 10px ${categoryColor}66`,
-              }}
-            >
-              {categoryName}
-            </span>
+            {categoryName}
           </motion.div>
 
           {/* Game icon */}
@@ -128,97 +126,45 @@ export function Tutorial() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', delay: 0.1 }}
-            style={{
-              position: 'absolute',
-              top: '22%',
-              left: '30%',
-              transform: 'translateX(-50%)',
-              width: 70,
-              height: 70,
-              objectFit: 'contain',
-              zIndex: 3,
-            }}
+            className="tut-game-icon"
             draggable={false}
           />
 
           {/* Game name */}
           <motion.div
+            className="tut-game-name"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            style={{
-              position: 'absolute',
-              top: '39%',
-              left: '35%',
-              transform: 'translateX(-50%)',
-              fontFamily: 'Baveuse, cursive',
-              fontSize: 24,
-              color: '#ffd700',
-              textShadow: '0 0 10px rgba(255,215,0,0.5), 0 2px 4px rgba(0,0,0,0.3)',
-              zIndex: 3,
-              whiteSpace: 'nowrap',
-            }}
           >
             {game.name}
           </motion.div>
 
-          {/* Instructions */}
+          {/* Instructions card */}
           <motion.div
+            className="tut-instructions"
             initial={{ y: 15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3 }}
-            style={{
-              position: 'absolute',
-              top: '48%',
-              left: '12%',
-              width: '52%',
-              zIndex: 3,
-            }}
           >
-            <p style={{
-              fontFamily: 'Baveuse, cursive',
-              fontSize: 11,
-              color: '#444',
-              lineHeight: 1.4,
-              textAlign: 'center',
-              marginBottom: 8,
-            }}>
-              {instructions.description}
-            </p>
+            <p className="tut-desc">{instructions.description}</p>
 
-            <div style={{
-              background: 'rgba(0,0,0,0.08)',
-              borderRadius: 8,
-              padding: '6px 10px',
-            }}>
+            <div className="tut-tips">
               {instructions.tips.map((tip, i) => (
-                <p key={i} style={{
-                  fontFamily: 'Baveuse, cursive',
-                  fontSize: 9,
-                  color: '#555',
-                  lineHeight: 1.5,
-                }}>
-                  • {tip}
-                </p>
+                <p key={i} className="tut-tip">• {tip}</p>
               ))}
             </div>
 
-            <div style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: 20,
-              marginTop: 8,
-              fontFamily: 'Baveuse, cursive',
-              fontSize: 10,
-            }}>
-              <span style={{ color: '#27ae60' }}>+{game.correctPoints} pts</span>
+            <div className="tut-scoring">
+              <span style={{ color: '#2ecc71' }}>+{game.correctPoints} pts</span>
               <span style={{ color: '#e74c3c' }}>{game.incorrectPoints} pts</span>
-              <span style={{ color: '#666' }}>60 seconds</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)' }}>60 seconds</span>
             </div>
           </motion.div>
 
           {/* START button */}
-          <motion.div
+          <motion.button
+            className="tut-start-btn"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: 'spring' }}
@@ -226,24 +172,13 @@ export function Tutorial() {
             whileTap={{ scale: 0.95 }}
             onClick={handleStart}
             style={{
-              position: 'absolute',
-              bottom: '20%',
-              left: '30%',
-              transform: 'translateX(-50%)',
-              fontFamily: 'Baveuse, cursive',
-              fontSize: 20,
-              color: '#fff',
               background: `linear-gradient(180deg, ${categoryColor}, ${categoryColor}bb)`,
-              padding: '10px 40px',
-              borderRadius: 14,
-              cursor: 'pointer',
               boxShadow: `0 4px 16px ${categoryColor}66`,
-              border: '2px solid rgba(255,255,255,0.2)',
-              zIndex: 3,
             }}
           >
             START GAME
-          </motion.div>
+          </motion.button>
+          </div>
         </div>
       </div>
     </div>
