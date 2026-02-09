@@ -1,4 +1,4 @@
-// Countdown Screen — v2 with category-colored accents
+// Countdown Screen — v2 redesign: removed page-header, full-stage layout
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
@@ -44,10 +44,6 @@ export function CountdownScreen() {
 
   return (
     <div className="game-page">
-      <div className="page-header">
-        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
-      </div>
-
       <div className="game-stage">
         <img
           src="/assets/generated/countdown-bg.png"

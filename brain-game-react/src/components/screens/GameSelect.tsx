@@ -1,6 +1,4 @@
-// Game Select Screen — v2 with AI-generated background + React UI cards
-// Three pedestals BG → glass cards for Classic / Practice / Pro modes
-// Practice sub-screen: overlay grid of all 12 mini-games
+// Game Select Screen — v2 redesign: clean mode selection + practice grid
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -61,7 +59,6 @@ export function GameSelect() {
     playClick();
     if (id === 'classic') startFullTest();
     else if (id === 'practice') setShowPractice(true);
-    // pro = coming soon, just click sound
   };
 
   const handleSelectGame = (id: MinigameId) => {
@@ -71,13 +68,7 @@ export function GameSelect() {
 
   return (
     <div className="game-page">
-      <div className="page-header">
-        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
-        <p className="page-subtitle">PRO PLAYER CLUB</p>
-      </div>
-
       <div className="game-stage">
-        {/* New AI-generated pedestal background */}
         <img
           src="/assets/generated/gameselect-bg.png"
           alt=""
@@ -116,7 +107,7 @@ export function GameSelect() {
                   CHOOSE YOUR MODE
                 </motion.div>
 
-                {/* Three mode cards on pedestals */}
+                {/* Three mode cards — centered, full width */}
                 <div className="gs-modes-row">
                   {MODES.map((mode, i) => (
                     <motion.button
@@ -141,26 +132,6 @@ export function GameSelect() {
                     </motion.button>
                   ))}
                 </div>
-
-                {/* Professor + speech */}
-                <motion.img
-                  src="/assets/generated/professor-hero.png"
-                  alt=""
-                  className="gs-professor"
-                  draggable={false}
-                  initial={{ x: 80, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.5 }}
-                />
-                <motion.div
-                  className="gs-speech"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
-                >
-                  Choose your game mode to begin!
-                  <div className="speech-tail-down" />
-                </motion.div>
               </motion.div>
             ) : (
               /* Practice game picker grid */
@@ -188,7 +159,7 @@ export function GameSelect() {
                 {/* Title */}
                 <div className="gs-practice-title">CHOOSE A GAME</div>
 
-                {/* Game grid */}
+                {/* Game grid — 4x3 */}
                 <div className="gs-practice-grid">
                   {MINIGAMES.map((game, index) => (
                     <motion.div
@@ -215,7 +186,6 @@ export function GameSelect() {
                       >
                         {CATEGORY_NAMES_SHORT[game.category]}
                       </span>
-                      {game.isPro && <span className="gs-pro-badge">PRO</span>}
                     </motion.div>
                   ))}
                 </div>
@@ -223,22 +193,6 @@ export function GameSelect() {
             )}
           </AnimatePresence>
         </div>
-      </div>
-
-      {/* Bottom nav */}
-      <div className="bottom-nav">
-        <button className="bottom-nav-btn" onClick={() => playClick()}>
-          <span className="bottom-nav-icon">🏆</span>
-          <span className="bottom-nav-label">LEADERBOARD</span>
-        </button>
-        <button className="bottom-nav-btn" onClick={() => playClick()}>
-          <span className="bottom-nav-icon">📖</span>
-          <span className="bottom-nav-label">HOW IT WORKS</span>
-        </button>
-        <button className="bottom-nav-btn bottom-nav-btn-disabled">
-          <span className="bottom-nav-icon">🔜</span>
-          <span className="bottom-nav-label">COMING SOON</span>
-        </button>
       </div>
     </div>
   );

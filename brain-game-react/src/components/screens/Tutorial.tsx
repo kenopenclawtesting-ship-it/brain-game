@@ -1,4 +1,4 @@
-// Tutorial Screen — v2 with category-specific AI backgrounds
+// Tutorial Screen — v2 redesign: removed page-header, full-stage layout
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -89,10 +89,6 @@ export function Tutorial() {
 
   return (
     <div className="game-page">
-      <div className="page-header">
-        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
-      </div>
-
       <div className="game-stage">
         {/* Category-specific AI background */}
         <img src={categoryBg} alt="" className="stage-bg" draggable={false} />
@@ -168,7 +164,7 @@ export function Tutorial() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: 'spring' }}
-            whileHover={{ scale: 1.08 }}
+            whileHover={{ scale: 1.08, filter: 'brightness(1.2)' }}
             whileTap={{ scale: 0.95 }}
             onClick={handleStart}
             style={{

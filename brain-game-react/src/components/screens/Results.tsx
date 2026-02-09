@@ -1,4 +1,4 @@
-// Results Screen — v2 with AI-generated celebration background + professor
+// Results Screen — v2 redesign: centered layout, no professor, clean score display
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
@@ -62,10 +62,6 @@ export function Results() {
 
   return (
     <div className="game-page">
-      <div className="page-header">
-        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
-      </div>
-
       <div className="game-stage">
         <img
           src="/assets/generated/results-bg-v2.png"
@@ -74,10 +70,10 @@ export function Results() {
           draggable={false}
         />
 
-        {/* Dark overlay for text readability */}
+        {/* Dark overlay for readability */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'rgba(0,0,0,0.35)',
+          background: 'rgba(0,0,0,0.4)',
           pointerEvents: 'none',
         }} />
 
@@ -160,7 +156,7 @@ export function Results() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.7, type: 'spring' }}
-              whileHover={{ scale: 1.08 }}
+              whileHover={{ scale: 1.08, filter: 'brightness(1.2)' }}
               whileTap={{ scale: 0.95 }}
               onClick={handleContinue}
               style={{
@@ -172,28 +168,6 @@ export function Results() {
                 currentCategory >= 3 ? 'SEE RESULTS' : 'CONTINUE'}
             </motion.button>
           </div>
-
-          {/* Professor - right side */}
-          <motion.img
-            src="/assets/generated/professor-hero.png"
-            alt=""
-            className="res-professor"
-            draggable={false}
-            initial={{ x: 80, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-          />
-
-          {/* Speech bubble */}
-          <motion.div
-            className="res-speech"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
-          >
-            {currentScore >= 300 ? 'Excellent work!' : currentScore >= 100 ? 'Good effort!' : 'Keep trying!'}
-            <div className="speech-tail-down" />
-          </motion.div>
         </div>
       </div>
     </div>

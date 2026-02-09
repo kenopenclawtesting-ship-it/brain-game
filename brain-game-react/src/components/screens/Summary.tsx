@@ -1,4 +1,4 @@
-// Summary Screen — v2 with AI-generated background + brain type reveal
+// Summary Screen — v2 redesign: full-stage brain type reveal
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
@@ -55,10 +55,6 @@ export function Summary() {
 
   return (
     <div className="game-page">
-      <div className="page-header">
-        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
-      </div>
-
       <div className="game-stage">
         <img
           src="/assets/generated/summary-bg.png"
@@ -140,7 +136,7 @@ export function Summary() {
                 initial={{ y: 15, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.08, filter: 'brightness(1.2)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handlePlayAgain}
               >

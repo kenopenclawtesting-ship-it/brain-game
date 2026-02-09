@@ -12,7 +12,7 @@ import { MinigameId } from './types';
 import './index.css';
 
 // Screens that should use fade transitions (not the game itself)
-const TRANSITION_SCREENS = ['menu', 'gameSelect', 'tutorial', 'results', 'summary'];
+const TRANSITION_SCREENS = ['menu', 'gameSelect', 'tutorial', 'countdown', 'results', 'summary'];
 
 function App() {
   const currentScreen = useGameStore((state) => state.currentScreen);
