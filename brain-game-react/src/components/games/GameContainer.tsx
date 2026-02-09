@@ -18,6 +18,14 @@ const CATEGORY_COLORS: Record<Category, string> = {
   3: '#3498db',
 };
 
+// Category AI backgrounds
+const CATEGORY_BGS: Record<Category, string> = {
+  0: '/assets/generated/cat-bg-analyse.png',
+  1: '/assets/generated/cat-bg-calculate.png',
+  2: '/assets/generated/cat-bg-memory.png',
+  3: '/assets/generated/cat-bg-identify.png',
+};
+
 interface GameContainerProps {
   children: ReactNode;
 }
@@ -32,6 +40,7 @@ export function GameContainer({ children }: GameContainerProps) {
   const game = MINIGAMES[currentMinigame];
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
   const categoryColor = CATEGORY_COLORS[currentCategory as Category];
+  const categoryBg = CATEGORY_BGS[currentCategory as Category];
 
   useEffect(() => {
     if (currentScreen === 'game') {
@@ -86,14 +95,35 @@ export function GameContainer({ children }: GameContainerProps) {
           <TimerCompact categoryColor={categoryColor} />
         </div>
 
-        {/* Game content - darker area */}
-        <div 
-          className="absolute inset-0 pt-20 pb-16 px-4"
-          style={{
-            background: 'linear-gradient(180deg, #1a1a4a 0%, #2a1a3a 100%)'
-          }}
-        >
-          {children}
+        {/* Game content - category-themed background */}
+        <div className="absolute inset-0">
+          {/* AI category background */}
+          <img
+            src={categoryBg}
+            alt=""
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              opacity: 0.2,
+            }}
+            draggable={false}
+          />
+          {/* Dark overlay for gameplay readability */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(180deg, #1a1a4a 0%, #2a1a3a 100%)',
+              opacity: 0.85,
+            }}
+          />
+          {/* Game content */}
+          <div className="relative h-full pt-20 pb-16 px-4">
+            {children}
+          </div>
         </div>
 
         {/* Feedback flash overlay */}
