@@ -37,12 +37,12 @@ export function CountdownScreen() {
   return (
     <div className="game-page">
       <div className="page-header">
-        <h1 className="page-title">WHO HAS THE BIGGEST BRAIN?</h1>
+        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
       </div>
 
       <div className="game-stage">
         <img
-          src="/assets/sprites/stage-bg.png"
+          src="/assets/generated/countdown-bg.png"
           alt=""
           className="stage-bg"
           draggable={false}
@@ -61,7 +61,7 @@ export function CountdownScreen() {
 
             {/* Game icon */}
             <motion.img
-              src={`/assets/icons/game-${currentMinigame + 1}.png`}
+              src={`/assets/generated/icon-game-${currentMinigame + 1}.png`}
               alt={game.name}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}

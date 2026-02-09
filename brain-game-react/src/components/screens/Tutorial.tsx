@@ -121,7 +121,7 @@ export function Tutorial() {
 
           {/* Game icon */}
           <motion.img
-            src={`/assets/icons/game-${currentMinigame + 1}.png`}
+            src={`/assets/generated/icon-game-${currentMinigame + 1}.png`}
             alt={game.name}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}

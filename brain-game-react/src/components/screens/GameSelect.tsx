@@ -203,7 +203,7 @@ export function GameSelect() {
                       style={{ borderColor: CATEGORY_COLORS[game.category] + '66' }}
                     >
                       <img
-                        src={`/assets/icons/game-${game.id + 1}.png`}
+                        src={`/assets/generated/icon-game-${game.id + 1}.png`}
                         alt={game.name}
                         className="gs-game-icon"
                         draggable={false}

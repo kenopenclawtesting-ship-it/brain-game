@@ -276,6 +276,81 @@ const RESULTS_ASSETS = [
   },
 ];
 
+const GAME_ICON_ASSETS = [
+  {
+    id: 'icon-shape-order',
+    filename: 'icon-game-1.png',
+    prompt: 'Game icon for a shape memory game, colorful geometric shapes (triangle, circle, square) arranged in a sequence pattern, vibrant neon colors on dark purple background, premium mobile game icon style, clean glossy design, rounded corners, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-card-pairs',
+    filename: 'icon-game-2.png',
+    prompt: 'Game icon for a memory card matching game, two playing cards face down with question marks, one card flipping to reveal a star, vibrant blue and purple colors on dark background, premium mobile game icon style, clean glossy design, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-missing-number',
+    filename: 'icon-game-3.png',
+    prompt: 'Game icon for a math equation game, equation with missing number shown as glowing question mark, numbers 1 2 3 floating, yellow and amber colors on dark background, premium mobile game icon style, calculator theme, clean glossy design, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-missing-sign',
+    filename: 'icon-game-4.png',
+    prompt: 'Game icon for a math operator game, glowing plus minus multiply divide signs floating in circle, one highlighted with question mark, green and teal colors on dark background, premium mobile game icon style, clean glossy design, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-cube-counter',
+    filename: 'icon-game-5.png',
+    prompt: 'Game icon for a 3D cube counting game, stack of colorful isometric cubes arranged in a small structure, vibrant red blue yellow cubes, dark purple background, premium mobile game icon style, clean 3D design, glossy finish',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-balance-scale',
+    filename: 'icon-game-6.png',
+    prompt: 'Game icon for a weight balance game, golden balance scale with different objects on each side, one side heavier, warm gold colors on dark background, premium mobile game icon style, clean glossy design, 3D depth, justice scale',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-asteroids',
+    filename: 'icon-game-7.png',
+    prompt: 'Game icon for a meteor number sequence game, colorful meteors with numbers on them flying through space, vibrant orange and red fireballs, starry dark blue space background, premium mobile game icon style, clean glossy design, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-jigsaw',
+    filename: 'icon-game-8.png',
+    prompt: 'Game icon for a jigsaw puzzle matching game, colorful puzzle pieces coming together, one piece highlighted and floating, vibrant blue and cyan colors on dark background, premium mobile game icon style, clean glossy design, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-math-combo',
+    filename: 'icon-game-9.png',
+    prompt: 'Game icon for a number combination sum game, grid of glowing numbers with some highlighted forming a target sum, green accent colors on dark background, premium mobile game icon style, clean glossy calculator-like design, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-hex-path',
+    filename: 'icon-game-10.png',
+    prompt: 'Game icon for a hexagonal grid path game, cluster of glowing hexagons with a traced path through them, vibrant cyan and blue neon colors on dark background, premium mobile game icon style, clean glossy design, honeycomb pattern, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-action-sequence',
+    filename: 'icon-game-11.png',
+    prompt: 'Game icon for a Simon Says memory sequence game, row of colorful light-up buttons (red green blue yellow) with one glowing brightly, dark background, premium mobile game icon style, clean glossy design, arcade button style, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+  {
+    id: 'icon-car-path',
+    filename: 'icon-game-12.png',
+    prompt: 'Game icon for a car path tracking game, cute cartoon car on a winding road with junctions, bright red car, road forks and turns, vibrant colors on dark background, premium mobile game icon style, clean glossy design, top-down view, 3D depth',
+    width: 512, height: 512, model: 'fal-ai/flux-pro/v1.1',
+  },
+];
+
 // ─── Asset Groups ───────────────────────────────────────────────────────
 const ASSET_GROUPS = {
   mainmenu: MAINMENU_ASSETS,
@@ -283,7 +358,8 @@ const ASSET_GROUPS = {
   categories: CATEGORY_BG_ASSETS,
   countdown: COUNTDOWN_ASSETS,
   results: [...RESULTS_ASSETS],
-  all: [...MAINMENU_ASSETS, ...GAMESELECT_ASSETS, ...CATEGORY_BG_ASSETS, ...COUNTDOWN_ASSETS, ...RESULTS_ASSETS],
+  icons: GAME_ICON_ASSETS,
+  all: [...MAINMENU_ASSETS, ...GAMESELECT_ASSETS, ...CATEGORY_BG_ASSETS, ...COUNTDOWN_ASSETS, ...RESULTS_ASSETS, ...GAME_ICON_ASSETS],
 };
 
 // ─── Main ───────────────────────────────────────────────────────────────
