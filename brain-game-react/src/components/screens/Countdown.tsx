@@ -1,10 +1,17 @@
-// Countdown Screen - 3-2-1-GO with stage background
+// Countdown Screen — v2 with category-colored accents
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
 import { MINIGAMES, CATEGORY_NAMES } from '../../lib/constants';
 import { Category } from '../../types';
+
+const CATEGORY_COLORS: Record<Category, string> = {
+  0: '#e74c3c',
+  1: '#f1c40f',
+  2: '#2ecc71',
+  3: '#3498db',
+};
 
 export function CountdownScreen() {
   const currentMinigame = useGameStore((state) => state.currentMinigame);
@@ -16,6 +23,7 @@ export function CountdownScreen() {
 
   const game = MINIGAMES[currentMinigame];
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
+  const categoryColor = CATEGORY_COLORS[currentCategory as Category];
 
   useEffect(() => {
     play('start');
@@ -50,12 +58,17 @@ export function CountdownScreen() {
 
         <div className="stage-overlay">
           <div className="countdown-container">
-            {/* Category & Game name */}
+            {/* Category badge */}
             <motion.div
               initial={{ y: -30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
             >
-              <div className="countdown-category">{categoryName}</div>
+              <div
+                className="countdown-category"
+                style={{ color: categoryColor }}
+              >
+                {categoryName}
+              </div>
               <div className="countdown-game-name">{game.name}</div>
             </motion.div>
 
@@ -66,7 +79,13 @@ export function CountdownScreen() {
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', delay: 0.1 }}
-              style={{ width: 60, height: 60, objectFit: 'contain', marginBottom: 16 }}
+              style={{
+                width: 60,
+                height: 60,
+                objectFit: 'contain',
+                marginBottom: 16,
+                filter: `drop-shadow(0 0 12px ${categoryColor}66)`,
+              }}
               draggable={false}
             />
 

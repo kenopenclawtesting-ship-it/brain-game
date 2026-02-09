@@ -124,7 +124,7 @@ export function Summary() {
                 transition={{ type: 'spring', bounce: 0.4 }}
               >
                 <img
-                  src={`/assets/sprites/brain-type-${brainType.index + 1}.png`}
+                  src={`/assets/generated/brain-type-${brainType.index + 1}.png`}
                   alt={brainType.name}
                   className="summary-brain-img"
                 />
