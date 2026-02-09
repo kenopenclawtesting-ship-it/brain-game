@@ -1,14 +1,13 @@
-// Main Menu Screen - Sprite-based composition matching original Flash game
-// Uses extracted FrameGameShow sprite as background, positions interactive elements on top
+// Main Menu Screen — v2 with AI-generated assets
+// Layers: stage bg → sunburst → marquee frame → brain logo → title → play button → professor → speech bubble
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export function MainMenu() {
   const setScreen = useGameStore((state) => state.setScreen);
   const { play, stop, playClick } = useSound();
-  const [profSrc, setProfSrc] = useState('/assets/sprites/professor-happy.png');
 
   useEffect(() => {
     play('theme');
@@ -17,100 +16,142 @@ export function MainMenu() {
 
   return (
     <div className="game-page">
-      {/* Page header - above the game frame */}
+      {/* Page header */}
       <div className="page-header">
-        <h1 className="page-title">WHO HAS THE BIGGEST BRAIN?</h1>
-        <p className="page-subtitle">Pro Player Club</p>
+        <h1 className="page-title-rainbow">WHO HAS THE BIGGEST BRAIN?</h1>
+        <p className="page-subtitle">PRO PLAYER CLUB</p>
       </div>
 
-      {/* Game stage - the sprite IS the visual */}
+      {/* Game stage — AI-generated background */}
       <div className="game-stage">
-        {/* Background sprite from extracted FrameGameShow frame 30 */}
+        {/* Base stage background — game show set */}
         <img
-          src="/assets/sprites/stage-bg.png"
+          src="/assets/generated/mainmenu-bg.png"
           alt=""
           className="stage-bg"
           draggable={false}
         />
 
-        {/* Interactive overlay layer */}
         <div className="stage-overlay">
-          {/* English title (positioned over Chinese title in sprite) */}
-          <div className="title-overlay">
-            <span className="title-line1">WHO HAS THE BIGGEST</span>
-            <span className="title-brain">BRAIN</span>
-            <span className="title-q">?</span>
-          </div>
-
-          {/* Subtitle banner (positioned over Chinese subtitle) */}
-          <div className="subtitle-banner">
-            ★ PRO PLAYER CLUB ★
-          </div>
-
-          {/* PLAY button sprite */}
+          {/* Sunburst — centered behind the marquee screen content */}
           <motion.img
-            src="/assets/sprites/button-play.png"
-            alt="Play"
-            className="btn-play"
+            src="/assets/generated/mainmenu-sunburst.png"
+            alt=""
+            className="mm-sunburst"
             draggable={false}
-            whileHover={{ scale: 1.1, filter: 'brightness(1.15)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => { playClick(); setScreen('gameSelect'); }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
           />
 
-          {/* CHALLENGE button sprite */}
+          {/* Brain logo — top center of the marquee area */}
           <motion.img
-            src="/assets/sprites/button-invite.png"
-            alt="Challenge"
-            className="btn-challenge"
+            src="/assets/generated/brain-logo.png"
+            alt=""
+            className="mm-brain-logo"
             draggable={false}
-            whileHover={{ scale: 1.1, filter: 'brightness(1.15)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => playClick()}
-          />
-
-          {/* TROPHIES button sprite */}
-          <motion.img
-            src="/assets/sprites/button-trophies.png"
-            alt="Trophies"
-            className="btn-trophies"
-            draggable={false}
-            whileHover={{ scale: 1.1, filter: 'brightness(1.15)' }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => playClick()}
-          />
-
-          {/* Speech bubble */}
-          <motion.div
-            className="speech-bubble"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
+          />
+
+          {/* In-stage title text */}
+          <motion.div
+            className="mm-title-area"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
           >
-            <p>
-              <strong>Welcome!</strong> Got a Big BRAIN? Play Who Has The Biggest Brain? to find out!
-            </p>
-            <div className="speech-tail-left" />
+            <div className="mm-title-line1">WHO HAS THE</div>
+            <div className="mm-title-line2">BIGGEST</div>
+            <div className="mm-title-line1">BRAIN?</div>
           </motion.div>
 
-          {/* Interactive professor - covers baked-in professor, adds hover effect */}
+          {/* PLAY button — golden, centered */}
+          <motion.div
+            className="mm-play-btn"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+            whileHover={{ scale: 1.12 }}
+            whileTap={{ scale: 0.92 }}
+            onClick={() => { playClick(); setScreen('gameSelect'); }}
+          >
+            <img
+              src="/assets/generated/play-button.png"
+              alt="Play"
+              draggable={false}
+            />
+            <motion.div
+              className="mm-play-glow"
+              animate={{ opacity: [0.4, 0.8, 0.4] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
+
+          {/* Secondary buttons — Invite & Trophies */}
+          <motion.div
+            className="mm-secondary-btns"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.5 }}
+          >
+            <button
+              className="mm-secondary-btn"
+              onClick={() => playClick()}
+            >
+              <span className="mm-btn-icon">👥</span>
+              <span>INVITE</span>
+            </button>
+            <button
+              className="mm-secondary-btn"
+              onClick={() => playClick()}
+            >
+              <span className="mm-btn-icon">🏆</span>
+              <span>TROPHIES</span>
+            </button>
+          </motion.div>
+
+          {/* Professor character — right side */}
           <motion.img
-            src={profSrc}
+            src="/assets/generated/professor-hero.png"
             alt="Professor"
-            className="prof-interactive"
+            className="mm-professor"
             draggable={false}
-            onMouseEnter={() => setProfSrc('/assets/sprites/professor-talk.png')}
-            onMouseLeave={() => setProfSrc('/assets/sprites/professor-happy.png')}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.7, ease: 'easeOut' }}
           />
+
+          {/* Speech bubble — above professor */}
+          <motion.div
+            className="mm-speech-bubble"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1.0, type: 'spring', stiffness: 200 }}
+          >
+            <p>
+              <strong>Welcome!</strong> Got a Big BRAIN?
+              Play now to find out!
+            </p>
+            <div className="speech-tail-down" />
+          </motion.div>
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="page-footer">
-        © 2007-2009 Playfish Ltd. All Rights Reserved.
+      {/* Bottom nav */}
+      <div className="bottom-nav">
+        <button className="bottom-nav-btn" onClick={() => playClick()}>
+          <span className="bottom-nav-icon">🏆</span>
+          <span className="bottom-nav-label">LEADERBOARD</span>
+        </button>
+        <button className="bottom-nav-btn" onClick={() => playClick()}>
+          <span className="bottom-nav-icon">📖</span>
+          <span className="bottom-nav-label">HOW IT WORKS</span>
+        </button>
+        <button className="bottom-nav-btn bottom-nav-btn-disabled">
+          <span className="bottom-nav-icon">🔜</span>
+          <span className="bottom-nav-label">COMING SOON</span>
+        </button>
       </div>
     </div>
   );

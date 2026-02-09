@@ -1,0 +1,67 @@
+{
+  "assets": [
+    {
+      "id": "mainmenu-bg",
+      "filename": "mainmenu-bg.png",
+      "prompt": "Game show stage background, dramatic purple and blue lighting, spotlights from above, golden frame border, marquee lights around the edge, premium TV quiz show set, deep rich colors, no text, no people, cinematic, wide angle, 4K quality, dark purple velvet curtains, gold trim details, theatrical stage design",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 1280,
+      "height": 960,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:24:34.523Z"
+    },
+    {
+      "id": "professor-hero",
+      "filename": "professor-hero.png",
+      "prompt": "Cartoon professor character, male, friendly smile, big round glasses, messy dark hair, white lab coat, holding glowing brain, warm colors, game character art style like Candy Crush or Clash Royale, clean vector-like illustration, transparent background style on solid dark purple, full body standing pose, expressive face, premium mobile game quality",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 768,
+      "height": 1024,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:24:38.103Z"
+    },
+    {
+      "id": "brain-logo",
+      "filename": "brain-logo.png",
+      "prompt": "Glowing neon brain icon, electric purple and cyan colors, digital neural network style, game logo design, premium quality, dark background, radiating light effects, futuristic, clean edges, symmetrical, vivid glow effect",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:24:41.662Z"
+    },
+    {
+      "id": "play-button",
+      "filename": "play-button.png",
+      "prompt": "Large golden PLAY button for a game, 3D beveled style, glowing gold gradient, premium mobile game UI, slight shadow, clean design, no text, circular shape with play triangle icon, metallic gold finish, ornate border detail, dark background",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:24:45.220Z"
+    },
+    {
+      "id": "mainmenu-sunburst",
+      "filename": "mainmenu-sunburst.png",
+      "prompt": "Radial sunburst pattern, golden yellow rays emanating from center, game show style light burst effect, clean graphic design, warm gold and amber colors on dark background, theatrical spotlight effect, no text, decorative pattern",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 1024,
+      "height": 1024,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:24:51.926Z"
+    },
+    {
+      "id": "marquee-frame",
+      "filename": "marquee-frame.png",
+      "prompt": "Ornate game show picture frame border, golden metallic frame with round light bulbs around the edge like a theatre marquee, premium TV show style, rectangular frame shape, transparent center, dark background, theatrical gold detailing, no text, clean design",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 1280,
+      "height": 960,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:24:56.853Z"
+    }
+  ],
+  "totalSpent": 0.24000000000000002,
+  "generated": "2026-02-09T04:24:26.321Z",
+  "lastUpdated": "2026-02-09T04:24:56.853Z"
+}

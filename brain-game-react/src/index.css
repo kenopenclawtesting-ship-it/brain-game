@@ -42,36 +42,46 @@ body {
 }
 
 /* ============================
-   PAGE HEADER - Title above game frame
+   PAGE HEADER - Rainbow gradient title matching original site
    ============================ */
 .page-header {
   text-align: center;
-  padding: 15px 0 8px;
+  padding: 18px 0 10px;
 }
 
-.page-title {
+.page-title-rainbow {
   font-family: 'Baveuse', cursive;
-  font-size: 26px;
-  color: #f0e6d0;
-  text-shadow:
-    0 0 20px rgba(255, 215, 0, 0.3),
-    0 2px 4px rgba(0, 0, 0, 0.5);
-  letter-spacing: 2px;
+  font-size: 32px;
+  font-weight: normal;
+  letter-spacing: 3px;
+  background: linear-gradient(
+    90deg,
+    #ff4f8b 0%,
+    #ff7b4f 18%,
+    #ffb347 32%,
+    #ffd700 45%,
+    #4fc3f7 65%,
+    #7c4dff 85%,
+    #b44fff 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
 }
 
 .page-subtitle {
   font-family: 'Baveuse', cursive;
-  font-size: 12px;
-  color: #8888aa;
+  font-size: 11px;
+  color: #7777aa;
   margin-top: 2px;
-  letter-spacing: 4px;
+  letter-spacing: 5px;
   text-transform: uppercase;
 }
 
 /* ============================
    GAME STAGE - Sprite-based composition
-   The background sprite IS the visual.
-   Everything else is positioned on top.
+   stage-bg.png is the main visual (650x483)
    ============================ */
 .game-stage {
   position: relative;
@@ -96,158 +106,206 @@ body {
 }
 
 /* ============================
-   TITLE OVERLAY - English text covering Chinese in sprite
+   IN-STAGE TITLE TEXT (CSS overlay on clean generated background)
+   The Banana Pro image has NO text — we render it all in CSS for crisp fonts
    ============================ */
-.title-overlay {
+.stage-title-area {
   position: absolute;
-  top: 12%;
-  left: 35%;
+  top: 15%;
+  left: 46%;
   transform: translateX(-50%);
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1;
-  z-index: 2;
-}
-
-.title-line1 {
-  font-family: 'Baveuse', cursive;
-  font-size: 11px;
-  color: #6a5a7a;
-  letter-spacing: 1px;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
-}
-
-.title-brain {
-  font-family: 'Baveuse', cursive;
-  font-size: 42px;
-  color: #ff69b4;
-  text-shadow:
-    -2px -2px 0 rgba(255, 255, 255, 0.6),
-    2px -2px 0 rgba(255, 255, 255, 0.6),
-    -2px 2px 0 rgba(255, 255, 255, 0.6),
-    2px 2px 0 rgba(255, 255, 255, 0.6),
-    0 3px 6px rgba(0, 0, 0, 0.2);
-  letter-spacing: 3px;
-}
-
-.title-q {
-  font-family: 'Baveuse', cursive;
-  font-size: 50px;
-  color: #ff3333;
-  text-shadow:
-    -2px -2px 0 rgba(255, 255, 255, 0.4),
-    2px 2px 0 rgba(0, 0, 0, 0.15);
-  margin-top: -10px;
-}
-
-/* ============================
-   SUBTITLE BANNER
-   ============================ */
-.subtitle-banner {
-  position: absolute;
-  top: 27%;
-  left: 35%;
-  transform: translateX(-50%);
-  font-family: 'Baveuse', cursive;
-  font-size: 11px;
-  color: #ffd700;
-  background: linear-gradient(180deg, #4a3520 0%, #2a1a0a 100%);
-  padding: 3px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 215, 0, 0.4);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  white-space: nowrap;
-  z-index: 2;
-}
-
-/* ============================
-   BUTTON SPRITES - Positioned inside the teal interior
-   ============================ */
-.btn-play {
-  position: absolute;
-  left: 14%;
-  top: 35%;
-  width: 120px;
-  cursor: pointer;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
-  z-index: 2;
-}
-
-.btn-challenge {
-  position: absolute;
-  left: 36%;
-  top: 35%;
-  width: 120px;
-  cursor: pointer;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
-  z-index: 2;
-}
-
-.btn-trophies {
-  position: absolute;
-  left: 14%;
-  top: 56%;
-  width: 100px;
-  cursor: pointer;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
-  z-index: 2;
-}
-
-/* ============================
-   SPEECH BUBBLE
-   ============================ */
-.speech-bubble {
-  position: absolute;
-  left: 36%;
-  top: 55%;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 10px 12px;
-  max-width: 145px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
-  font-family: 'Baveuse', cursive;
-  font-size: 10px;
-  color: #333;
-  line-height: 1.4;
   z-index: 3;
+  pointer-events: none;
 }
 
-.speech-tail-left {
-  position: absolute;
-  left: -10px;
-  bottom: 18px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 7px 11px 7px 0;
-  border-color: transparent #ffffff transparent transparent;
+.stage-title-small {
+  font-family: 'Baveuse', cursive;
+  font-size: 16px;
+  color: #e86aaa;
+  letter-spacing: 2px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-bottom: 0;
+}
+
+.stage-title-big {
+  font-family: 'Baveuse', cursive;
+  font-size: 68px;
+  color: #e84d8a;
+  letter-spacing: 4px;
+  line-height: 0.9;
+  text-shadow:
+    -2px -2px 0 #fff,
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff,
+    2px 2px 0 #fff,
+    0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.stage-title-banner {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 22px;
+  background: linear-gradient(180deg, #3d2a1a 0%, #2a1a0a 100%);
+  border-radius: 14px;
+  font-family: 'Baveuse', cursive;
+  font-size: 13px;
+  color: #d4a847;
+  letter-spacing: 4px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ============================
-   PROFESSOR - Interactive overlay on baked-in sprite
+   ABSOLUTE BUTTON POSITIONING
+   Each button precisely placed over the sunburst screen area
+   Stage is 650x483, inner screen area is roughly:
+     left:12% top:39% width:55% height:40%
    ============================ */
-.prof-interactive {
+.abs-btn {
   position: absolute;
-  right: 5%;
-  top: 43%;
-  height: 155px;
-  width: auto;
   cursor: pointer;
   z-index: 2;
+}
+
+.abs-btn img {
+  width: 100%;
+  height: auto;
+  display: block;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
+/* PLAY - large, center-left of sunburst. Natural: 215x147 */
+.abs-btn-play {
+  top: 40%;
+  left: 14%;
+  width: 185px;
+}
+
+/* INVITE - right of play, top-aligned. Natural: 143x96 */
+.abs-btn-invite {
+  top: 40%;
+  left: 50%;
+  width: 128px;
+}
+
+/* TROPHIES - below invite with clear gap. Natural: 164x76 */
+.abs-btn-trophies {
+  top: 60%;
+  left: 50%;
+  width: 130px;
+}
+
 /* ============================
-   FOOTER
+   SPEECH BUBBLE - positioned above baked-in professor (right side)
+   Professor is at bottom-right corner of stage-bg, don't overlay a second one
    ============================ */
-.page-footer {
-  text-align: center;
-  padding: 12px 0;
+.speech-bubble {
+  position: absolute;
+  right: 4%;
+  top: 32%;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px 14px;
+  width: 138px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #333;
+  line-height: 1.4;
+  z-index: 5;
+}
+
+.speech-tail-down {
+  position: absolute;
+  bottom: -10px;
+  right: 25px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 11px 7px 0 7px;
+  border-color: #ffffff transparent transparent transparent;
+}
+
+/* ============================
+   STAGE COPYRIGHT
+   ============================ */
+.stage-copyright {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  color: rgba(100, 80, 120, 0.7);
+  z-index: 2;
+  white-space: nowrap;
+}
+
+/* ============================
+   BOTTOM NAVIGATION - Orange/amber tabs matching original site
+   ============================ */
+.bottom-nav {
+  display: flex;
+  gap: 2px;
+  margin-top: 6px;
+  width: 650px;
+  max-width: 95vw;
+}
+
+.bottom-nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 12px 8px;
   font-family: 'Baveuse', cursive;
   font-size: 11px;
-  color: #555570;
+  color: #fff;
+  background: linear-gradient(180deg, #2d2855 0%, #1c1840 100%);
+  border: 1px solid rgba(80, 60, 140, 0.4);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 1px;
+}
+
+.bottom-nav-btn:first-child {
+  border-radius: 0 0 0 10px;
+}
+
+.bottom-nav-btn:last-child {
+  border-radius: 0 0 10px 0;
+}
+
+.bottom-nav-btn:hover {
+  background: linear-gradient(180deg, #3d3870 0%, #2c2455 100%);
+}
+
+.bottom-nav-icon {
+  font-size: 16px;
+}
+
+.bottom-nav-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #b0a8cc;
+}
+
+.bottom-nav-btn:hover .bottom-nav-label {
+  color: #fff;
+}
+
+.bottom-nav-btn-disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.bottom-nav-btn-disabled:hover {
+  background: linear-gradient(180deg, #2d2855 0%, #1c1840 100%);
+}
+
+.bottom-nav-btn-disabled:hover .bottom-nav-label {
+  color: #b0a8cc;
 }
 
 /* ============================
@@ -350,82 +408,105 @@ body {
 }
 
 /* ============================
-   GAME SELECT - PlayMenu sprite with click zones
+   GAME SELECT - Banana Pro generated bg with transparent click zones
+   Background has all icons/labels baked in, we just add click zones + speech text
    ============================ */
-.gs-back-btn {
-  position: absolute;
-  top: 14%;
-  left: 6%;
-  width: 50px;
-  cursor: pointer;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-  z-index: 5;
-}
 
-.gs-title {
-  position: absolute;
-  top: 14%;
-  left: 35%;
-  transform: translateX(-50%);
-  font-family: 'Baveuse', cursive;
-  font-size: 18px;
-  color: #ffd700;
-  text-shadow:
-    0 0 10px rgba(255, 215, 0, 0.5),
-    0 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 3;
-  white-space: nowrap;
-}
-
-.play-menu-container {
-  position: absolute;
-  top: 24%;
-  left: 12%;
-  width: 55%;
-  z-index: 2;
-}
-
-.play-menu-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
-}
-
-.click-zone {
+/* Click zone shared styles */
+.gs-click-back,
+.gs-click-classic,
+.gs-click-practice,
+.gs-click-pro {
   position: absolute;
   cursor: pointer;
-  border-radius: 20px;
-  transition: background-color 0.2s, box-shadow 0.2s;
-  z-index: 3;
+  z-index: 4;
+  transition: background-color 0.2s;
 }
 
-.click-zone:hover {
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-}
-
-.classic-zone {
+/* Back button - over baked-in blue arrow (top-left) */
+.gs-click-back {
   top: 2%;
-  left: 18%;
-  width: 64%;
-  height: 50%;
+  left: 1%;
+  width: 9%;
+  height: 12%;
   border-radius: 50%;
 }
 
-.practice-zone {
-  bottom: 0;
-  left: 0;
-  width: 42%;
-  height: 46%;
-  border-radius: 30%;
+/* Classic Game - over baked-in circles cluster + label */
+.gs-click-classic {
+  top: 2%;
+  left: 10%;
+  width: 38%;
+  height: 58%;
+  border-radius: 20px;
 }
 
-.pro-zone {
-  bottom: 0;
-  right: 0;
-  width: 52%;
-  height: 50%;
-  border-radius: 30%;
+/* Practice - over baked-in dumbbell + label */
+.gs-click-practice {
+  bottom: 2%;
+  left: 4%;
+  width: 30%;
+  height: 36%;
+  border-radius: 16px;
+}
+
+/* Pro Game - over baked-in starburst + label */
+.gs-click-pro {
+  bottom: 2%;
+  left: 32%;
+  width: 32%;
+  height: 40%;
+  border-radius: 16px;
+}
+
+/* Speech bubble text - positioned inside baked-in white bubble */
+.gs-speech-text {
+  position: absolute;
+  top: 11%;
+  right: 7%;
+  width: 24%;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  color: #333;
+  line-height: 1.35;
+  text-align: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Practice mode overlay */
+.gs-practice-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.gs-practice-title {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Baveuse', cursive;
+  font-size: 22px;
+  color: #ffd700;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 6;
+  white-space: nowrap;
+}
+
+.gs-practice-grid {
+  position: absolute;
+  top: 16%;
+  left: 8%;
+  right: 8%;
+  bottom: 8%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  z-index: 6;
+  align-content: start;
 }
 
 /* ============================
@@ -615,4 +696,171 @@ body {
   font-family: 'Baveuse', cursive;
   font-size: 18px;
   color: #fff;
+}
+
+/* ============================
+   MAIN MENU v2 — AI-generated asset layers
+   Stage is 650px wide, aspect ratio ~1280:960 = 4:3
+   ============================ */
+
+/* Slowly rotating golden sunburst behind the marquee screen */
+.mm-sunburst {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  width: 80%;
+  transform: translateX(-50%);
+  opacity: 0.35;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Glowing brain logo — above the title, offset to match title center */
+.mm-brain-logo {
+  position: absolute;
+  top: 2%;
+  left: 33%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  z-index: 4;
+  filter: drop-shadow(0 0 15px rgba(124, 58, 237, 0.6));
+  pointer-events: none;
+}
+
+/* Title text — overlaid on the marquee screen area */
+.mm-title-area {
+  position: absolute;
+  top: 16%;
+  left: 33%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 4;
+  pointer-events: none;
+  width: 50%;
+}
+
+.mm-title-line1 {
+  font-family: 'Baveuse', cursive;
+  font-size: 16px;
+  color: #ffd700;
+  letter-spacing: 3px;
+  text-shadow:
+    0 0 8px rgba(255, 215, 0, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mm-title-line2 {
+  font-family: 'Baveuse', cursive;
+  font-size: 42px;
+  color: #ff5ca0;
+  line-height: 1;
+  text-shadow:
+    -2px -2px 0 #fff,
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff,
+    2px 2px 0 #fff,
+    0 0 20px rgba(255, 92, 160, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Golden play button — centered in the stage */
+.mm-play-btn {
+  position: absolute;
+  top: 46%;
+  left: 25%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 110px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.mm-play-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(255, 200, 0, 0.5));
+}
+
+/* Pulsing glow ring behind play button */
+.mm-play-glow {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Secondary buttons (Invite / Trophies) — below play */
+.mm-secondary-btns {
+  position: absolute;
+  top: 72%;
+  left: 8%;
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.mm-secondary-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Baveuse', cursive;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s;
+}
+
+.mm-secondary-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+  border-color: rgba(255, 215, 0, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.mm-btn-icon {
+  font-size: 16px;
+}
+
+/* Professor character — right side of stage, behind title layer */
+.mm-professor {
+  position: absolute;
+  right: -2%;
+  bottom: 0;
+  height: 62%;
+  width: auto;
+  object-fit: contain;
+  z-index: 3;
+  filter: drop-shadow(-4px 4px 12px rgba(0, 0, 0, 0.5));
+  pointer-events: none;
+}
+
+/* Speech bubble — positioned above professor */
+.mm-speech-bubble {
+  position: absolute;
+  right: 4%;
+  top: 22%;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px 14px;
+  width: 125px;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #333;
+  line-height: 1.4;
+  z-index: 6;
 }
