@@ -1,6 +1,6 @@
-// Game Container - DARK TV Game Show Theme
+// Game Container - Light category-themed backgrounds
 import { ReactNode, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useGameTimer } from '../../hooks/useGameTimer';
 import { useSound } from '../../hooks/useSound';
@@ -18,12 +18,12 @@ const CATEGORY_COLORS: Record<Category, string> = {
   3: '#3498db',
 };
 
-// Category AI backgrounds
-const CATEGORY_BGS: Record<Category, string> = {
-  0: '/assets/generated/cat-bg-analyse.png',
-  1: '/assets/generated/cat-bg-calculate.png',
-  2: '/assets/generated/cat-bg-memory.png',
-  3: '/assets/generated/cat-bg-identify.png',
+// Light category backgrounds
+const CATEGORY_LIGHT_BGS: Record<Category, string> = {
+  0: '#fde8e4', // light coral (Analyse/Red)
+  1: '#fdf4e0', // light gold (Calculate/Yellow)
+  2: '#e4f8ee', // light mint (Memory/Green)
+  3: '#e4f0fd', // light sky (Identify/Blue)
 };
 
 interface GameContainerProps {
@@ -40,7 +40,7 @@ export function GameContainer({ children }: GameContainerProps) {
   const game = MINIGAMES[currentMinigame];
   const categoryName = CATEGORY_NAMES[currentCategory as Category];
   const categoryColor = CATEGORY_COLORS[currentCategory as Category];
-  const categoryBg = CATEGORY_BGS[currentCategory as Category];
+  const categoryLightBg = CATEGORY_LIGHT_BGS[currentCategory as Category];
 
   useEffect(() => {
     if (currentScreen === 'game') {
@@ -48,7 +48,7 @@ export function GameContainer({ children }: GameContainerProps) {
       resetTimer();
       startTimer();
     }
-    
+
     return () => {
       stop('ingame');
     };
@@ -59,14 +59,14 @@ export function GameContainer({ children }: GameContainerProps) {
      <div className="flex flex-col items-center" style={{ position: 'relative', zIndex: 1 }}>
       {/* Header with category and game name */}
       <div className="w-full max-w-[640px]">
-        <div 
+        <div
           className="flex justify-between items-center px-4 py-2 text-white rounded-t-xl shadow-lg"
-          style={{ 
+          style={{
             background: `linear-gradient(180deg, ${categoryColor} 0%, ${categoryColor}cc 100%)`,
           }}
         >
           <div className="text-sm font-medium text-white/80">{categoryName}</div>
-          <div 
+          <div
             className="text-lg font-bold"
             style={{ fontFamily: 'Baveuse, cursive' }}
           >
@@ -81,43 +81,18 @@ export function GameContainer({ children }: GameContainerProps) {
       {/* Game area */}
       <GameCanvas className="rounded-t-none">
         {/* Top bar with timer and score */}
-        <div 
+        <div
           className="absolute top-0 left-0 right-0 z-10 flex justify-between items-center p-4"
           style={{
-            background: 'linear-gradient(180deg, rgba(26,26,74,0.95) 0%, transparent 100%)'
+            background: `linear-gradient(180deg, ${categoryLightBg} 0%, transparent 100%)`
           }}
         >
           <Timer />
           <ScoreDisplay />
         </div>
 
-        {/* Bottom timer bar removed — top-left Timer is sufficient */}
-
-        {/* Game content - category-themed background */}
-        <div className="absolute inset-0">
-          {/* AI category background */}
-          <img
-            src={categoryBg}
-            alt=""
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              opacity: 0.2,
-            }}
-            draggable={false}
-          />
-          {/* Dark overlay for gameplay readability */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(180deg, #1a1a4a 0%, #2a1a3a 100%)',
-              opacity: 0.85,
-            }}
-          />
+        {/* Game content - light category-themed background */}
+        <div className="absolute inset-0" style={{ background: categoryLightBg }}>
           {/* Game content */}
           <div className="relative h-full pt-20 pb-4 px-4">
             {children}
@@ -147,7 +122,7 @@ export function TimeUpOverlay() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, type: 'spring' }}
       >
-        <div 
+        <div
           className="text-6xl font-bold gold-glow"
           style={{ fontFamily: 'Baveuse, cursive' }}
         >

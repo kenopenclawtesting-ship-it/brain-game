@@ -1,4 +1,4 @@
-// Game Select Screen — v2 redesign: clean mode selection + practice grid
+// Game Select Screen — bright WHTBB original style
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -68,13 +68,10 @@ export function GameSelect() {
 
   return (
     <div className="game-page">
-      <div className="game-stage">
-        <img
-          src="/assets/generated/gameselect-bg.png"
-          alt=""
-          className="stage-bg"
-          draggable={false}
-        />
+      <div className="game-stage" style={{
+        background: 'linear-gradient(180deg, #ff7eb3 0%, #ff5ca0 30%, #e8468f 60%, #d63384 100%)',
+        aspectRatio: '750 / 560',
+      }}>
 
         <div className="stage-overlay">
           <AnimatePresence mode="wait">
@@ -153,7 +150,7 @@ export function GameSelect() {
                   ←
                 </motion.button>
 
-                {/* Dark overlay */}
+                {/* Light overlay for practice grid readability */}
                 <div className="gs-practice-overlay" />
 
                 {/* Title */}

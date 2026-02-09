@@ -1,187 +1,1343 @@
 {
+  "generated_at": "2026-02-09T04:35:58.165Z",
+  "model": "fal-ai/flux-pro/v1.1",
+  "total_assets": 35,
   "assets": [
     {
-      "id": "mainmenu-bg",
-      "filename": "mainmenu-bg.png",
-      "prompt": "Game show stage background, dramatic purple and blue lighting, spotlights from above, golden frame border, marquee lights around the edge, premium TV quiz show set, deep rich colors, no text, no people, cinematic, wide angle, 4K quality, dark purple velvet curtains, gold trim details, theatrical stage design",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 1280,
-      "height": 960,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:24:34.523Z"
+      "name": "main-menu-bg",
+      "filename": "main-menu-bg.png",
+      "prompt": "Premium game show stage background, dramatic purple and gold spotlights, glass morphism effects, modern 2025 mobile game aesthetic, deep purple gradient, golden light beams, no text",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd38/OpVyuXdYNCOkPnSiqQH6e_5226fff4615d43d79c3d6a2caf5bf58f.jpg",
+      "attempt": 1
     },
     {
-      "id": "professor-hero",
-      "filename": "professor-hero.png",
-      "prompt": "Cartoon professor character, male, friendly smile, big round glasses, messy dark hair, white lab coat, holding glowing brain, warm colors, game character art style like Candy Crush or Clash Royale, clean vector-like illustration, transparent background style on solid dark purple, full body standing pose, expressive face, premium mobile game quality",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 768,
-      "height": 1024,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:24:38.103Z"
+      "name": "professor-character",
+      "filename": "professor-character.png",
+      "prompt": "Friendly cartoon professor character, white lab coat, round glasses, excited expression, full body, transparent background, game character style, high quality",
+      "size": "portrait_4_3",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd38/h4isKTGzSBKvOyl24CV8o_3dae9d0734824d31806b8491fdf77288.jpg",
+      "attempt": 1
     },
     {
-      "id": "brain-logo",
-      "filename": "brain-logo.png",
-      "prompt": "Glowing neon brain icon, electric purple and cyan colors, digital neural network style, game logo design, premium quality, dark background, radiating light effects, futuristic, clean edges, symmetrical, vivid glow effect",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:24:41.662Z"
-    },
-    {
-      "id": "play-button",
+      "name": "play-button",
       "filename": "play-button.png",
-      "prompt": "Large golden PLAY button for a game, 3D beveled style, glowing gold gradient, premium mobile game UI, slight shadow, clean design, no text, circular shape with play triangle icon, metallic gold finish, ornate border detail, dark background",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:24:45.220Z"
+      "prompt": "Glowing PLAY button, circular, green gradient with gold border, game UI element, transparent background",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd39/jEchEgr-NkbszWRHnPu_s_546f0d35be0f424d83524e1227fef271.jpg",
+      "attempt": 1
     },
     {
-      "id": "mainmenu-sunburst",
-      "filename": "mainmenu-sunburst.png",
-      "prompt": "Radial sunburst pattern, golden yellow rays emanating from center, game show style light burst effect, clean graphic design, warm gold and amber colors on dark background, theatrical spotlight effect, no text, decorative pattern",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 1024,
-      "height": 1024,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:24:51.926Z"
+      "name": "invite-button",
+      "filename": "invite-button.png",
+      "prompt": "Glowing INVITE button, circular, blue gradient with silver border, game UI element, transparent background",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3a/rMopawe2mio1RrLhvqxun_019a33ddc87744ccbaa3906f80533705.jpg",
+      "attempt": 1
     },
     {
-      "id": "marquee-frame",
-      "filename": "marquee-frame.png",
-      "prompt": "Ornate game show picture frame border, golden metallic frame with round light bulbs around the edge like a theatre marquee, premium TV show style, rectangular frame shape, transparent center, dark background, theatrical gold detailing, no text, clean design",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 1280,
-      "height": 960,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:24:56.853Z"
+      "name": "trophy-icon",
+      "filename": "trophy-icon.png",
+      "prompt": "Golden trophy icon, shiny, game achievement style, transparent background",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3a/i3a8vueJzlKS10ikR_1x3_eeac2bf0da8c45bf8ae09142dd750f84.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-shape-order",
-      "filename": "icon-game-1.png",
-      "prompt": "Game icon for a shape memory game, colorful geometric shapes (triangle, circle, square) arranged in a sequence pattern, vibrant neon colors on dark purple background, premium mobile game icon style, clean glossy design, rounded corners, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:56:45.017Z"
+      "name": "classic-mode-card",
+      "filename": "classic-mode-card.png",
+      "prompt": "Classic game mode card, vintage game show style, golden frame, deep purple background, modern glass morphism, premium mobile game UI",
+      "size": "portrait_4_3",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3b/rlC-IYbf5CaXl-7ToEsXy_ca8904ce3e3c4793891130ff3934bb72.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-card-pairs",
-      "filename": "icon-game-2.png",
-      "prompt": "Game icon for a memory card matching game, two playing cards face down with question marks, one card flipping to reveal a star, vibrant blue and purple colors on dark background, premium mobile game icon style, clean glossy design, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:56:47.644Z"
+      "name": "practice-mode-card",
+      "filename": "practice-mode-card.png",
+      "prompt": "Practice mode card, casual friendly style, blue gradient frame, modern glass morphism",
+      "size": "portrait_4_3",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3c/csBxoVXZ3A4SruypygSde_a6bef3e508874c9faee263f02eb6cd71.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-missing-number",
-      "filename": "icon-game-3.png",
-      "prompt": "Game icon for a math equation game, equation with missing number shown as glowing question mark, numbers 1 2 3 floating, yellow and amber colors on dark background, premium mobile game icon style, calculator theme, clean glossy design, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:56:50.709Z"
+      "name": "pro-mode-card",
+      "filename": "pro-mode-card.png",
+      "prompt": "Pro game mode card, elite competitive style, platinum and neon frame, modern glass morphism",
+      "size": "portrait_4_3",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3d/LsbpthsWp2SeK_BpEBCEo_89aeb163c99e45eda0e1672792958f31.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-missing-sign",
-      "filename": "icon-game-4.png",
-      "prompt": "Game icon for a math operator game, glowing plus minus multiply divide signs floating in circle, one highlighted with question mark, green and teal colors on dark background, premium mobile game icon style, clean glossy design, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:56:56.703Z"
+      "name": "game-select-bg",
+      "filename": "game-select-bg.png",
+      "prompt": "Game category selection screen background, futuristic holographic display, dark purple with neon grid lines",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3e/LkJ2WOZTEh3vhPfez9Ihg_e58cfbbb36ea4ae7bc17410ec0279459.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-cube-counter",
-      "filename": "icon-game-5.png",
-      "prompt": "Game icon for a 3D cube counting game, stack of colorful isometric cubes arranged in a small structure, vibrant red blue yellow cubes, dark purple background, premium mobile game icon style, clean 3D design, glossy finish",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:56:59.242Z"
+      "name": "countdown-bg",
+      "filename": "countdown-bg.png",
+      "prompt": "Dramatic countdown screen background, cosmic explosion of purple and gold energy, radial burst pattern, cinematic",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3e/rc0yFhg2Hijv3obl51Vqp_e17ddbc1f396468d97a112e042c504a2.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-balance-scale",
-      "filename": "icon-game-6.png",
-      "prompt": "Game icon for a weight balance game, golden balance scale with different objects on each side, one side heavier, warm gold colors on dark background, premium mobile game icon style, clean glossy design, 3D depth, justice scale",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:05.782Z"
+      "name": "countdown-numbers",
+      "filename": "countdown-numbers.png",
+      "prompt": "Number 3 2 1 GO dramatic 3D text, golden metallic, explosive energy effects",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3f/yQDc1AbyvdX0tYcA1mmup_0d322cb734db487180ad2689ea7f4653.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-asteroids",
-      "filename": "icon-game-7.png",
-      "prompt": "Game icon for a meteor number sequence game, colorful meteors with numbers on them flying through space, vibrant orange and red fireballs, starry dark blue space background, premium mobile game icon style, clean glossy design, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:09.499Z"
+      "name": "game-bg-calculate",
+      "filename": "game-bg-calculate.png",
+      "prompt": "Math calculation game background, floating numbers and equations, neon blue chalkboard style, modern",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd3f/pXyrhY5NNS0N6GgHhuQsR_2ace92447b0d43eeb711121429abc987.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-jigsaw",
-      "filename": "icon-game-8.png",
-      "prompt": "Game icon for a jigsaw puzzle matching game, colorful puzzle pieces coming together, one piece highlighted and floating, vibrant blue and cyan colors on dark background, premium mobile game icon style, clean glossy design, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:13.247Z"
+      "name": "game-bg-carpath",
+      "filename": "game-bg-carpath.png",
+      "prompt": "Car racing path game background, winding road aerial view, colorful cartoon city, modern game art",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd40/1FYfLOAL3kUDx2nSuxMZr_ac7361aecda8433f98956b7f781eb656.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-math-combo",
-      "filename": "icon-game-9.png",
-      "prompt": "Game icon for a number combination sum game, grid of glowing numbers with some highlighted forming a target sum, green accent colors on dark background, premium mobile game icon style, clean glossy calculator-like design, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:15.800Z"
+      "name": "game-bg-cubecounter",
+      "filename": "game-bg-cubecounter.png",
+      "prompt": " 3D cube counting game background, isometric grid of colorful cubes, purple space theme",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd41/R5gjXLA-pCdOmqmm4b8Sd_ce86c787c8594c018eb6135ec1aac854.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-hex-path",
-      "filename": "icon-game-10.png",
-      "prompt": "Game icon for a hexagonal grid path game, cluster of glowing hexagons with a traced path through them, vibrant cyan and blue neon colors on dark background, premium mobile game icon style, clean glossy design, honeycomb pattern, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:23.954Z"
+      "name": "game-bg-jigsawmatch",
+      "filename": "game-bg-jigsawmatch.png",
+      "prompt": "Jigsaw puzzle game background, scattered glowing puzzle pieces, warm gradient",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd42/JBD1w-qIDLRJd-gJTreVR_f33d53d517284bae97686be74af3b86c.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-action-sequence",
-      "filename": "icon-game-11.png",
-      "prompt": "Game icon for a Simon Says memory sequence game, row of colorful light-up buttons (red green blue yellow) with one glowing brightly, dark background, premium mobile game icon style, clean glossy design, arcade button style, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:27.524Z"
+      "name": "game-bg-matchcard",
+      "filename": "game-bg-matchcard.png",
+      "prompt": "Memory card matching game background, grid of face-down playing cards, casino style purple velvet",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd42/_Lso0qypNBHwtWkN0mGea_6322288f585f4c628171de356763d903.jpg",
+      "attempt": 1
     },
     {
-      "id": "icon-car-path",
-      "filename": "icon-game-12.png",
-      "prompt": "Game icon for a car path tracking game, cute cartoon car on a winding road with junctions, bright red car, road forks and turns, vibrant colors on dark background, premium mobile game icon style, clean glossy design, top-down view, 3D depth",
-      "model": "fal-ai/flux-pro/v1.1",
-      "width": 512,
-      "height": 512,
-      "cost": 0.04,
-      "timestamp": "2026-02-09T04:57:30.551Z"
+      "name": "game-bg-mathcombination",
+      "filename": "game-bg-mathcombination.png",
+      "prompt": "Math combination game background, number blocks and plus signs floating, colorful abstract",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd43/exzkM5lt3_1qjkNfz2e85_00ac1fe15ad94566bd47b20ec273b4a3.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "game-bg-memorysequence",
+      "filename": "game-bg-memorysequence.png",
+      "prompt": "Memory sequence game background, glowing orbs in a pattern, dark mystical theme",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd44/uJHwEjYsJb2xgkD64KFd5_106cfd2e81244b448f4d0ffba16ad3df.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "game-bg-meteorsequence",
+      "filename": "game-bg-meteorsequence.png",
+      "prompt": "Meteor sequence game background, colorful meteors streaking across starfield, space theme",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd45/e6rns_qzlsg1kvlgVx3yh_bb75c3fb05da4294860aaa919b5e719a.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "game-bg-missingsign",
+      "filename": "game-bg-missingsign.png",
+      "prompt": "Missing math sign game background, question marks and math operators floating, playful",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd46/2Fe4PqRWc1D1dNo593fb0_c1c3b902841247b0b7a8266e3c707321.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "game-bg-sequencematch",
+      "filename": "game-bg-sequencematch.png",
+      "prompt": "Sequence matching game background, connecting dots and lines pattern, circuit board style neon",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd47/BCiUoaSH5moMwjWmfIkQx_c16009033b90462f9ded0a18cc7c1c4a.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "game-bg-shapeorder",
+      "filename": "game-bg-shapeorder.png",
+      "prompt": "Shape ordering game background, geometric shapes floating in space, colorful gradients",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd48/bCLzQhNLFv3iZ-wxGxaeJ_af7aa78210224cd58618c4707431a0af.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "game-bg-weightgame",
+      "filename": "game-bg-weightgame.png",
+      "prompt": "Weight balance game background, golden balance scale, scientific laboratory modern style",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd49/s7mH6zSfMUXjkKv1Q7bNO_e82d92e6f4724ac3bb9ca47a8305795b.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "results-bg",
+      "filename": "results-bg.png",
+      "prompt": "Score results screen background, stage with confetti and spotlights, celebration theme, purple and gold",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4a/yMaH5FV2ATibhw__cxTZm_e1e8dfcaa6204c3685411a42dd62c4b1.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "brain-reveal-bg",
+      "filename": "brain-reveal-bg.png",
+      "prompt": "Brain size reveal screen background, glowing brain illustration, cosmic dark purple, neurons firing",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4b/KGC1WE3MX-QzXClCbreQz_25b413d0a9e64f5eb9cb4fdae2b9ab3f.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "professor-happy",
+      "filename": "professor-happy.png",
+      "prompt": "Professor character happy celebration pose, arms raised, confetti, cartoon style, transparent background",
+      "size": "portrait_4_3",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4c/E2Z_JUZeMQQKzssp2Nm48_7e98563c3f4e4d0db7f9c2e622a7a483.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "professor-disappointed",
+      "filename": "professor-disappointed.png",
+      "prompt": "Professor character disappointed pose, scratching head, cartoon style, transparent background",
+      "size": "portrait_4_3",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4c/LjmILWfoKK91tx5_8AvRF_6903577e310e46e3b37adb2a088d88a4.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "ui-button",
+      "filename": "ui-button.png",
+      "prompt": "Modern game UI button, rounded rectangle, gradient purple to blue, glass morphism, game style",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4d/-oW5z59SA9xrtK71ZFtFN_f9bc7190e8984316a00d200a386329e0.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "star-rating",
+      "filename": "star-rating.png",
+      "prompt": "Star rating icon, 5 golden stars, game UI, transparent background",
+      "size": "landscape_16_9",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4e/rpRWgnhsDvyCmlVjWTw-j_a68c55d66b004a85ac72f0890f2dee8a.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "timer-icon",
+      "filename": "timer-icon.png",
+      "prompt": "Timer clock icon, circular, urgent red glow, game UI element",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4e/JmOt6pvr4tmDTfCFxNPFD_f1f282a6c6f84761b600ca3592f3284b.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "brain-icon",
+      "filename": "brain-icon.png",
+      "prompt": "Brain icon, glowing pink and purple, game logo style",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd4f/w9QoHJwnLoaGG9XYHipak_ba2a4fd6f3604c6b8f51b3c085df3284.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "category-analyse",
+      "filename": "category-analyse.png",
+      "prompt": "Category icon ANALYSE, magnifying glass with brain, game UI",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd50/GcqM9RV-qK1zioiZ2tVx2_83e3a2d57cf24fb88fcc2fbe3ae67d41.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "category-calculate",
+      "filename": "category-calculate.png",
+      "prompt": "Category icon CALCULATE, calculator with numbers, game UI",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd51/JkpTfP_Mep8HwMt-M02f0_767a7b321e5b441398b51fd6e40c9baa.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "category-memorise",
+      "filename": "category-memorise.png",
+      "prompt": "Category icon MEMORISE, thought bubble with stars, game UI",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd51/hD8j3LmhgwamASPlORvOU_ebeb258b0d27400cb6b0b5db660734a0.jpg",
+      "attempt": 1
+    },
+    {
+      "name": "category-visualise",
+      "filename": "category-visualise.png",
+      "prompt": "Category icon VISUALISE, eye with geometric patterns, game UI",
+      "size": "square",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dbd52/7oRrw7NQ4IjIPHXlmCLXa_ffa9997fcfea49c18e7a87bfab8a31f5.jpg",
+      "attempt": 1
     }
   ],
-  "totalSpent": 0.7200000000000001,
-  "generated": "2026-02-09T04:24:26.321Z",
-  "lastUpdated": "2026-02-09T04:57:30.551Z"
+  "summary": {
+    "total": 35,
+    "success": 35,
+    "failed": 0,
+    "skipped": 0,
+    "completed_at": "2026-02-09T04:40:30.244Z"
+  },
+  "phase2_generated_at": "2026-02-09T18:23:23.967Z",
+  "phase2_assets": [
+    {
+      "name": "card-back",
+      "prompt": "Playing card back design, ornate golden swirl pattern on deep purple, game card style, centered symmetric design",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-back.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd030/0Q2eYk8lCsWtbPYsAioFE_7a70511d2c2d44f39095c5474b505cb2.jpg"
+    },
+    {
+      "name": "card-front",
+      "prompt": "Blank white playing card face with thin golden border, clean glossy surface",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-front.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd031/W_ppEUVn6ibGOSitmTnj2_b587f099290a4928bedc5ece5b2a2385.jpg"
+    },
+    {
+      "name": "card-red",
+      "prompt": "Red circle symbol on a white card, simple bold flat design, game matching card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-red.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd032/Rk7enpUdO4PcA5vHiNytI_1cb073abb8ec46adb50924d4ab4d463d.jpg"
+    },
+    {
+      "name": "card-blue",
+      "prompt": "Blue diamond symbol on a white card, simple bold flat design, game matching card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-blue.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd032/pWNvxlHWGRqtkSrRfhfb1_75d639dd9ee94365a5b0d1b8910e2567.jpg"
+    },
+    {
+      "name": "card-green",
+      "prompt": "Green square symbol on a white card, simple bold flat design, game matching card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-green.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd034/FS7v45fhLTTbScp1hId8a_2b82d98154ac44ab8cea399c42a0b451.jpg"
+    },
+    {
+      "name": "card-yellow",
+      "prompt": "Yellow star symbol on a white card, simple bold flat design, game matching card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-yellow.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd034/9QAB_-U6xQH9BjdRVBNjy_6d0f90bf423c4a8c8c9e535aa5c0a065.jpg"
+    },
+    {
+      "name": "card-grey",
+      "prompt": "Grey triangle symbol on a white card, simple bold flat design, game matching card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-grey.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd035/6PNtAEOcqirFm99Loo40H_3490e75b6efc44fbbb94264a5398efec.jpg"
+    },
+    {
+      "name": "card-circle",
+      "prompt": "Orange circle shape on a white card, bold flat geometric, game card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-circle.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd036/MJkN6xAZClOQM80jNZ6hT_cd02fe6d3cb247cfbac8122763db868e.jpg"
+    },
+    {
+      "name": "card-square",
+      "prompt": "Purple square shape on a white card, bold flat geometric, game card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-square.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd036/Nks65TPRA1dkDXyLk_cm7_86649811e3c44270b74106de0660c065.jpg"
+    },
+    {
+      "name": "card-star",
+      "prompt": "Gold five-pointed star shape on a white card, bold flat geometric, game card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-star.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd037/2Y54ojcGD3liJYiMpNXol_d92508de334542d29259d5f14b440d67.jpg"
+    },
+    {
+      "name": "card-triangle",
+      "prompt": "Teal triangle shape on a white card, bold flat geometric, game card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-triangle.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd038/COCdSxVhg6qvBWKQiMSbb_6e1f63aa57314c119efe46ec42ea336b.jpg"
+    },
+    {
+      "name": "card-dots",
+      "prompt": "Three pink dots in a triangle formation on a white card, bold flat design, game card",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "card-dots.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd038/7p-tVkeqSGhxcvUJoAPUz_59a860123c3b4dc590a873dc76acf6fe.jpg"
+    },
+    {
+      "name": "shape-circle",
+      "prompt": "Glossy 3D red circle sphere, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-circle.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd039/18T2CGTy1wwoXMtLey7FK_f3316c2bd83a43f1b8b0c93949b6223d.jpg"
+    },
+    {
+      "name": "shape-square",
+      "prompt": "Glossy 3D blue square cube, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-square.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03a/nX5a2fNbBxeFRIFps_1bk_4601cc641cdd4882b663babafdaa2f69.jpg"
+    },
+    {
+      "name": "shape-triangle",
+      "prompt": "Glossy 3D green triangle pyramid, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-triangle.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03a/XNY1b2Otbq0geGQBWBVA__58155748486949adb23beb2032f960c7.jpg"
+    },
+    {
+      "name": "shape-star",
+      "prompt": "Glossy 3D golden five-pointed star, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-star.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03b/anBCn6H-o31cLxnZIFXWe_bd67b0aaad384b5795886482d4a7bcf6.jpg"
+    },
+    {
+      "name": "shape-diamond",
+      "prompt": "Glossy 3D purple diamond gem, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-diamond.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03c/zqx_rrOwVRVR4C_nLMTVD_bc79cf27dac440bbb2fdd9f4a9efe0a1.jpg"
+    },
+    {
+      "name": "shape-pentagon",
+      "prompt": "Glossy 3D orange pentagon shape, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-pentagon.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03c/XwMG-_8HUTPMVOYeb87YL_d05fc92219ee4357a2eb9a1ff3d22fdd.jpg"
+    },
+    {
+      "name": "shape-hexagon",
+      "prompt": "Glossy 3D teal hexagon shape, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-hexagon.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03d/VJNWsjTMyRMYkzgZ4hIfx_9d0c3821301245f2a5a4cc62427ea8e8.jpg"
+    },
+    {
+      "name": "shape-cross",
+      "prompt": "Glossy 3D pink plus/cross shape, floating game object, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-cross.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03d/UAuC5FVfTc4jzIUxQf9or_950bc661e57c44a8bd2de3e9936bf250.jpg"
+    },
+    {
+      "name": "shape-sushi-1",
+      "prompt": "Cute glossy 3D sushi nigiri with salmon, kawaii game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-sushi-1.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03e/kqMHd0QUZMY2Tr4YuFEVM_616dc44f75144cf48004f1ea13425a8d.jpg"
+    },
+    {
+      "name": "shape-sushi-2",
+      "prompt": "Cute glossy 3D sushi maki roll, kawaii game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-sushi-2.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03f/20PSeNbpHIfg-2Gztan-V_e5f7140cac924800bb74088013934682.jpg"
+    },
+    {
+      "name": "shape-sushi-3",
+      "prompt": "Cute glossy 3D sushi temaki hand roll, kawaii game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-sushi-3.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd03f/lvR5hohwXQbJxdFW3C362_f280a7b047504e6e8df49fa1d15676b0.jpg"
+    },
+    {
+      "name": "shape-sushi-4",
+      "prompt": "Cute glossy 3D onigiri rice ball, kawaii game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-sushi-4.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd040/TGGR5CeJNkpvGzrtJ04yE_e672e85fce46450db51d1bc7c168fed8.jpg"
+    },
+    {
+      "name": "shape-sushi-5",
+      "prompt": "Cute glossy 3D sushi shrimp tempura, kawaii game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-sushi-5.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd041/3rNd842nPtlus1GAMGTHb_67acecc7338a4a17814f9425bd728176.jpg"
+    },
+    {
+      "name": "shape-sushi-6",
+      "prompt": "Cute glossy 3D sushi egg tamago, kawaii game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "shape-sushi-6.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd041/dhPBhV6_H84Z04Ptcp_Eh_9ec5956a64ab4820a5f6f1826222162c.jpg"
+    },
+    {
+      "name": "cube-blue",
+      "prompt": "Single 3D isometric blue cube block, clean geometric, game voxel, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "cube-blue.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd042/ol0B0Tq1SYlgh1LUwTm3c_f5a3f1f8ea4f4f66839734a43ce3cd21.jpg"
+    },
+    {
+      "name": "cube-red",
+      "prompt": "Single 3D isometric red cube block, clean geometric, game voxel, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "cube-red.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd042/NGEmWwgnAzcMxQJ72G4KC_c5367e04cc2f45509336cb0981b25e2f.jpg"
+    },
+    {
+      "name": "cube-green",
+      "prompt": "Single 3D isometric green cube block, clean geometric, game voxel, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "cube-green.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd043/XDrcJG-9Bbc9dmA6ly3TS_ce982af846494d4ea6768aa004f7aec5.jpg"
+    },
+    {
+      "name": "cube-purple",
+      "prompt": "Single 3D isometric purple cube block, clean geometric, game voxel, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "cube-purple.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd044/eb3hPQGiKIGVbv41gFl4y_ad11dec88495484195ada99aea850e35.jpg"
+    },
+    {
+      "name": "cube-gold",
+      "prompt": "Single 3D isometric gold/yellow cube block, clean geometric, game voxel, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "cube-gold.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd044/GpKLx5rVzM60iJfq1T3KA_d4d899730b3f442988f8f1e23794fb20.jpg"
+    },
+    {
+      "name": "meteor-1",
+      "prompt": "Glowing space meteor asteroid with fiery orange trail, rocky texture, isolated on solid black background, game sprite",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "meteor-1.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd045/oTCUKUpftTIM7kva24UMO_bce5b37421914fd1ae8a57d9e6eb9a87.jpg"
+    },
+    {
+      "name": "meteor-2",
+      "prompt": "Blue ice meteor comet with crystalline surface and cold trail, isolated on solid black background, game sprite",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "meteor-2.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd045/HSHQnsiXDOappJjjMtpug_3aaef53a81b34518895ced0f3f7753eb.jpg"
+    },
+    {
+      "name": "meteor-3",
+      "prompt": "Purple glowing meteor with magical energy trail, space rock, isolated on solid black background, game sprite",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "meteor-3.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd046/rtDBxExw5ENW0EIlm8qGY_82a743e9b039487c89150a68f3808cb2.jpg"
+    },
+    {
+      "name": "meteor-4",
+      "prompt": "Green toxic meteor asteroid with neon glow, cratered surface, isolated on solid black background, game sprite",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "meteor-4.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd047/ps4Eyndb-11dmTY4yZEsR_a1f8b10318d54d098a06ea22bd6f7657.jpg"
+    },
+    {
+      "name": "meteor-5",
+      "prompt": "Golden metallic meteor with sparkle trail, shiny surface, isolated on solid black background, game sprite",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "meteor-5.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd047/2qIGj6xa5-qMQ6yhyLSVA_8cf09ef0c4b047ecbe189d6e75046a37.jpg"
+    },
+    {
+      "name": "meteor-6",
+      "prompt": "Red hot lava meteor with molten cracks and fire, isolated on solid black background, game sprite",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "meteor-6.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd048/ns6LHm3PE1QRg0AYT9pmB_8eb1b828044a46529c56fe3adda9e5cb.jpg"
+    },
+    {
+      "name": "scale-beam",
+      "prompt": "Balance scale beam, horizontal golden metallic bar with center pivot fulcrum triangle, scientific scale, isolated on solid black background",
+      "size": "landscape_16_9",
+      "needsBgRemoval": true,
+      "filename": "scale-beam.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd049/aXJGv4MMBblVTjHGXqc61_ffea9ae2d5884bdfaed5efa4cc819932.jpg"
+    },
+    {
+      "name": "scale-pan",
+      "prompt": "Round metal weighing pan/dish, golden bronze, top view, scale pan for balance, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "scale-pan.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd049/oKVYB-45JeoONx_GQiftp_0d61aea987164a4588a6fe8762dbd3cf.jpg"
+    },
+    {
+      "name": "scale-stand",
+      "prompt": "Ornate golden balance scale stand/pillar, classical scientific instrument base, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "scale-stand.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04a/jnuR7DoZFwaW5RY_TIW5n_4c9abb8e4323438b8424f2b758f6e31e.jpg"
+    },
+    {
+      "name": "weight-sphere-red",
+      "prompt": "Shiny red metallic sphere weight ball, heavy object, game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "weight-sphere-red.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04a/xcUJBsKVtj-OFnsuGUL40_d0a91f5ddda64ad580d55eb2142e9313.jpg"
+    },
+    {
+      "name": "weight-cube-blue",
+      "prompt": "Shiny blue metallic cube weight block, heavy object, game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "weight-cube-blue.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04b/7AwaFE89gjFHDTgJS42gq_911f2fb3083a42ac9814dd1b72414fa1.jpg"
+    },
+    {
+      "name": "weight-pyramid-green",
+      "prompt": "Shiny green metallic pyramid weight, heavy object, game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "weight-pyramid-green.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04b/D7VyfeDpqLeuv0T_PZ2nI_65b72876b74d4085bf710deebbbe98c7.jpg"
+    },
+    {
+      "name": "weight-cylinder-gold",
+      "prompt": "Shiny gold metallic cylinder weight, heavy object, game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "weight-cylinder-gold.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04c/ZntzHDqq6VvcZuqrPNkkm_e3f8ab31dc3a44d6b6c4bc48f72bebf8.jpg"
+    },
+    {
+      "name": "weight-diamond-purple",
+      "prompt": "Shiny purple metallic diamond shape weight, heavy object, game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "weight-diamond-purple.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04d/-D5zPfsH59wn28QKyTSZO_92d5ff8b984b423f9014966c3498e902.jpg"
+    },
+    {
+      "name": "weight-star-orange",
+      "prompt": "Shiny orange metallic star shape weight, heavy object, game item, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "weight-star-orange.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04d/3LyoBo43s4w_9uI71aM64_d17528e9094d4a19bd9fd2e8e3285946.jpg"
+    },
+    {
+      "name": "hex-tile-normal",
+      "prompt": "Single hexagon tile, flat top, subtle grey-blue gradient, clean edges, game tile, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "hex-tile-normal.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04e/EMLYAcFsJVwLUbKmqYERJ_82fffdb9ca104fd793117bb6cab70a06.jpg"
+    },
+    {
+      "name": "hex-tile-highlight",
+      "prompt": "Single hexagon tile glowing bright purple-blue neon, highlighted active state, game tile, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "hex-tile-highlight.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd04f/5AkIAXgsPXQJ1CAPcNuMp_008ed301477a4c0eac57a43848ef818f.jpg"
+    },
+    {
+      "name": "hex-tile-selected",
+      "prompt": "Single hexagon tile glowing bright green neon, selected correct state, game tile, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "hex-tile-selected.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd050/HHGbelm68lS3o7f8TsSTY_7d0b13f1516e4174b0c36e5899135ced.jpg"
+    },
+    {
+      "name": "hex-tile-error",
+      "prompt": "Single hexagon tile glowing bright red, error wrong state, game tile, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "hex-tile-error.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd050/yZouqAFCfbCDuMxFp1aAl_6d5d44ea26c24be1a5766b47d3ac1e35.jpg"
+    },
+    {
+      "name": "hex-tile-sequence",
+      "prompt": "Single hexagon tile glowing bright gold/amber, sequence indicator state, game tile, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "hex-tile-sequence.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd051/gbAyWKte0gHs5R161TAQu_d1ebc987c01b4e398f2e3d7265144927.jpg"
+    },
+    {
+      "name": "jigsaw-piece-1",
+      "prompt": "Single jigsaw puzzle piece, blue colored, classic interlocking shape with 2 tabs 2 blanks, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "jigsaw-piece-1.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd051/WtYugcb9hg5I1tOuTjQme_1941054c06784db1b1bb323fa7b2ad28.jpg"
+    },
+    {
+      "name": "jigsaw-piece-2",
+      "prompt": "Single jigsaw puzzle piece, green colored, classic interlocking shape, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "jigsaw-piece-2.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd052/wacQ8GQK9bJ6eVrxK2LMk_173297c8746846a6a9b91b3a78c21e39.jpg"
+    },
+    {
+      "name": "jigsaw-piece-3",
+      "prompt": "Single jigsaw puzzle piece, red colored, corner piece with 2 flat edges, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "jigsaw-piece-3.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd053/OOtzLSDH6Pz8xOYZh4VwH_1bc4e5de8cbb49d5961f84017c2bbfa4.jpg"
+    },
+    {
+      "name": "jigsaw-piece-4",
+      "prompt": "Single jigsaw puzzle piece, yellow colored, edge piece with 1 flat edge, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "jigsaw-piece-4.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd053/O2E1Uum1vCK_IWWGC-hkr_a3a211e3829041b9bc9781f682f5b725.jpg"
+    },
+    {
+      "name": "jigsaw-frame",
+      "prompt": "Empty jigsaw puzzle frame outline, rectangular border with piece-shaped cutouts, wooden frame, game board, isolated on solid black background",
+      "size": "landscape_16_9",
+      "needsBgRemoval": true,
+      "filename": "jigsaw-frame.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd054/y9tzVpY6GI22OYUcvHMNa_37003dac3d7447c7a79cc932e291fd28.jpg"
+    },
+    {
+      "name": "car-red",
+      "prompt": "Cute cartoon red car, top-down aerial view, small vehicle, game sprite, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "car-red.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd055/QtJnwGKmHJWDLi81yoXZs_280b3ad774b4418c8816d515f1bfca62.jpg"
+    },
+    {
+      "name": "car-blue",
+      "prompt": "Cute cartoon blue car, top-down aerial view, small vehicle, game sprite, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "car-blue.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd055/p5zotdSb6rhHD3H0ksT_1_feb328cc37c94be4911cddfb2ed3f299.jpg"
+    },
+    {
+      "name": "car-green",
+      "prompt": "Cute cartoon green car, top-down aerial view, small vehicle, game sprite, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "car-green.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd056/iBqi2sKs_50-s0W02caPG_2bd2ac34afe14915af08c77f82c4994c.jpg"
+    },
+    {
+      "name": "car-yellow",
+      "prompt": "Cute cartoon yellow car, top-down aerial view, small vehicle, game sprite, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "car-yellow.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd056/gqXlr3iVthjKF9HXc2CGP_cc0469ee29fd45029067d4425ac02d81.jpg"
+    },
+    {
+      "name": "road-straight",
+      "prompt": "Road path tile segment, straight horizontal road, grey asphalt with white lane markings, top view, game tile",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "road-straight.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd057/fc-vY-3mrHpCcBb73zmfv_777fb1525b4b480bae15a7444254cf41.jpg"
+    },
+    {
+      "name": "road-curve",
+      "prompt": "Road path tile segment, curved 90 degree turn road, grey asphalt with white lane markings, top view, game tile",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "road-curve.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd058/a91U4P8O-h_nJ7mDLBmMb_ce1e2ee452b04b3d9bea0aeab74ce80e.jpg"
+    },
+    {
+      "name": "road-intersection",
+      "prompt": "Road path tile segment, T-intersection crossroads, grey asphalt with white lane markings, top view, game tile",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "road-intersection.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd058/9evSH4vb1CJpXlXbAbc89_ffb00271904d485cadef6bdf3aa106e5.jpg"
+    },
+    {
+      "name": "parking-spot",
+      "prompt": "Parking spot destination marker, numbered parking bay top view, colorful, game tile",
+      "size": "square",
+      "needsBgRemoval": false,
+      "filename": "parking-spot.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd059/y7NNx6w4HHJ0FJcUO3W4-_c658e308a04f44958042d3c6e24f4b7a.jpg"
+    },
+    {
+      "name": "switch-red",
+      "prompt": "Large round arcade button, glossy red, side view showing depth, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-red.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05a/fTnbxqfk8ir7rIi7ykBZg_7601340f8dfc42ba95a609a7f690429a.jpg"
+    },
+    {
+      "name": "switch-blue",
+      "prompt": "Large round arcade button, glossy blue, side view showing depth, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-blue.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05a/wEgGl7BLCgKWJR14kyUQo_76b6564e8081479998f743f4a27333b9.jpg"
+    },
+    {
+      "name": "switch-green",
+      "prompt": "Large round arcade button, glossy green, side view showing depth, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-green.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05b/aV2-4cAog2fVa0Ug097zy_4e00043c90af4e13b6b4745f79b82e7e.jpg"
+    },
+    {
+      "name": "switch-yellow",
+      "prompt": "Large round arcade button, glossy yellow, side view showing depth, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-yellow.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05b/t5pdGq0nO59zQ2U7tsxp7_dff35bb0c48344638443ba89f0107f11.jpg"
+    },
+    {
+      "name": "switch-purple",
+      "prompt": "Large round arcade button, glossy purple, side view showing depth, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-purple.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05c/mfKGgcAZGxY6BOPPB3DS2_02bced872f744be7a3daa0bc59cef914.jpg"
+    },
+    {
+      "name": "switch-red-lit",
+      "prompt": "Large round arcade button, bright glowing red with light emission, activated state, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-red-lit.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05d/6gN_zujLTupObi10A4Q1v_6db9a5c9a4f24775be8f7f6bce77562d.jpg"
+    },
+    {
+      "name": "switch-blue-lit",
+      "prompt": "Large round arcade button, bright glowing blue with light emission, activated state, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-blue-lit.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05d/1powXGbusLo6en32kuPFi_77015b7b00974b07bdd8c4f5f94917bd.jpg"
+    },
+    {
+      "name": "switch-green-lit",
+      "prompt": "Large round arcade button, bright glowing green with light emission, activated state, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-green-lit.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05e/gEaSpm41n4n4DvjMgoLWe_1a6771d072db42cea7b9a8537109e18d.jpg"
+    },
+    {
+      "name": "switch-yellow-lit",
+      "prompt": "Large round arcade button, bright glowing yellow with light emission, activated state, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-yellow-lit.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05f/V88sZ777EbYeT9miKKwJi_4d1924c4ac2a4f209d339eabd5dc3d9c.jpg"
+    },
+    {
+      "name": "switch-purple-lit",
+      "prompt": "Large round arcade button, bright glowing purple with light emission, activated state, game button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "switch-purple-lit.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd05f/_nflfLeh2_RhOm66ZEZih_314cee3f467246de89eeb39d263548e6.jpg"
+    },
+    {
+      "name": "switch-panel",
+      "prompt": "Dark metallic game panel board, rectangular control console surface with button mounting holes, futuristic, isolated on solid black background",
+      "size": "landscape_16_9",
+      "needsBgRemoval": true,
+      "filename": "switch-panel.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd060/LIdZP4Q6NCK8-gtVdcXuA_2a82ef6cb7ea4c63ac2b410a0b4597ea.jpg"
+    },
+    {
+      "name": "math-sign-plus",
+      "prompt": "Golden metallic plus sign + symbol, 3D floating, math operator, game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "math-sign-plus.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd061/FF9TgwE-7vkW3QzMQ4FSA_c357cedfe4314f3a84c0141fc236a533.jpg"
+    },
+    {
+      "name": "math-sign-minus",
+      "prompt": "Golden metallic minus sign - symbol, 3D floating, math operator, game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "math-sign-minus.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd061/PVk0LHlNUm3JGbnV7JBA4_87da2ebaf0614412be3335105e9faa8d.jpg"
+    },
+    {
+      "name": "math-sign-multiply",
+      "prompt": "Golden metallic multiplication x symbol, 3D floating, math operator, game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "math-sign-multiply.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd062/s4k7rkQEH3UKhmZyd45EC_6ec07978c5d542c79d29b7f98f4c7b2e.jpg"
+    },
+    {
+      "name": "math-sign-divide",
+      "prompt": "Golden metallic division symbol with dot slash dot, 3D floating, math operator, game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "math-sign-divide.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd062/Fzo-P1p9OEMVo6ckFn-J2_f0460bb0590b483e8d02b396bd54f626.jpg"
+    },
+    {
+      "name": "math-sign-equals",
+      "prompt": "Golden metallic equals = sign symbol, 3D floating, math operator, game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "math-sign-equals.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd063/Zm--b4vfnEesG9jkzM2QO_dab97996e01649528833c25bc6614575.jpg"
+    },
+    {
+      "name": "math-sign-question",
+      "prompt": "Golden metallic question mark symbol, 3D floating, mystery unknown, game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "math-sign-question.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd064/BIIbKQLxnaxd4F2SiX6CI_df32cd0c7e3b434fb9c7eed0dbc3040f.jpg"
+    },
+    {
+      "name": "number-tile",
+      "prompt": "Blank square number tile, glossy white with golden border, clean surface for overlay text, game tile, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "number-tile.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd064/mv1xP3gmZ6mdYy53bvkcv_824b173f25604e3cabf9655f85a2d1dc.jpg"
+    },
+    {
+      "name": "number-block-normal",
+      "prompt": "Square number block tile, dark blue glossy with silver border, clean face for number display, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "number-block-normal.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd065/vYucrCacO8kB265WLwwYc_82da07641cb941679e269981d558c5c8.jpg"
+    },
+    {
+      "name": "number-block-selected",
+      "prompt": "Square number block tile, bright glowing gold with golden border, selected active state, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "number-block-selected.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd065/tAt79oG0kASvYoGS83TIW_7d1cbb290ed04ce1b748049cc1c2723a.jpg"
+    },
+    {
+      "name": "number-block-correct",
+      "prompt": "Square number block tile, bright green glow with golden border, correct answer state, game piece, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "number-block-correct.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd066/zsBQ6RWVqmtsm0kSs-Bu6_e30b914651de4cacbb3862e6dd2dc8e9.jpg"
+    },
+    {
+      "name": "target-display",
+      "prompt": "Target number display banner, golden ornate frame, dark center, scoreboard style, game UI element, isolated on solid black background",
+      "size": "landscape_16_9",
+      "needsBgRemoval": true,
+      "filename": "target-display.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd067/rachgnPEUE72LzkKNfPc2_b8cb2ea6b2124917991fa48b43c5e9b8.jpg"
+    },
+    {
+      "name": "feedback-correct",
+      "prompt": "Green checkmark in a circle, correct answer symbol, bright glowing, game UI, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "feedback-correct.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd067/e541W_Xiq7tWbVtC9jG8w_64fc728588e7479aa028b9f6d9f94737.jpg"
+    },
+    {
+      "name": "feedback-wrong",
+      "prompt": "Red X in a circle, wrong answer symbol, bright glowing, game UI, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "feedback-wrong.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd068/Wn1EmEh7KJAKDi7rwOskH_ca85b3c359de4e5cb8ece7f5b7041d71.jpg"
+    },
+    {
+      "name": "feedback-timesup",
+      "prompt": "Times Up text with alarm clock, red urgency, game over indicator, isolated on solid black background",
+      "size": "landscape_16_9",
+      "needsBgRemoval": true,
+      "filename": "feedback-timesup.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd069/rzKUL5dPfJuUADedk_bvL_d96656e1285141b49b42ed8c97cb2c10.jpg"
+    },
+    {
+      "name": "numpad-button",
+      "prompt": "Glossy rounded square button, dark purple with subtle gradient, game keypad button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "numpad-button.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd069/sxNRPUDkdYVb8BFn3i7KJ_e78d6f01fa9241808a29c0890712917f.jpg"
+    },
+    {
+      "name": "numpad-button-pressed",
+      "prompt": "Glossy rounded square button pressed/depressed, lighter purple with inner glow, game keypad button, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "numpad-button-pressed.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06a/UpR-TPhOd7gqmHL6cIAVw_801d223fb64e4f2badfad0c1e0f6031a.jpg"
+    },
+    {
+      "name": "professor-pointing",
+      "prompt": "Friendly cartoon professor character pointing upward with one finger, teaching pose, white lab coat, round glasses, full body, isolated on solid white background",
+      "size": "portrait_4_3",
+      "needsBgRemoval": true,
+      "filename": "professor-pointing.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06a/B0KCV4EuNe_yMkvSITasp_645e60dff97d45da9b4f070dad4ac947.jpg"
+    },
+    {
+      "name": "professor-thinking",
+      "prompt": "Friendly cartoon professor character with hand on chin thinking pose, contemplative expression, white lab coat, round glasses, full body, isolated on solid white background",
+      "size": "portrait_4_3",
+      "needsBgRemoval": true,
+      "filename": "professor-thinking.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06b/0hnfHDkEQzOmIujN9lZRw_749094e28d7d4f89a4803ca78e954180.jpg"
+    },
+    {
+      "name": "professor-celebrating",
+      "prompt": "Friendly cartoon professor character jumping with both fists in the air, extreme celebration excitement, white lab coat, round glasses, full body, isolated on solid white background",
+      "size": "portrait_4_3",
+      "needsBgRemoval": true,
+      "filename": "professor-celebrating.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06c/6UNxIl5YmUYwN-ZsNh9ya_2c1f74b54f3d474ea6da5c7c2f1bdad0.jpg"
+    },
+    {
+      "name": "icon-shapeorder",
+      "prompt": "Game icon showing colorful geometric shapes in a row circle star triangle, mini-game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-shapeorder.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06c/bxE_nsxHKcxZji2NDbRAR_aa24d006a8b74ad385d112c8b1f0d380.jpg"
+    },
+    {
+      "name": "icon-matchcard",
+      "prompt": "Game icon showing two playing cards face down with question marks, memory card game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-matchcard.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06d/u4h36wwcacdg6wnlPe6aG_0a42aa88bf9444aba786c54b3a68a52c.jpg"
+    },
+    {
+      "name": "icon-calculate",
+      "prompt": "Game icon showing mathematical equation with missing number, math game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-calculate.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06e/_Bxuem5QLRSvJ0XW8Qb8j_a6e8293a528b4c229d28961e12ccf385.jpg"
+    },
+    {
+      "name": "icon-missingsign",
+      "prompt": "Game icon showing math equation with missing operator sign, operator game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-missingsign.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06f/pUtGV6VvPcnMoMrNUULbJ_27962e4e604a437c9a594fa7813f5459.jpg"
+    },
+    {
+      "name": "icon-cubecounter",
+      "prompt": "Game icon showing stacked isometric 3D cubes to count, block counting game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-cubecounter.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd06f/z-WdtIplLkJDU1gBXTK6E_e8180ee098eb4e31831882bf86a08b55.jpg"
+    },
+    {
+      "name": "icon-weightgame",
+      "prompt": "Game icon showing golden balance scale with objects, weight comparison game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-weightgame.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd070/GQ8N6e9K8wMFjY5npg9XF_60a39c79348148bda1206b6e79515326.jpg"
+    },
+    {
+      "name": "icon-meteorsequence",
+      "prompt": "Game icon showing numbered meteors flying through space, asteroid sequence game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-meteorsequence.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd071/pts3f7Tq5mzLmTDwmK3v-_1e5b1727309e46bc925e988a296c8bf6.jpg"
+    },
+    {
+      "name": "icon-jigsawmatch",
+      "prompt": "Game icon showing interlocking jigsaw puzzle pieces, puzzle matching game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-jigsawmatch.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd071/krnydrhogu6ga6wtrQL8T_b9332b08191c4894ba9044793359eb9e.jpg"
+    },
+    {
+      "name": "icon-mathcombination",
+      "prompt": "Game icon showing number blocks combining to reach a target sum, math combination game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-mathcombination.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd072/FQQcLB9ua31cCoR16GFmM_5a9e867180fb46489758c4b0595bd388.jpg"
+    },
+    {
+      "name": "icon-sequencematch",
+      "prompt": "Game icon showing hexagonal tiles in a path pattern, hex path game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-sequencematch.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd072/S2PRZ-ZgX-uE5RW2jP3OK_c55d54e7cdf446afbb36f22f90017ad3.jpg"
+    },
+    {
+      "name": "icon-memorysequence",
+      "prompt": "Game icon showing colorful arcade buttons lighting up in sequence, simon says game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-memorysequence.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd073/AkyOO86Ptmx2ExPKrg3J0_080505336e9444c98141b8807fdc777a.jpg"
+    },
+    {
+      "name": "icon-carpath",
+      "prompt": "Game icon showing small cars on winding paths from aerial view, car path game icon, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "icon-carpath.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd074/gzM1cgdSIDCiI-c01viSF_723840c03c7643f78bc510dacac2f064.jpg"
+    },
+    {
+      "name": "coin-token",
+      "prompt": "Golden shiny coin token with brain emblem, game currency, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "coin-token.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd074/kSF-thxxMit1xvwDIe9uM_8fd8a9e3c2c54a239f4ecc3e8f99c689.jpg"
+    },
+    {
+      "name": "star-single",
+      "prompt": "Single golden five-pointed star, shiny metallic, rating star, game UI, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "star-single.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd075/JqOIZltWULAYaUrkxO_C0_4978494fa0254f8b87271b96aa674390.jpg"
+    },
+    {
+      "name": "star-empty",
+      "prompt": "Single grey empty five-pointed star outline, unfilled rating star, game UI, isolated on solid black background",
+      "size": "square",
+      "needsBgRemoval": true,
+      "filename": "star-empty.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd076/N2anFkY8DqyTzBtgKh2ij_4492aeba2de14401b5e2be104f45cf7e.jpg"
+    },
+    {
+      "name": "progress-bar-fill",
+      "prompt": "Horizontal glowing gradient bar segment, purple to gold, progress bar fill, game UI element",
+      "size": "landscape_16_9",
+      "needsBgRemoval": false,
+      "filename": "progress-bar-fill.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd076/2R5bPa-L50M5q-ZCzSxIs_a611bf43f060475581c143e646e6ce9b.jpg"
+    },
+    {
+      "name": "progress-bar-bg",
+      "prompt": "Horizontal dark grey rounded bar background, empty progress bar track, game UI element",
+      "size": "landscape_16_9",
+      "needsBgRemoval": false,
+      "filename": "progress-bar-bg.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd077/fClAQtUxTfPSBl08KmbSJ_424fd65be11447f586c8652b19ff2f0a.jpg"
+    },
+    {
+      "name": "combo-streak",
+      "prompt": "Fiery combo streak text effect with flames and sparkles, multiplier indicator, game UI, isolated on solid black background",
+      "size": "landscape_16_9",
+      "needsBgRemoval": true,
+      "filename": "combo-streak.png",
+      "status": "success",
+      "image_url": "https://v3b.fal.media/files/b/0a8dd077/6p06OtJ1An9QRZwlCDJGA_1d6e948428f248ae9f5dd239757668cb.jpg"
+    }
+  ],
+  "phase2_total": 112,
+  "phase2_success": 112,
+  "phase2_failed": 0
 }

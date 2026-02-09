@@ -1,4 +1,4 @@
-// Main Menu Screen — v2 redesign: clean, full-stage, one primary action
+// Main Menu Screen — bright WHTBB original style
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../store/gameStore';
 import { useSound } from '../../hooks/useSound';
@@ -15,17 +15,11 @@ export function MainMenu() {
 
   return (
     <div className="game-page">
-      <div className="game-stage">
-        {/* AI background */}
-        <img
-          src="/assets/generated/mainmenu-bg.png"
-          alt=""
-          className="stage-bg"
-          draggable={false}
-        />
-
-        {/* Dark vignette so UI pops against busy bg */}
-        <div className="mm-vignette" />
+      <div className="game-stage" style={{
+        background: 'linear-gradient(180deg, #ff7eb3 0%, #ff5ca0 30%, #e8468f 60%, #d63384 100%)',
+        aspectRatio: '750 / 560',
+      }}>
+        {/* Pink/magenta gradient serves as stage background — no AI image needed */}
 
         <div className="stage-overlay">
           {/* Sunburst — slow spin behind content */}

@@ -1,5 +1,5 @@
-// WeightGame — 3 visual styles selectable via ?wv=1|2|3
-import { useState, useEffect, useCallback, useMemo } from 'react';
+// WeightGame — single clean warm scale style
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore } from '../../../store/gameStore';
 import { useFeedbackSound } from '../../../hooks/useSound';
@@ -14,6 +14,12 @@ const WEIGHT_IMAGES = [
   '/assets/generated/weight-rock.png',
   '/assets/generated/weight-cloud.png',
   '/assets/generated/weight-gold-bar.png',
+  '/assets/generated/weight-cube-blue.png',
+  '/assets/generated/weight-cylinder-gold.png',
+  '/assets/generated/weight-diamond-purple.png',
+  '/assets/generated/weight-pyramid-green.png',
+  '/assets/generated/weight-sphere-red.png',
+  '/assets/generated/weight-star-orange.png',
 ];
 
 const NUM_CORRECT_BEFORE_ADDING_SCALE = 8;
@@ -36,14 +42,6 @@ function shuffle<T>(arr: T[]): T[] {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
-}
-
-// Read style from URL: ?wv=1 (neon), ?wv=2 (flash), ?wv=3 (royal)
-function getStyleVariant(): 1 | 2 | 3 {
-  const p = new URLSearchParams(window.location.search).get('wv');
-  if (p === '2') return 2;
-  if (p === '3') return 3;
-  return 1;
 }
 
 // ─── Shared Geometry ───────────────────────────────────────────────────
@@ -92,7 +90,6 @@ function calcGeo(leftArr: number[], rightArr: number[], heavierSide: 'left' | 'r
 export function WeightGameGame() {
   const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
   const [totalCorrect, setTotalCorrect] = useState(0);
-  const styleVariant = useMemo(getStyleVariant, []);
 
   const addCorrect = useGameStore((s) => s.addCorrect);
   const addIncorrect = useGameStore((s) => s.addIncorrect);
@@ -110,7 +107,6 @@ export function WeightGameGame() {
 
     const imageMap = shuffle(Array.from({ length: WEIGHT_IMAGES.length }, (_, i) => i))
       .slice(0, numItems);
-    // If numItems > WEIGHT_IMAGES.length, wrap
     while (imageMap.length < numItems) imageMap.push(imageMap[imageMap.length % WEIGHT_IMAGES.length]);
 
     const scalePairs: ScalePair[] = [];
@@ -169,32 +165,26 @@ export function WeightGameGame() {
     const fhs = pair.flipped ? (hs === 'left' ? 'right' : 'left') : hs;
     const g = calcGeo(li, ri, fhs as 'left' | 'right');
 
-    if (styleVariant === 2) return <ScaleFlash key={pairIdx} g={g} id={pairIdx} w={cw} getImg={getImg} />;
-    if (styleVariant === 3) return <ScaleRoyal key={pairIdx} g={g} id={pairIdx} w={cw} getImg={getImg} />;
-    return <ScaleNeon key={pairIdx} g={g} id={pairIdx} w={cw} getImg={getImg} />;
+    return <ScaleClean key={pairIdx} g={g} id={pairIdx} w={cw} getImg={getImg} />;
   };
-
-  // Style-specific wrapper backgrounds
-  const scaleAreaStyle: React.CSSProperties = styleVariant === 2
-    ? { background: 'linear-gradient(180deg, #e8eaf0 0%, #d0d4e0 100%)', borderRadius: 12, padding: '8px 4px', border: '1px solid rgba(0,0,0,0.1)' }
-    : styleVariant === 3
-    ? { background: 'radial-gradient(ellipse at 50% 40%, rgba(60,40,20,0.5) 0%, rgba(10,10,30,0.3) 100%)', borderRadius: 12, padding: '8px 4px', border: '1px solid rgba(255,200,80,0.12)' }
-    : { background: 'rgba(0,0,0,0.25)', borderRadius: 12, padding: '8px 4px', border: '1px solid rgba(100,200,255,0.08)' };
-
-  const titleStyle: React.CSSProperties = styleVariant === 2
-    ? { fontFamily: 'Baveuse, cursive', color: '#333', textShadow: 'none' }
-    : styleVariant === 3
-    ? { fontFamily: 'Baveuse, cursive', color: '#ffd700', textShadow: '0 0 15px rgba(255,200,50,0.4), 0 2px 4px rgba(0,0,0,0.6)' }
-    : { fontFamily: 'Baveuse, cursive', color: '#60d0ff', textShadow: '0 0 15px rgba(80,200,255,0.4), 0 2px 4px rgba(0,0,0,0.6)' };
 
   return (
     <GameContainer>
       <div className="flex flex-col items-center h-full">
-        <div className="text-base tracking-wide" style={titleStyle}>
+        <div className="text-base tracking-wide" style={{
+          fontFamily: 'Baveuse, cursive',
+          color: '#5a4030',
+          textShadow: 'none',
+        }}>
           Tap the HEAVIEST object
         </div>
 
-        <div className="flex-1 w-full flex flex-col justify-center gap-1 my-1" style={scaleAreaStyle}>
+        <div className="flex-1 w-full flex flex-col justify-center gap-1 my-1" style={{
+          background: 'linear-gradient(180deg, #f5efe8 0%, #ebe3d8 100%)',
+          borderRadius: 12,
+          padding: '8px 4px',
+          border: '1px solid rgba(0,0,0,0.08)',
+        }}>
           {Array.from({ length: numRows }).map((_, row) => {
             const si = row * 2;
             return (
@@ -205,254 +195,91 @@ export function WeightGameGame() {
           })}
         </div>
 
-        {/* Bottom buttons — style-specific */}
+        {/* Bottom buttons — light rounded cards */}
         <div className="flex justify-center gap-3 py-2 flex-wrap">
-          {puzzle.itemOrder.map((itemIdx) => {
-            const btnStyle: React.CSSProperties = styleVariant === 2
-              ? { width: 72, height: 72, background: '#fff', border: '2px solid #ccc', borderRadius: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }
-              : styleVariant === 3
-              ? { width: 70, height: 70, background: 'radial-gradient(circle, #2a2040 0%, #1a1030 100%)', border: '2.5px solid #c8a040', borderRadius: '50%', boxShadow: '0 0 12px rgba(200,160,60,0.3), 0 4px 10px rgba(0,0,0,0.5)' }
-              : { width: 70, height: 70, background: 'linear-gradient(180deg, rgba(20,30,60,0.9) 0%, rgba(10,15,40,0.95) 100%)', border: '2px solid rgba(80,180,255,0.3)', borderRadius: 14, boxShadow: '0 0 10px rgba(60,160,255,0.15), 0 4px 10px rgba(0,0,0,0.4)' };
-            const hoverStyle = styleVariant === 2
-              ? { scale: 1.12, boxShadow: '0 4px 16px rgba(0,0,0,0.25)', borderColor: '#4a90d9' }
-              : styleVariant === 3
-              ? { scale: 1.12, boxShadow: '0 0 20px rgba(255,200,50,0.5), 0 4px 10px rgba(0,0,0,0.5)', borderColor: '#ffd700' }
-              : { scale: 1.12, boxShadow: '0 0 20px rgba(60,180,255,0.5), 0 4px 10px rgba(0,0,0,0.5)', borderColor: 'rgba(80,200,255,0.8)' };
-            const imgSize = styleVariant === 2 ? 54 : 48;
-            return (
-              <motion.button key={itemIdx} onClick={() => handleItemClick(itemIdx)}
-                className="flex items-center justify-center overflow-hidden cursor-pointer"
-                style={btnStyle} whileHover={hoverStyle} whileTap={{ scale: 0.9 }}>
-                <img src={getImg(itemIdx)} style={{ width: imgSize, height: imgSize, objectFit: 'contain' }} draggable={false} alt="" />
-              </motion.button>
-            );
-          })}
+          {puzzle.itemOrder.map((itemIdx) => (
+            <motion.button key={itemIdx} onClick={() => handleItemClick(itemIdx)}
+              className="flex items-center justify-center overflow-hidden cursor-pointer"
+              style={{
+                width: 72,
+                height: 72,
+                background: '#fff',
+                border: '2px solid #ddd',
+                borderRadius: 14,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+              }}
+              whileHover={{
+                scale: 1.12,
+                boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+                borderColor: '#e74c3c',
+              }}
+              whileTap={{ scale: 0.9 }}>
+              <img src={getImg(itemIdx)} style={{ width: 54, height: 54, objectFit: 'contain' }} draggable={false} alt="" />
+            </motion.button>
+          ))}
         </div>
       </div>
     </GameContainer>
   );
 }
 
-// ─── Shared Scale Props ────────────────────────────────────────────────
+// ─── Scale Props ────────────────────────────────────────────────────
 interface SP { g: Geo; id: number; w: number; getImg: (i: number) => string; }
 const h = (w: number) => (w / VB_W) * VB_H;
 
 // ═══════════════════════════════════════════════════════════════════════
-// STYLE 1 — NEON GLOW
-// Dark theme, items with colored glow halos, neon edge-lit scale
+// SINGLE CLEAN STYLE — Warm wood beam, clean cards, soft shadows
 // ═══════════════════════════════════════════════════════════════════════
-function ScaleNeon({ g, id, w, getImg }: SP) {
+function ScaleClean({ g, id, w, getImg }: SP) {
   return (
     <svg width={w} height={h(w)} viewBox={`0 0 ${VB_W} ${VB_H}`} style={{ display: 'block' }}>
       <defs>
-        <linearGradient id={`nb-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#304060" />
-          <stop offset="100%" stopColor="#1a2030" />
+        <linearGradient id={`beam-${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#b08050" />
+          <stop offset="50%" stopColor="#8c6438" />
+          <stop offset="100%" stopColor="#6a4828" />
         </linearGradient>
-        <linearGradient id={`np-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#405878" />
-          <stop offset="100%" stopColor="#283848" />
+        <linearGradient id={`plat-${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#d4a860" />
+          <stop offset="100%" stopColor="#b08040" />
         </linearGradient>
-        <filter id={`ng-${id}`}>
-          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-          <feFlood floodColor="#40a0ff" floodOpacity="0.6" result="color" />
-          <feComposite in="color" in2="blur" operator="in" result="glow" />
-          <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-        <filter id={`nig-${id}`}>
-          <feGaussianBlur in="SourceAlpha" stdDeviation="2.5" result="blur" />
-          <feFlood floodColor="#60c0ff" floodOpacity="0.5" result="color" />
-          <feComposite in="color" in2="blur" operator="in" result="glow" />
-          <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-        <filter id={`nsh-${id}`}>
-          <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="#000" floodOpacity="0.6" />
+        <filter id={`sh-${id}`}>
+          <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#000" floodOpacity="0.15" />
         </filter>
       </defs>
 
-      {/* Fulcrum */}
-      <polygon points={`${PIVOT_X},${g.ftop} ${PIVOT_X - 14},${g.fbot} ${PIVOT_X + 14},${g.fbot}`}
-        fill={`url(#${`nb-${id}`})`} stroke="#406080" strokeWidth="1" strokeLinejoin="round" />
-      <rect x={PIVOT_X - 20} y={g.fbot - 1} width={40} height={6} rx={3} fill="#283848" stroke="#406080" strokeWidth="0.6" />
-
-      {/* Beam with neon edge */}
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="#1a2030" strokeWidth={10} strokeLinecap="round" />
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke={`url(#${`nb-${id}`})`} strokeWidth={8} strokeLinecap="round" />
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="rgba(80,180,255,0.3)" strokeWidth={10} strokeLinecap="round" filter={`url(#${`ng-${id}`})`} />
-      {/* Pivot */}
-      <circle cx={PIVOT_X} cy={PIVOT_Y} r={5} fill="#304060" stroke="#50a0e0" strokeWidth="1.5" />
-
-      {/* Chains */}
-      {[[g.lx, g.ly, g.lpx, g.lpy], [g.rx, g.ry, g.rpx, g.rpy]].map(([bx, by, px, py], ci) => (
-        <g key={ci}>
-          <line x1={bx - 5} y1={by + 5} x2={px - PLAT_W / 2 + 5} y2={py} stroke="#50a0e0" strokeWidth="1" opacity="0.6" />
-          <line x1={bx + 5} y1={by + 5} x2={px + PLAT_W / 2 - 5} y2={py} stroke="#50a0e0" strokeWidth="1" opacity="0.6" />
-        </g>
-      ))}
-
-      {/* Platforms */}
-      {[[g.lpx, g.lpy], [g.rpx, g.rpy]].map(([cx, cy], pi) => (
-        <g key={pi}>
-          <rect x={cx - PLAT_W / 2} y={cy} width={PLAT_W} height={7} rx={3.5}
-            fill={`url(#${`np-${id}`})`} stroke="#50a0e0" strokeWidth="0.8" opacity="0.8" />
-          <rect x={cx - PLAT_W / 2 + 2} y={cy + 1} width={PLAT_W - 4} height={2} rx={1}
-            fill="rgba(80,180,255,0.15)" />
-        </g>
-      ))}
-
-      {/* Items with glow halos */}
-      {[...g.leftItems, ...g.rightItems].map((pos, i) => (
-        <g key={i} filter={`url(#${`nig-${id}`})`}>
-          <rect x={pos.x - 2} y={pos.y - 2} width={ITEM_SIZE + 4} height={ITEM_SIZE + 4}
-            rx={8} fill="rgba(15,20,40,0.85)" stroke="rgba(80,180,255,0.35)" strokeWidth="1.2" />
-          <image href={getImg(pos.idx)} x={pos.x} y={pos.y} width={ITEM_SIZE} height={ITEM_SIZE} />
-        </g>
-      ))}
-    </svg>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// STYLE 2 — FLASH REPLICA
-// Light background, simple black-line scales, white cards, maximum clarity
-// ═══════════════════════════════════════════════════════════════════════
-function ScaleFlash({ g, id, w, getImg }: SP) {
-  return (
-    <svg width={w} height={h(w)} viewBox={`0 0 ${VB_W} ${VB_H}`} style={{ display: 'block' }}>
-      <defs>
-        <filter id={`fs-${id}`}>
-          <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#000" floodOpacity="0.18" />
-        </filter>
-      </defs>
-
-      {/* Simple fulcrum — dark triangle */}
+      {/* Fulcrum — dark simple triangle */}
       <polygon points={`${PIVOT_X},${g.ftop} ${PIVOT_X - 12},${g.fbot} ${PIVOT_X + 12},${g.fbot}`}
-        fill="#555" stroke="#333" strokeWidth="1.5" strokeLinejoin="round" />
-      <rect x={PIVOT_X - 18} y={g.fbot} width={36} height={5} rx={2.5} fill="#444" />
+        fill="#5a4030" stroke="#3a2820" strokeWidth="1.5" strokeLinejoin="round" />
+      <rect x={PIVOT_X - 18} y={g.fbot} width={36} height={5} rx={2.5} fill="#4a3828" />
 
-      {/* Simple beam */}
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="#3a3a3a" strokeWidth={7} strokeLinecap="round" />
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="#5a5a5a" strokeWidth={5} strokeLinecap="round" />
-      <circle cx={PIVOT_X} cy={PIVOT_Y} r={4} fill="#444" stroke="#333" strokeWidth="1.5" />
+      {/* Warm wood beam */}
+      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="#4a3020" strokeWidth={7} strokeLinecap="round" />
+      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke={`url(#beam-${id})`} strokeWidth={5} strokeLinecap="round" />
+      <circle cx={PIVOT_X} cy={PIVOT_Y} r={4} fill="#6a4828" stroke="#4a3020" strokeWidth="1.5" />
 
-      {/* Simple chains — thin black lines */}
+      {/* Chains — brown rope lines */}
       {[[g.lx, g.ly, g.lpx, g.lpy], [g.rx, g.ry, g.rpx, g.rpy]].map(([bx, by, px, py], ci) => (
         <g key={ci}>
-          <line x1={bx - 6} y1={by + 4} x2={px - PLAT_W / 2 + 4} y2={py} stroke="#555" strokeWidth="1.5" />
-          <line x1={bx + 6} y1={by + 4} x2={px + PLAT_W / 2 - 4} y2={py} stroke="#555" strokeWidth="1.5" />
+          <line x1={bx - 6} y1={by + 4} x2={px - PLAT_W / 2 + 4} y2={py} stroke="#8c6438" strokeWidth="1.5" />
+          <line x1={bx + 6} y1={by + 4} x2={px + PLAT_W / 2 - 4} y2={py} stroke="#8c6438" strokeWidth="1.5" />
         </g>
       ))}
 
-      {/* Platforms — solid dark */}
+      {/* Platforms — tan/gold */}
       {[[g.lpx, g.lpy], [g.rpx, g.rpy]].map(([cx, cy], pi) => (
         <rect key={pi} x={cx - PLAT_W / 2} y={cy} width={PLAT_W} height={7} rx={3}
-          fill="#666" stroke="#444" strokeWidth="1" />
+          fill={`url(#plat-${id})`} stroke="#8c6438" strokeWidth="1" />
       ))}
 
-      {/* Items on clean white cards */}
+      {/* Items on light rounded cards with soft shadows */}
       {[...g.leftItems, ...g.rightItems].map((pos, i) => (
-        <g key={i} filter={`url(#${`fs-${id}`})`}>
+        <g key={i} filter={`url(#sh-${id})`}>
           <rect x={pos.x - 4} y={pos.y - 4} width={ITEM_SIZE + 8} height={ITEM_SIZE + 8}
-            rx={8} fill="#fff" stroke="#ddd" strokeWidth="1" />
+            rx={8} fill="#fff" stroke="#e0d4c8" strokeWidth="1" />
           <image href={getImg(pos.idx)} x={pos.x} y={pos.y} width={ITEM_SIZE} height={ITEM_SIZE} />
         </g>
       ))}
-    </svg>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-// STYLE 3 — ROYAL GOLD
-// Ornate gold/brass scale, items in gold medallion circles, premium feel
-// ═══════════════════════════════════════════════════════════════════════
-function ScaleRoyal({ g, id, w, getImg }: SP) {
-  const MR = ITEM_SIZE / 2 + 5; // medallion radius
-  return (
-    <svg width={w} height={h(w)} viewBox={`0 0 ${VB_W} ${VB_H}`} style={{ display: 'block' }}>
-      <defs>
-        <linearGradient id={`rb-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f0d060" />
-          <stop offset="30%" stopColor="#c8a030" />
-          <stop offset="70%" stopColor="#a08020" />
-          <stop offset="100%" stopColor="#806010" />
-        </linearGradient>
-        <linearGradient id={`rf-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#d4aa40" />
-          <stop offset="100%" stopColor="#806010" />
-        </linearGradient>
-        <linearGradient id={`rp-${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#e8c44a" />
-          <stop offset="100%" stopColor="#a08020" />
-        </linearGradient>
-        <radialGradient id={`rm-${id}`}>
-          <stop offset="0%" stopColor="#1a1528" />
-          <stop offset="100%" stopColor="#10101a" />
-        </radialGradient>
-        <filter id={`rg-${id}`}>
-          <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="#c8a030" floodOpacity="0.4" />
-        </filter>
-        <filter id={`rs-${id}`}>
-          <feDropShadow dx="0" dy="1.5" stdDeviation="2" floodColor="#000" floodOpacity="0.5" />
-        </filter>
-      </defs>
-
-      {/* Ornate fulcrum */}
-      <polygon points={`${PIVOT_X},${g.ftop} ${PIVOT_X - 16},${g.fbot} ${PIVOT_X + 16},${g.fbot}`}
-        fill={`url(#${`rf-${id}`})`} stroke="#705010" strokeWidth="1.2" strokeLinejoin="round" />
-      {/* Fulcrum jewel */}
-      <circle cx={PIVOT_X} cy={g.ftop + 12} r={3} fill="#e04040" stroke="#801010" strokeWidth="0.8" />
-      {/* Base */}
-      <rect x={PIVOT_X - 22} y={g.fbot - 1} width={44} height={7} rx={3.5}
-        fill={`url(#${`rf-${id}`})`} stroke="#705010" strokeWidth="0.8" />
-      <rect x={PIVOT_X - 19} y={g.fbot} width={38} height={2} rx={1} fill="rgba(255,255,255,0.2)" />
-
-      {/* Gold beam */}
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="#604010" strokeWidth={11} strokeLinecap="round" />
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke={`url(#${`rb-${id}`})`} strokeWidth={9} strokeLinecap="round" />
-      <line x1={g.lx} y1={g.ly} x2={g.rx} y2={g.ry} stroke="rgba(255,255,255,0.25)" strokeWidth={5} strokeLinecap="round" />
-      {/* Ornate pivot */}
-      <circle cx={PIVOT_X} cy={PIVOT_Y} r={6} fill="#c8a030" stroke="#806010" strokeWidth="1.5" />
-      <circle cx={PIVOT_X} cy={PIVOT_Y} r={3} fill="#f0d060" />
-
-      {/* Gold chains — dashed for link effect */}
-      {[[g.lx, g.ly, g.lpx, g.lpy], [g.rx, g.ry, g.rpx, g.rpy]].map(([bx, by, px, py], ci) => (
-        <g key={ci}>
-          <line x1={bx - 5} y1={by + 5} x2={px - PLAT_W / 2 + 5} y2={py}
-            stroke="#c8a030" strokeWidth="2" strokeDasharray="3,2" />
-          <line x1={bx + 5} y1={by + 5} x2={px + PLAT_W / 2 - 5} y2={py}
-            stroke="#c8a030" strokeWidth="2" strokeDasharray="3,2" />
-        </g>
-      ))}
-
-      {/* Gold platforms */}
-      {[[g.lpx, g.lpy], [g.rpx, g.rpy]].map(([cx, cy], pi) => (
-        <g key={pi}>
-          <rect x={cx - PLAT_W / 2} y={cy} width={PLAT_W} height={8} rx={4}
-            fill={`url(#${`rp-${id}`})`} stroke="#806010" strokeWidth="1" />
-          <rect x={cx - PLAT_W / 2 + 4} y={cy + 1} width={PLAT_W - 8} height={3} rx={1.5}
-            fill="rgba(255,255,255,0.25)" />
-        </g>
-      ))}
-
-      {/* Items in gold medallion circles */}
-      {[...g.leftItems, ...g.rightItems].map((pos, i) => {
-        const cx = pos.x + ITEM_SIZE / 2;
-        const cy = pos.y + ITEM_SIZE / 2;
-        return (
-          <g key={i} filter={`url(#${`rs-${id}`})`}>
-            {/* Outer gold ring */}
-            <circle cx={cx} cy={cy} r={MR + 2} fill="none" stroke="#c8a030" strokeWidth="3" />
-            {/* Dark inner fill */}
-            <circle cx={cx} cy={cy} r={MR} fill={`url(#${`rm-${id}`})`} />
-            {/* Inner gold ring */}
-            <circle cx={cx} cy={cy} r={MR - 1} fill="none" stroke="#a08020" strokeWidth="0.8" />
-            {/* Highlight arc */}
-            <path d={`M ${cx - MR + 4} ${cy - 6} A ${MR} ${MR} 0 0 1 ${cx + MR - 4} ${cy - 6}`}
-              fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="2" />
-            <image href={getImg(pos.idx)} x={pos.x + 1} y={pos.y + 1} width={ITEM_SIZE - 2} height={ITEM_SIZE - 2} />
-          </g>
-        );
-      })}
     </svg>
   );
 }

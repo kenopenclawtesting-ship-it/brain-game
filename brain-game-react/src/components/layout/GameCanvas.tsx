@@ -24,15 +24,10 @@ export function GameCanvas({ children, className = '' }: GameCanvasProps) {
   );
 }
 
-// Full-screen wrapper - DARK TV game show background with spotlights
+// Full-screen wrapper - warm light background
 export function GameCanvasWrapper({ children }: { children: ReactNode }) {
   return (
     <div className="game-page" style={{ justifyContent: 'center' }}>
-      {/* Spotlight beams */}
-      <div className="spotlight spotlight-left" />
-      <div className="spotlight spotlight-right" />
-      <div className="spotlight spotlight-center" />
-
       <div
         style={{
           position: 'relative',
@@ -40,10 +35,10 @@ export function GameCanvasWrapper({ children }: { children: ReactNode }) {
           width: '100%',
           maxWidth: CANVAS_WIDTH,
           padding: '10px',
-          background: 'linear-gradient(180deg, rgba(80,80,180,0.25) 0%, rgba(60,40,120,0.2) 50%, rgba(40,20,80,0.25) 100%)',
+          background: 'rgba(255, 255, 255, 0.3)',
           borderRadius: '16px',
-          boxShadow: '0 0 50px rgba(100,80,200,0.35), 0 0 100px rgba(80,60,180,0.15)',
-          border: '1px solid rgba(120,100,200,0.3)',
+          boxShadow: '0 2px 16px rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
         }}
       >
         {children}
