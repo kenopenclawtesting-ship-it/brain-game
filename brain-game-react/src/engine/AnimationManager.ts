@@ -34,7 +34,7 @@ class AnimationManagerClass {
   /**
    * Fade in animation
    */
-  fadeIn(target: PIXI.DisplayObject, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  fadeIn(target: PIXI.Container, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 0.5, ease = "power2.out", delay = 0 } = config;
     target.alpha = 0;
     
@@ -52,7 +52,7 @@ class AnimationManagerClass {
   /**
    * Fade out animation
    */
-  fadeOut(target: PIXI.DisplayObject, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  fadeOut(target: PIXI.Container, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 0.5, ease = "power2.out", delay = 0 } = config;
     
     const tween = gsap.to(target, {
@@ -69,7 +69,7 @@ class AnimationManagerClass {
   /**
    * Slide in from position
    */
-  slideIn(target: PIXI.DisplayObject, fromX: number, fromY: number, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  slideIn(target: PIXI.Container, fromX: number, fromY: number, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 0.8, ease = "back.out(1.7)", delay = 0 } = config;
     const targetX = target.x;
     const targetY = target.y;
@@ -92,7 +92,7 @@ class AnimationManagerClass {
   /**
    * Slide out to position
    */
-  slideOut(target: PIXI.DisplayObject, toX: number, toY: number, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  slideOut(target: PIXI.Container, toX: number, toY: number, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 0.5, ease = "power2.in", delay = 0 } = config;
     
     const tween = gsap.to(target, {
@@ -110,7 +110,7 @@ class AnimationManagerClass {
   /**
    * Scale pulse animation (like Flash button effects)
    */
-  scalePulse(target: PIXI.DisplayObject, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  scalePulse(target: PIXI.Container, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 0.3, ease = "power2.out" } = config;
     const originalScale = target.scale.x;
     
@@ -130,7 +130,7 @@ class AnimationManagerClass {
   /**
    * Shake animation for wrong answers
    */
-  shake(target: PIXI.DisplayObject, intensity: number = 5, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  shake(target: PIXI.Container, intensity: number = 5, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 0.5, ease = "power2.out" } = config;
     const originalX = target.x;
     const originalY = target.y;
@@ -192,22 +192,25 @@ class AnimationManagerClass {
   /**
    * Stagger animation for multiple objects
    */
-  staggerFrom(targets: PIXI.DisplayObject[], fromProps: TweenTarget, config: Partial<AnimationConfig & { stagger: number }> = {}): gsap.core.Timeline {
+  staggerFrom(targets: PIXI.Container[], fromProps: TweenTarget, config: Partial<AnimationConfig & { stagger: number }> = {}): gsap.core.Timeline {
     const { duration = 0.5, ease = "power2.out", stagger = 0.1, delay = 0 } = config;
     const timeline = this.createTimeline();
-    
-    timeline.staggerFrom(targets, duration, {
+
+    timeline.from(targets, {
       ...fromProps,
+      duration,
       ease,
-    }, stagger, delay);
-    
+      stagger,
+      delay,
+    });
+
     return timeline;
   }
 
   /**
    * Create a looping animation
    */
-  loop(target: PIXI.DisplayObject, properties: TweenTarget, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  loop(target: PIXI.Container, properties: TweenTarget, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 1, ease = "none" } = config;
     
     const tween = gsap.to(target, {
@@ -225,7 +228,7 @@ class AnimationManagerClass {
   /**
    * Rotation animation
    */
-  spin(target: PIXI.DisplayObject, rotations: number = 1, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
+  spin(target: PIXI.Container, rotations: number = 1, config: Partial<AnimationConfig> = {}): gsap.core.Tween {
     const { duration = 1, ease = "none", repeat = -1 } = config;
     
     const tween = gsap.to(target, {

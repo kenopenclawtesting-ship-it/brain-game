@@ -48,7 +48,7 @@ export abstract class BaseGame {
   /**
    * Abstract methods that each game must implement
    */
-  abstract async loadAssets(): Promise<void>;
+  abstract loadAssets(): Promise<void>;
   abstract initializeGame(): void;
   abstract startRound(round: number): void;
   abstract handleUserInput(input: any): void;
@@ -283,13 +283,13 @@ export abstract class BaseGame {
     sprite.y = this.app.screen.height / 2;
   }
 
-  protected addClickHandler(target: PIXI.DisplayObject, handler: () => void): void {
+  protected addClickHandler(target: PIXI.Container, handler: () => void): void {
     target.eventMode = 'static';
     target.cursor = 'pointer';
     target.on('pointerdown', handler);
   }
 
-  protected removeClickHandler(target: PIXI.DisplayObject): void {
+  protected removeClickHandler(target: PIXI.Container): void {
     target.off('pointerdown');
     target.eventMode = 'auto';
     target.cursor = 'default';

@@ -59,9 +59,129 @@
       "height": 960,
       "cost": 0.04,
       "timestamp": "2026-02-09T04:24:56.853Z"
+    },
+    {
+      "id": "icon-shape-order",
+      "filename": "icon-game-1.png",
+      "prompt": "Game icon for a shape memory game, colorful geometric shapes (triangle, circle, square) arranged in a sequence pattern, vibrant neon colors on dark purple background, premium mobile game icon style, clean glossy design, rounded corners, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:56:45.017Z"
+    },
+    {
+      "id": "icon-card-pairs",
+      "filename": "icon-game-2.png",
+      "prompt": "Game icon for a memory card matching game, two playing cards face down with question marks, one card flipping to reveal a star, vibrant blue and purple colors on dark background, premium mobile game icon style, clean glossy design, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:56:47.644Z"
+    },
+    {
+      "id": "icon-missing-number",
+      "filename": "icon-game-3.png",
+      "prompt": "Game icon for a math equation game, equation with missing number shown as glowing question mark, numbers 1 2 3 floating, yellow and amber colors on dark background, premium mobile game icon style, calculator theme, clean glossy design, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:56:50.709Z"
+    },
+    {
+      "id": "icon-missing-sign",
+      "filename": "icon-game-4.png",
+      "prompt": "Game icon for a math operator game, glowing plus minus multiply divide signs floating in circle, one highlighted with question mark, green and teal colors on dark background, premium mobile game icon style, clean glossy design, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:56:56.703Z"
+    },
+    {
+      "id": "icon-cube-counter",
+      "filename": "icon-game-5.png",
+      "prompt": "Game icon for a 3D cube counting game, stack of colorful isometric cubes arranged in a small structure, vibrant red blue yellow cubes, dark purple background, premium mobile game icon style, clean 3D design, glossy finish",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:56:59.242Z"
+    },
+    {
+      "id": "icon-balance-scale",
+      "filename": "icon-game-6.png",
+      "prompt": "Game icon for a weight balance game, golden balance scale with different objects on each side, one side heavier, warm gold colors on dark background, premium mobile game icon style, clean glossy design, 3D depth, justice scale",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:05.782Z"
+    },
+    {
+      "id": "icon-asteroids",
+      "filename": "icon-game-7.png",
+      "prompt": "Game icon for a meteor number sequence game, colorful meteors with numbers on them flying through space, vibrant orange and red fireballs, starry dark blue space background, premium mobile game icon style, clean glossy design, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:09.499Z"
+    },
+    {
+      "id": "icon-jigsaw",
+      "filename": "icon-game-8.png",
+      "prompt": "Game icon for a jigsaw puzzle matching game, colorful puzzle pieces coming together, one piece highlighted and floating, vibrant blue and cyan colors on dark background, premium mobile game icon style, clean glossy design, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:13.247Z"
+    },
+    {
+      "id": "icon-math-combo",
+      "filename": "icon-game-9.png",
+      "prompt": "Game icon for a number combination sum game, grid of glowing numbers with some highlighted forming a target sum, green accent colors on dark background, premium mobile game icon style, clean glossy calculator-like design, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:15.800Z"
+    },
+    {
+      "id": "icon-hex-path",
+      "filename": "icon-game-10.png",
+      "prompt": "Game icon for a hexagonal grid path game, cluster of glowing hexagons with a traced path through them, vibrant cyan and blue neon colors on dark background, premium mobile game icon style, clean glossy design, honeycomb pattern, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:23.954Z"
+    },
+    {
+      "id": "icon-action-sequence",
+      "filename": "icon-game-11.png",
+      "prompt": "Game icon for a Simon Says memory sequence game, row of colorful light-up buttons (red green blue yellow) with one glowing brightly, dark background, premium mobile game icon style, clean glossy design, arcade button style, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:27.524Z"
+    },
+    {
+      "id": "icon-car-path",
+      "filename": "icon-game-12.png",
+      "prompt": "Game icon for a car path tracking game, cute cartoon car on a winding road with junctions, bright red car, road forks and turns, vibrant colors on dark background, premium mobile game icon style, clean glossy design, top-down view, 3D depth",
+      "model": "fal-ai/flux-pro/v1.1",
+      "width": 512,
+      "height": 512,
+      "cost": 0.04,
+      "timestamp": "2026-02-09T04:57:30.551Z"
     }
   ],
-  "totalSpent": 0.24000000000000002,
+  "totalSpent": 0.7200000000000001,
   "generated": "2026-02-09T04:24:26.321Z",
-  "lastUpdated": "2026-02-09T04:24:56.853Z"
+  "lastUpdated": "2026-02-09T04:57:30.551Z"
 }

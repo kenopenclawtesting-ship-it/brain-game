@@ -28,8 +28,8 @@ const SOUND_CONFIG: Record<SoundName, SoundConfig> = {
   buttonInGame: { src: '/assets/sounds/button-ingame.mp3', volume: 0.7 },
   timer: { src: '/assets/sounds/timer-sound.mp3', volume: 0.8 },
   start: { src: '/assets/sounds/start-sound.mp3', volume: 0.8 },
-  correct: { src: '/assets/sounds/button-ingame.mp3', volume: 0.6 },
-  wrong: { src: '/assets/sounds/button-ingame.mp3', volume: 0.4 },
+  correct: { src: '/assets/sounds/correct.mp3', volume: 0.6 },
+  wrong: { src: '/assets/sounds/wrong.mp3', volume: 0.4 },
   applause: { src: '/assets/sounds/applause.mp3', volume: 0.7 },
 };
 
